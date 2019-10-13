@@ -9,25 +9,32 @@ export class ArtistGallery extends React.Component {
     }
 
     componentDidMount() {
-        fetch(
-            "https://api.spotify.com/v1/me/top/artists", {
-                method: 'GET',
-                headers: {
-                    "Accept": "application/json",
-                    "Content-Type": "application/json",
-                    "Authorization": "Bearer XXXX"
-                },
-            }).then((response) => {
-                return response.json();
-            }).then((data) => {
-                console.log(data);
+        fetch("https://api.spotify.com/v1/me/top/artists", {
+            method: 'GET',
+            headers: {
+                "Accept": "application/json",
+                "Content-Type": "application/json",
+                "Authorization": "Bearer XXXX"
+            },
+        }).then((response) => {
+            return response.json();
+        }).then((data) => {
+            if (data.error) {
                 this.setState({
-                    artists: data.items,
+                    errors: data.error,
                 });
-            })
+            }
+            console.log(data);
+            this.setState({
+                artists: data.items,
+            });
+        });
     }
 
     render() {
+        if (this.state.errors) {
+            return <section>Uh oh. An Error Occurred: {this.state.errors.status} {this.state.errors.message}</section>
+        }
         return (
             <section>
                 {this.state.artists.map((artist) => {
