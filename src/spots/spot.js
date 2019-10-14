@@ -1,4 +1,5 @@
 import React from 'react'
+import {spotify} from './auth'
 
 export class ArtistGallery extends React.Component {
     constructor(props) {
@@ -9,15 +10,9 @@ export class ArtistGallery extends React.Component {
     }
 
     componentDidMount() {
-        fetch("https://api.spotify.com/v1/me/top/artists", {
+        spotify.fetch("https://api.spotify.com/v1/me/top/artists", {
             method: 'GET',
-            headers: {
-                "Accept": "application/json",
-                "Content-Type": "application/json",
-                "Authorization": "Bearer XXXX"
-            },
-        }).then((response) => {
-            return response.json();
+            headers: {},
         }).then((data) => {
             if (data.error) {
                 this.setState({
@@ -33,6 +28,13 @@ export class ArtistGallery extends React.Component {
 
     render() {
         if (this.state.errors) {
+            if (this.state.errors.status === 401) {
+                return (
+                    <section>
+                        Oops you need to authorize this app:
+                        <a href={spotify.authorizeUrl}>Click here to authorize.</a>
+                    </section>);
+            }
             return <section>Uh oh. An Error Occurred: {this.state.errors.status} {this.state.errors.message}</section>
         }
         return (
@@ -46,10 +48,6 @@ export class ArtistGallery extends React.Component {
 }
 
 class ArtistCard extends React.Component {
-    constructor(props) {
-        super(props);
-    }
-
     render() {
         return (
             <div>
