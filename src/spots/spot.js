@@ -23,7 +23,7 @@ export class ArtistGallery extends React.Component {
             this.setState({
                 artists: data.items,
             });
-        });
+        }).catch((error)=>this.setState({errors: error}));
     }
 
     render() {
