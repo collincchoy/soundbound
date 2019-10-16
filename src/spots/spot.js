@@ -1,4 +1,7 @@
 import React from 'react'
+import 'react-bulma-components/dist/react-bulma-components.min.css';
+import { Card, Heading, Container, Section, Tile, Columns } from 'react-bulma-components';
+
 import {spotify} from './auth'
 
 export class ArtistGallery extends React.Component {
@@ -30,19 +33,25 @@ export class ArtistGallery extends React.Component {
         if (this.state.errors) {
             if (this.state.errors.status === 401) {
                 return (
-                    <section>
+                    <Container>
                         Oops you need to authorize this app:
                         <a href={spotify.authorizeUrl}>Click here to authorize.</a>
-                    </section>);
+                    </Container>);
             }
-            return <section>Uh oh. An Error Occurred: {this.state.errors.status} {this.state.errors.message}</section>
+            return <Container>Uh oh. An Error Occurred: {this.state.errors.status} {this.state.errors.message}</Container>
         }
         return (
-            <section>
+            <Container Widescreen>
+                <Columns>
                 {this.state.artists.map((artist) => {
-                    return <ArtistCard name={artist.name} image={artist.images[2]}/>
+                    return (
+                      <Columns.Column size={3}>
+                          <ArtistCard name={artist.name} image={artist.images[2]}/>
+                      </Columns.Column>
+                    );
                 })}
-            </section>
+                </Columns>
+            </Container>
         );
     }
 }
@@ -50,10 +59,19 @@ export class ArtistGallery extends React.Component {
 class ArtistCard extends React.Component {
     render() {
         return (
-            <div>
-                <h2>{this.props.name}</h2>
-                <img src={this.props.image.url} alt={this.props.name} width={this.props.image.width} height={this.props.image.height}/>
-            </div>
+            <Card>
+                <Card.Content>
+                    <Heading size={4}>
+                        {this.props.name}
+                    </Heading>
+                </Card.Content>
+                <Card.Image
+                  src={this.props.image.url}
+                  alt={this.props.name}
+                  size="square"
+                  /*width={this.props.image.width} height={this.props.image.height}*/
+                />
+            </Card>
         )
     }
 }

@@ -1,4 +1,6 @@
 import React from 'react';
+import { Image, Heading, Box, Columns } from 'react-bulma-components';
+
 import {spotify} from './auth';
 
 export class Profile extends React.Component {
@@ -24,10 +26,19 @@ export class Profile extends React.Component {
 
     render() {
         return (
-            <div>
-                <h1>{this.state.name}</h1>
-                <img src={this.state.imageUrl} alt="Profile" />
-            </div>
+            <Columns>
+                <Columns.Column size="half" offset="one-quarter">
+                <Box>
+                    <Heading size={3}>{this.state.name}</Heading>
+                    <Image
+                      style={{textAlign: "center", display: "inline-block"}}
+                      size={128}
+                      src={this.state.imageUrl}
+                      alt="MyProfile"
+                    />
+                </Box>
+                </Columns.Column>
+            </Columns>
         );
     }
 }
