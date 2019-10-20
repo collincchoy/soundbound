@@ -1,9 +1,16 @@
 
+interface RequestHeaders {
+    Authorization: string;
+    Accept: string;
+    'Content-Type': string;
+}
+
 class Spotify {
     baseUrl = "https://api.spotify.com/v1";
     redirectUri = "http://localhost:3000/"
     clientId = "56b3e61755c4412da05579ef18851833";
-    constructor(access_token) {
+    _access_token: string;
+    constructor(access_token='') {
         console.log(access_token);
         this._access_token = access_token;
     }
@@ -12,7 +19,7 @@ class Spotify {
         var fragmentString = window.location.hash.substring(1);
 
         // Parse query string to see if page request is coming from OAuth 2.0 server.
-        var params = {};
+        var params: any = {};
         var regex = /([^&=]+)=([^&]*)/g, m;
         while (m = regex.exec(fragmentString)) {
             params[decodeURIComponent(m[1])] = decodeURIComponent(m[2]);
@@ -20,39 +27,43 @@ class Spotify {
         this._access_token = params["access_token"];
     }
 
-    async fetch(url, options) {
+    async fetch(url: string, options: RequestInit): Promise<Response> {
         if (this._access_token === undefined) {
-            this.handleOAuthCallback()
+            this.handleOAuthCallback();
         }
 
-        if (options.headers) {
-            options.headers.Authorization = `Bearer ${this._access_token}`;
-            options.headers.Accept = "application/json";
-            options.headers["Content-Type"] = "application/json";
+        let requiredHeaders: RequestHeaders = {
+            'Authorization': '',//`Bearer ${this._access_token}`,
+            'Accept': "application/json",
+            "Content-Type": "application/json",
         }
-        console.log(JSON.stringify(options));
+        if (options.headers) {
+            options.headers = {...options.headers, ...requiredHeaders};
+        }
+        console.log('BOO');
         const response = await fetch(url, options);
-        if (response.ok) {
-            return response.json();
-        } else {
+        const actualResponse = await response.json();
+        if (!response.ok) {
+            console.log("this is not ok");
             return Promise.reject({
                 status: response.status,
-                statusText: response.statusText
+                response: actualResponse,
             });
         }
+        return actualResponse;
     }
 
-    get authorizeUrl() {
+    get authorizeUrl(): URL {
         const authUrl = new URL("https://accounts.spotify.com/authorize");
-        const params = {
+        const params: Record<string, string> = {
             client_id: this.clientId,
             response_type: "token",
             redirect_uri: this.redirectUri,
             // state: undefined,
             scope: "user-read-private user-read-email user-top-read",
-            show_dialog: true,
+            show_dialog: true.toString(),
         };
-        authUrl.search = new URLSearchParams(params);
+        authUrl.search = String(new URLSearchParams(params));
         return authUrl;
     }
 }

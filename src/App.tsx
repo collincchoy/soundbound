@@ -2,7 +2,7 @@ import React from 'react';
 import logo from './logo.svg';
 import './App.css';
 import {Section, Heading} from 'react-bulma-components';
-import {ArtistGallery} from './spots/spot';
+import {ArtistGallery} from './spots/artist';
 import {Profile} from './spots/profile';
 
 function App() {
