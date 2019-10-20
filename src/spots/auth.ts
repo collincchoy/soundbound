@@ -10,8 +10,8 @@ class Spotify {
     baseUrl = "https://api.spotify.com/v1";
     redirectUri = "http://localhost:3000/"
     clientId = "56b3e61755c4412da05579ef18851833";
-    _access_token: string;
-    constructor(access_token='') {
+    _access_token?: string;
+    constructor(access_token?: string) {
         console.log(access_token);
         this._access_token = access_token;
     }
@@ -34,7 +34,7 @@ class Spotify {
         }
 
         let requiredHeaders: RequestHeaders = {
-            'Authorization': '',//`Bearer ${this._access_token}`,
+            'Authorization': `Bearer ${this._access_token}`,
             'Accept': "application/json",
             "Content-Type": "application/json",
         }

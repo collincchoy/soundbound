@@ -37,7 +37,7 @@ export class ArtistGallery extends React.Component<{}, ArtistGalleryState> {
         return (
           <Container>
             Oops you need to authorize this app:
-              <a href={spotify.authorizeUrl.pathname}>Click here to authorize.</a>
+              <a href={spotify.authorizeUrl.toString()}>Click here to authorize.</a>
           </Container>);
       }
       return (
