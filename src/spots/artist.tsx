@@ -3,10 +3,15 @@ import 'react-bulma-components/dist/react-bulma-components.min.css';
 import { Card, Heading, Container, Columns } from 'react-bulma-components';
 
 import { spotify } from './auth'
-import { ArtistResponse } from "./types";
+import { ArtistResponse, ArtistImage, SpotifyError } from "./types";
 
-export class ArtistGallery extends React.Component {
-  constructor(props) {
+interface ArtistGalleryState {
+  artists: ArtistResponse[];
+  errors?: any;
+}
+
+export class ArtistGallery extends React.Component<{}, ArtistGalleryState> {
+  constructor(props: {}) {
     super(props);
     this.state = {
       artists: [],
@@ -18,12 +23,12 @@ export class ArtistGallery extends React.Component {
     spotify.fetch("https://api.spotify.com/v1/me/top/artists", {
       method: 'GET',
       headers: {},
-    }).then((data) => {
+    }).then((data: any) => {
       console.log(`bah data is: ${data}`);
       this.setState({
         artists: data.items,
       });
-    }).catch((error) => this.setState({ errors: error }));
+    }).catch((error: SpotifyError) => this.setState({ errors: error.error }));
   }
 
   render() {
@@ -32,13 +37,16 @@ export class ArtistGallery extends React.Component {
         return (
           <Container>
             Oops you need to authorize this app:
-                        <a href={spotify.authorizeUrl}>Click here to authorize.</a>
+              <a href={spotify.authorizeUrl.pathname}>Click here to authorize.</a>
           </Container>);
       }
-      return <Container>Uh oh. An Error Occurred: {this.state.errors.status} {this.state.errors.message}</Container>
+      return (
+        <Container>
+          Uh oh. An Error Occurred: {this.state.errors.status} {this.state.errors.message}
+        </Container>);
     }
     return (
-      <Container Widescreen>
+      <Container /*Widescreen*/>
         <Columns>
           {this.state.artists.map((artist) => {
             return (
@@ -53,7 +61,12 @@ export class ArtistGallery extends React.Component {
   }
 }
 
-class ArtistCard extends React.Component {
+interface ArtistCardProps {
+  name: string;
+  image: ArtistImage;
+}
+
+class ArtistCard extends React.Component<ArtistCardProps, {}> {
   render() {
     return (
       <Card>

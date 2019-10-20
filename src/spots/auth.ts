@@ -1,3 +1,4 @@
+import { ResponseType } from "./types";
 
 interface RequestHeaders {
     Authorization: string;
@@ -27,7 +28,7 @@ class Spotify {
         this._access_token = params["access_token"];
     }
 
-    async fetch(url: string, options: RequestInit): Promise<Response> {
+    async fetch(url: string, options: RequestInit): Promise<ResponseType> {
         if (this._access_token === undefined) {
             this.handleOAuthCallback();
         }
@@ -42,15 +43,11 @@ class Spotify {
         }
         console.log('BOO');
         const response = await fetch(url, options);
-        const actualResponse = await response.json();
         if (!response.ok) {
             console.log("this is not ok");
-            return Promise.reject({
-                status: response.status,
-                response: actualResponse,
-            });
+            throw await response.json();
         }
-        return actualResponse;
+        return response.json();
     }
 
     get authorizeUrl(): URL {
