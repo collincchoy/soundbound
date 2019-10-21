@@ -1,32 +1,32 @@
 import React from 'react'
 import 'react-bulma-components/dist/react-bulma-components.min.css';
-import { Card, Heading, Container, Columns } from 'react-bulma-components';
+import { Card, Container, Columns } from 'react-bulma-components';
 
 import { spotify } from './auth'
-import { ArtistResponse, ArtistImage, SpotifyError } from "./types";
+import { SpotifyError } from "./types";
 
-interface ArtistGalleryState {
-  artists: ArtistResponse[];
+interface TrackGalleryState {
+  items: [];
   errors?: any;
 }
 
-export class ArtistGallery extends React.Component<{}, ArtistGalleryState> {
+export class TrackGallery extends React.Component<{}, TrackGalleryState> {
   constructor(props: {}) {
     super(props);
     this.state = {
-      artists: [],
+      items: [],
     };
   }
 
   componentDidMount() {
-    const endpoint = "/me/top/artists";
+    const endpoint = "/me/top/tracks";
     spotify.fetch(endpoint, {
       method: 'GET',
       headers: {},
     }).then((data: any) => {
       console.log(`bah data is: ${data}`);
       this.setState({
-        artists: data.items,
+        items: data.items,
       });
     }).catch((error: SpotifyError) => this.setState({ errors: error.error }));
   }
@@ -48,10 +48,10 @@ export class ArtistGallery extends React.Component<{}, ArtistGalleryState> {
     return (
       <Container /*Widescreen*/>
         <Columns>
-          {this.state.artists.map((artist) => {
+          {this.state.items.map((item) => {
             return (
               <Columns.Column size={3}>
-                <ArtistCard name={artist.name} image={artist.images[2]} />
+                <TrackCard data={JSON.stringify(item)} />
               </Columns.Column>
             );
           })}
@@ -61,26 +61,17 @@ export class ArtistGallery extends React.Component<{}, ArtistGalleryState> {
   }
 }
 
-interface ArtistCardProps {
-  name: string;
-  image: ArtistImage;
+interface TrackCardProps {
+  data: {},
 }
 
-class ArtistCard extends React.Component<ArtistCardProps, {}> {
+class TrackCard extends React.Component<TrackCardProps, {}> {
   render() {
     return (
       <Card>
         <Card.Content>
-          <Heading size={4}>
-            {this.props.name}
-          </Heading>
+          {this.props.data}
         </Card.Content>
-        <Card.Image
-          src={this.props.image.url}
-          alt={this.props.name}
-          size="square"
-        /*width={this.props.image.width} height={this.props.image.height}*/
-        />
       </Card>
     )
   }

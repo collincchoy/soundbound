@@ -12,7 +12,7 @@ export class Profile extends React.Component {
         }
     }
     componentDidMount() {
-        spotify.fetch("https://api.spotify.com/v1/me", {
+        spotify.fetch("/me", {
             method: "GET",
             headers: {},
         }).then((data) => {

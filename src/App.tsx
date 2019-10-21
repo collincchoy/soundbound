@@ -1,9 +1,8 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
-import {Section, Heading} from 'react-bulma-components';
-import {ArtistGallery} from './spots/artist';
-import {Profile} from './spots/profile';
+import { Section } from 'react-bulma-components';
+import { Profile } from './spots/profile';
+import { PersonalPanel } from './PersonalPanel';
 
 function App() {
   return (
@@ -12,8 +11,7 @@ function App() {
         <Profile />
       </Section>
       <Section>
-        <Heading style={{color: "#ffffff"}}>Top Artists</Heading>
-        <ArtistGallery />
+        <PersonalPanel />
       </Section>
       <a
         className="App-link"

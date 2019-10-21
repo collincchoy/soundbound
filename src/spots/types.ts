@@ -1,37 +1,36 @@
-import { number, string } from "prop-types"
 
 export interface ha {
-    boo?: boolean;
+  boo?: boolean;
 }
 
 export interface SpotifyError {
-    error: {
-        status: number;
-        message: string;
-    }
+  error: {
+    status: number;
+    message: string;
+  }
 }
 
 export interface ResponseType {
 }
 
 export interface ArtistImage {
-    height: number;
-    url: string;
-    width: number;
+  height: number;
+  url: string;
+  width: number;
 }
 
 export interface ArtistResponse extends ResponseType {
-    href: string;
-    id: string;
-    name: string;
-    popularity: number;
-    type: string;
-    uri: string;
-    images: ArtistImage[];
-    genres: string[];
-    followers: {
-        href?: string | null;
-        total: number;
-    }[];
-    external_urls: any;
+  href: string;
+  id: string;
+  name: string;
+  popularity: number;
+  type: string;
+  uri: string;
+  images: ArtistImage[];
+  genres: string[];
+  followers: {
+    href?: string | null;
+    total: number;
+  }[];
+  external_urls: any;
 }
