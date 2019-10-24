@@ -1,13 +1,14 @@
 import React from 'react'
 import 'react-bulma-components/dist/react-bulma-components.min.css';
-import { Card, Heading, Container, Columns } from 'react-bulma-components';
+import { Card, Heading } from 'react-bulma-components';
 
 import { spotify } from './auth'
 import { ArtistResponse, ArtistImage, SpotifyError } from "./types";
+import { SpotifyErrorMessage, CardGallery } from './cardGallery';
 
 interface ArtistGalleryState {
   artists: ArtistResponse[];
-  errors?: any;
+  error?: {status: number, message: string};
 }
 
 export class ArtistGallery extends React.Component<{}, ArtistGalleryState> {
@@ -28,36 +29,23 @@ export class ArtistGallery extends React.Component<{}, ArtistGalleryState> {
       this.setState({
         artists: data.items,
       });
-    }).catch((error: SpotifyError) => this.setState({ errors: error.error }));
+    }).catch((error: SpotifyError) => this.setState({ error: error.error }));
+  }
+
+  renderArtist(artist: ArtistResponse): any {
+    return <ArtistCard name={artist.name} image={artist.images[2]} key={artist.name} />;
   }
 
   render() {
-    if (this.state.errors) {
-      if (this.state.errors.status === 401) {
-        return (
-          <Container>
-            Oops you need to authorize this app:
-              <a href={spotify.authorizeUrl.toString()}>Click here to authorize.</a>
-          </Container>);
-      }
-      return (
-        <Container>
-          Uh oh. An Error Occurred: {this.state.errors.status} {this.state.errors.message}
-        </Container>);
+    if (this.state.error) {
+      return <SpotifyErrorMessage status={this.state.error.status} message={this.state.error.message} />
     }
     return (
-      <Container /*Widescreen*/>
-        <Columns>
-          {this.state.artists.map((artist) => {
-            return (
-              <Columns.Column size={3}>
-                <ArtistCard name={artist.name} image={artist.images[2]} />
-              </Columns.Column>
-            );
-          })}
-        </Columns>
-      </Container>
-    );
+      <CardGallery
+        items={this.state.artists}
+        renderItem={(artist: ArtistResponse) => this.renderArtist(artist)}
+      />
+    )
   }
 }
 

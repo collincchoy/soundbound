@@ -1,20 +1,24 @@
 import React from 'react'
 import 'react-bulma-components/dist/react-bulma-components.min.css';
-import { Card, Container, Columns } from 'react-bulma-components';
+import { Card } from 'react-bulma-components';
 
 import { spotify } from './auth'
 import { SpotifyError } from "./types";
+import { CardGallery, SpotifyErrorMessage } from './cardGallery';
 
 interface TrackGalleryState {
-  items: [];
-  errors?: any;
+  tracks: [];
+  error?: {
+    status: number,
+    message: string,
+  };
 }
 
 export class TrackGallery extends React.Component<{}, TrackGalleryState> {
   constructor(props: {}) {
     super(props);
     this.state = {
-      items: [],
+      tracks: [],
     };
   }
 
@@ -24,40 +28,29 @@ export class TrackGallery extends React.Component<{}, TrackGalleryState> {
       method: 'GET',
       headers: {},
     }).then((data: any) => {
-      console.log(`bah data is: ${data}`);
+      console.log(`bah data is: ${data.items.length}`);
       this.setState({
-        items: data.items,
+        tracks: data.items,
       });
-    }).catch((error: SpotifyError) => this.setState({ errors: error.error }));
+    }).catch((error: SpotifyError) => this.setState({ error: error.error }));
+  }
+
+  renderTrack(track: { name: string, uri: string }): any {
+    console.log("rendering a track");
+    return <TrackCard data={JSON.stringify(track)} key={track.uri} />;
   }
 
   render() {
-    if (this.state.errors) {
-      if (this.state.errors.status === 401) {
-        return (
-          <Container>
-            Oops you need to authorize this app:
-              <a href={spotify.authorizeUrl.toString()}>Click here to authorize.</a>
-          </Container>);
-      }
-      return (
-        <Container>
-          Uh oh. An Error Occurred: {this.state.errors.status} {this.state.errors.message}
-        </Container>);
+    console.log("rendering trackgallery")
+    if (this.state.error) {
+      return <SpotifyErrorMessage status={this.state.error.status} message={this.state.error.message} />
     }
     return (
-      <Container /*Widescreen*/>
-        <Columns>
-          {this.state.items.map((item) => {
-            return (
-              <Columns.Column size={3}>
-                <TrackCard data={JSON.stringify(item)} />
-              </Columns.Column>
-            );
-          })}
-        </Columns>
-      </Container>
-    );
+      <CardGallery
+        items={this.state.tracks}
+        renderItem={(track) => this.renderTrack(track)}
+      />
+    )
   }
 }
 
