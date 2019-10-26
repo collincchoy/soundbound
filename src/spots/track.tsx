@@ -3,11 +3,11 @@ import 'react-bulma-components/dist/react-bulma-components.min.css';
 import { Card } from 'react-bulma-components';
 
 import { spotify } from './auth'
-import { SpotifyError } from "./types";
+import { SpotifyError, Track } from "./types";
 import { CardGallery, SpotifyErrorMessage } from './cardGallery';
 
 interface TrackGalleryState {
-  tracks: [];
+  tracks: Track[];
   error?: {
     status: number,
     message: string,
@@ -35,9 +35,8 @@ export class TrackGallery extends React.Component<{}, TrackGalleryState> {
     }).catch((error: SpotifyError) => this.setState({ error: error.error }));
   }
 
-  renderTrack(track: { name: string, uri: string }): any {
-    console.log("rendering a track");
-    return <TrackCard data={JSON.stringify(track)} key={track.uri} />;
+  renderTrack(track: Track): any {
+    return <TrackCard data={track} />;
   }
 
   render() {
@@ -55,16 +54,35 @@ export class TrackGallery extends React.Component<{}, TrackGalleryState> {
 }
 
 interface TrackCardProps {
-  data: {},
+  data: Track,
 }
 
 class TrackCard extends React.Component<TrackCardProps, {}> {
   render() {
+    console.log("rendering a track");
     return (
       <Card>
+        <Card.Header>
+          <p className="card-header-title">
+            {this.props.data.name}
+          </p>
+          <span className="card-header-icon">
+            {this.props.data.popularity}
+          </span>
+        </Card.Header>
         <Card.Content>
-          {this.props.data}
+          <span>Artist: {this.props.data.artists[0].name}</span>
+          <br/>
+          <span>Album: {this.props.data.album.name}</span>
         </Card.Content>
+        <Card.Footer>
+          <Card.Footer.Item>
+            <a href={this.props.data.href}>Listen!</a>
+          </Card.Footer.Item>
+          <Card.Footer.Item>
+            <a href={this.props.data.preview_url}>Preview!</a>
+          </Card.Footer.Item>
+        </Card.Footer>
       </Card>
     )
   }

@@ -9,8 +9,7 @@ function App() {
     <div className="App">
       <Section>
         <Profile />
-      </Section>
-      <Section>
+
         <PersonalPanel />
       </Section>
       <a

@@ -56,6 +56,7 @@ interface ArtistCardProps {
 
 class ArtistCard extends React.Component<ArtistCardProps, {}> {
   render() {
+    console.log("rendering an artist");
     return (
       <Card>
         <Card.Content>
