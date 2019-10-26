@@ -64,7 +64,7 @@ class TrackCard extends React.Component<TrackCardProps, {}> {
       <Card>
         <Card.Header>
           <p className="card-header-title">
-            {this.props.data.name}
+            <a href={this.props.data.href}>{this.props.data.name}</a>
           </p>
           <span className="card-header-icon">
             {this.props.data.popularity}
@@ -77,10 +77,10 @@ class TrackCard extends React.Component<TrackCardProps, {}> {
         </Card.Content>
         <Card.Footer>
           <Card.Footer.Item>
-            <a href={this.props.data.href}>Listen!</a>
-          </Card.Footer.Item>
-          <Card.Footer.Item>
-            <a href={this.props.data.preview_url}>Preview!</a>
+          <audio controls>
+            <source src={this.props.data.preview_url}/>
+            <p>Your browser doesn't support HTML5 audio. Here is a <a href={this.props.data.preview_url}>link to the audio</a> instead.</p>
+          </audio>
           </Card.Footer.Item>
         </Card.Footer>
       </Card>
