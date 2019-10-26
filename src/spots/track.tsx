@@ -60,26 +60,33 @@ interface TrackCardProps {
 class TrackCard extends React.Component<TrackCardProps, {}> {
   render() {
     console.log("rendering a track");
+    const artistName = this.props.data.artists[0].name,
+          trackTitle = this.props.data.name,
+          trackLink = this.props.data.href,
+          trackPreviewLink = this.props.data.preview_url,
+          trackAlbumName = this.props.data.album.name,
+          trackAlbumImage = this.props.data.album.images[1].url;
     return (
       <Card>
         <Card.Header>
           <p className="card-header-title">
-            <a href={this.props.data.href}>{this.props.data.name}</a>
+            <a href={trackLink}>{trackTitle}</a>
           </p>
           <span className="card-header-icon">
             {this.props.data.popularity}
           </span>
         </Card.Header>
+        <Card.Image src={trackAlbumImage} alt={trackAlbumName} size="square"/>
         <Card.Content>
-          <span>Artist: {this.props.data.artists[0].name}</span>
+          <span>Artist: {artistName}</span>
           <br/>
-          <span>Album: {this.props.data.album.name}</span>
+          <span>Album: {trackAlbumName}</span>
         </Card.Content>
         <Card.Footer>
           <Card.Footer.Item>
           <audio controls>
-            <source src={this.props.data.preview_url}/>
-            <p>Your browser doesn't support HTML5 audio. Here is a <a href={this.props.data.preview_url}>link to the audio</a> instead.</p>
+            <source src={trackPreviewLink}/>
+            <p>Your browser doesn't support HTML5 audio. Here is a <a href={trackPreviewLink}>link to the audio</a> instead.</p>
           </audio>
           </Card.Footer.Item>
         </Card.Footer>
