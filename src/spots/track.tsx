@@ -1,6 +1,6 @@
 import React from 'react'
 import 'react-bulma-components/dist/react-bulma-components.min.css';
-import { Card } from 'react-bulma-components';
+import { Card, Columns } from 'react-bulma-components';
 
 import { spotify } from './auth'
 import { SpotifyError, Track } from "./types";
@@ -41,14 +41,21 @@ export class TrackGallery extends React.Component<{}, TrackGalleryState> {
 
   render() {
     console.log("rendering trackgallery")
-    if (this.state.error) {
-      return <SpotifyErrorMessage status={this.state.error.status} message={this.state.error.message} />
+    const {error, tracks} = this.state;
+    if (error) {
+      return <SpotifyErrorMessage status={error.status} message={error.message} />
     }
+
+    const trackCards = tracks.map(track => 
+      <Columns.Column size={3} key={track.id}>
+        <TrackCard data={track} />
+      </Columns.Column>
+    );
+
     return (
-      <CardGallery
-        items={this.state.tracks}
-        renderItem={(track) => this.renderTrack(track)}
-      />
+      <CardGallery>
+        {trackCards}
+      </CardGallery>
     )
   }
 }

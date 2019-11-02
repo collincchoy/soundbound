@@ -4,28 +4,14 @@ import { Container, Columns } from 'react-bulma-components';
 
 import { spotify } from './auth'
 
-interface CardGalleryProps<T> {
-  items: T[];
-  renderItem: (item: T) => React.Component;
-}
-
-export class CardGallery<T> extends React.Component<CardGalleryProps<T>, {}> {
-  constructor(props: CardGalleryProps<T>) {
-    super(props);
-  }
-
+export class CardGallery<T> extends React.Component<{}, {}> {
   render() {
-    console.log(this.props.items);
+    const { children } = this.props;
+    console.log(children);
     return (
       <Container /*Widescreen*/>
         <Columns>
-          {this.props.items.map((item: T) => {
-            return (
-              <Columns.Column size={3}>
-                {this.props.renderItem(item)}
-              </Columns.Column>
-            );
-          })}
+          {children}
         </Columns>
       </Container>
     );

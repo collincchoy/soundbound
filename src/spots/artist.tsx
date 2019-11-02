@@ -1,6 +1,6 @@
 import React from 'react'
 import 'react-bulma-components/dist/react-bulma-components.min.css';
-import { Card, Heading } from 'react-bulma-components';
+import { Card, Heading, Columns } from 'react-bulma-components';
 
 import { spotify } from './auth'
 import { ArtistResponse, ArtistImage, SpotifyError } from "./types";
@@ -40,11 +40,17 @@ export class ArtistGallery extends React.Component<{}, ArtistGalleryState> {
     if (this.state.error) {
       return <SpotifyErrorMessage status={this.state.error.status} message={this.state.error.message} />
     }
+
+    const {artists} = this.state;
+    const artistCards = artists.map(artist => 
+      <Columns.Column size={3} key={artist.id} >
+        <ArtistCard name={artist.name} image={artist.images[2]} />
+      </Columns.Column>
+    );
     return (
-      <CardGallery
-        items={this.state.artists}
-        renderItem={(artist: ArtistResponse) => this.renderArtist(artist)}
-      />
+      <CardGallery>
+        {artistCards}
+      </CardGallery>
     )
   }
 }
