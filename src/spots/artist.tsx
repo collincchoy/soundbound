@@ -1,6 +1,6 @@
-import React from 'react'
+import React, { useState } from 'react'
 import 'react-bulma-components/dist/react-bulma-components.min.css';
-import { Card, Heading, Columns } from 'react-bulma-components';
+import { Card, Heading, Columns, Modal, Image, Tag } from 'react-bulma-components';
 
 import { spotify } from './auth'
 import { ArtistResponse, ArtistImage, SpotifyError } from "./types";
@@ -8,7 +8,7 @@ import { SpotifyErrorMessage, CardGallery } from './cardGallery';
 
 interface ArtistGalleryState {
   artists: ArtistResponse[];
-  error?: {status: number, message: string};
+  error?: { status: number, message: string };
 }
 
 export class ArtistGallery extends React.Component<{}, ArtistGalleryState> {
@@ -41,10 +41,10 @@ export class ArtistGallery extends React.Component<{}, ArtistGalleryState> {
       return <SpotifyErrorMessage status={this.state.error.status} message={this.state.error.message} />
     }
 
-    const {artists} = this.state;
-    const artistCards = artists.map(artist => 
+    const { artists } = this.state;
+    const artistCards = artists.map(artist =>
       <Columns.Column size={3} key={artist.id} >
-        <ArtistCard name={artist.name} image={artist.images[2]} />
+        <ArtistCardWithDetailsModal artist={artist} />
       </Columns.Column>
     );
     return (
@@ -58,25 +58,66 @@ export class ArtistGallery extends React.Component<{}, ArtistGalleryState> {
 interface ArtistCardProps {
   name: string;
   image: ArtistImage;
+  onClick: any;
 }
 
-class ArtistCard extends React.Component<ArtistCardProps, {}> {
-  render() {
-    console.log("rendering an artist");
-    return (
-      <Card>
-        <Card.Content>
-          <Heading size={4}>
-            {this.props.name}
-          </Heading>
-        </Card.Content>
+function ArtistCard(props: ArtistCardProps) {
+  return (
+    <Card>
+      <Card.Content>
+        <Heading size={4}>
+          {props.name}
+        </Heading>
+      </Card.Content>
+      <a>
         <Card.Image
-          src={this.props.image.url}
-          alt={this.props.name}
+          src={props.image.url}
+          alt={props.name}
           size="square"
+          onClick={props.onClick}
         /*width={this.props.image.width} height={this.props.image.height}*/
         />
-      </Card>
-    )
-  }
+      </a>
+    </Card>
+  )
+}
+
+function ArtistCardWithDetailsModal(props: { artist: ArtistResponse }) {
+  const { artist } = props;
+  const [isShowingDetails, setIsShowingDetails] = useState(false);
+
+  const showDetails = () => { console.log("clicked"); setIsShowingDetails(true) };
+  const closeDetails = () => setIsShowingDetails(false);
+
+  const genreList = artist.genres.map((genre) =>
+    <Tag color="dark" key={genre}>{genre}</Tag>
+  );
+  return (
+    <div>
+      <ArtistCard name={artist.name} image={artist.images[2]} onClick={showDetails} />
+      <Modal show={isShowingDetails} onClose={closeDetails} closeOnEsc={true} closeOnBlur={true}>
+        <Modal.Card>
+          <Modal.Card.Head onClose={closeDetails}>
+            <Modal.Card.Title>
+              {artist.name}
+            </Modal.Card.Title>
+          </Modal.Card.Head>
+          <Modal.Card.Body>
+            <div className="tags">
+              {genreList}
+            </div>
+            <p>
+              <b>Description</b>
+            </p>
+            <Image src={artist.images[0].url} alt="Large Profile"></Image>
+          </Modal.Card.Body>
+          <Modal.Card.Foot style={{ alignItems: 'center', justifyContent: 'center' }}>
+            <p>
+              Lorem Ipsum...
+          </p>
+          </Modal.Card.Foot>
+        </Modal.Card>
+      </Modal>
+    </div>
+  );
 }
