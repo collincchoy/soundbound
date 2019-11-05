@@ -15,11 +15,13 @@ interface TrackGalleryState {
 }
 
 export class TrackGallery extends React.Component<{}, TrackGalleryState> {
+  _abortController: AbortController;
   constructor(props: {}) {
     super(props);
     this.state = {
       tracks: [],
     };
+    this._abortController = new AbortController();
   }
 
   componentDidMount() {
@@ -27,6 +29,7 @@ export class TrackGallery extends React.Component<{}, TrackGalleryState> {
     spotify.fetch(endpoint, {
       method: 'GET',
       headers: {},
+      signal: this._abortController.signal,
     }).then((data: any) => {
       console.log(`bah data is: ${data.items.length}`);
       this.setState({
@@ -35,8 +38,8 @@ export class TrackGallery extends React.Component<{}, TrackGalleryState> {
     }).catch((error: SpotifyError) => this.setState({ error: error.error }));
   }
 
-  renderTrack(track: Track): any {
-    return <TrackCard data={track} />;
+  componentWillUnmount() {
+    this._abortController.abort();
   }
 
   render() {

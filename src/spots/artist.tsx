@@ -12,18 +12,22 @@ interface ArtistGalleryState {
 }
 
 export class ArtistGallery extends React.Component<{}, ArtistGalleryState> {
+  _abortController: AbortController;
   constructor(props: {}) {
     super(props);
     this.state = {
       artists: [],
     };
+    this._abortController = new AbortController();
   }
 
   componentDidMount() {
     const endpoint = "/me/top/artists";
+    const { signal } = this._abortController;
     spotify.fetch(endpoint, {
       method: 'GET',
       headers: {},
+      signal,
     }).then((data: any) => {
       console.log(`bah data is: ${data}`);
       this.setState({
@@ -32,8 +36,8 @@ export class ArtistGallery extends React.Component<{}, ArtistGalleryState> {
     }).catch((error: SpotifyError) => this.setState({ error: error.error }));
   }
 
-  renderArtist(artist: ArtistResponse): any {
-    return <ArtistCard name={artist.name} image={artist.images[2]} key={artist.name} />;
+  componentWillUnmount() {
+    this._abortController.abort();
   }
 
   render() {
