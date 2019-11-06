@@ -4,18 +4,15 @@ import { Container, Columns } from 'react-bulma-components';
 
 import { spotify } from './auth'
 
-export class CardGallery<T> extends React.Component<{}, {}> {
-  render() {
-    const { children } = this.props;
-    console.log(children);
-    return (
-      <Container /*Widescreen*/>
-        <Columns>
-          {children}
-        </Columns>
-      </Container>
-    );
-  }
+export const CardGallery: React.FC = (props) => {
+  const { children } = props;
+  return (
+    <Container /*Widescreen*/>
+      <Columns>
+        {children}
+      </Columns>
+    </Container>
+  );
 }
 
 export class SpotifyErrorMessage extends React.Component<{ status: number, message: string }, {}> {

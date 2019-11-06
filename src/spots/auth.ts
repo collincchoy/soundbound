@@ -22,22 +22,24 @@ class Spotify {
     this._access_token = params["access_token"];
   }
 
-  async fetch(url: string, options: RequestInit): Promise<ResponseType> {
+  async get(endpoint: string, abortSignal?: AbortSignal): Promise<ResponseType> {
     if (this._access_token == null) {
       this.handleOAuthCallback();
     }
 
-    let requiredHeaders: Record<string, string> = {
-      'Authorization': `Bearer ${this._access_token}`,
-      'Accept': "application/json",
-      "Content-Type": "application/json",
-    }
-    if (options.headers) {
-      options.headers = { ...options.headers, ...requiredHeaders };
-    }
-    const response = await fetch(this.baseUrl+url, options);
+    const url: string = this.baseUrl + endpoint;
+    const options: RequestInit = {
+      method: 'GET',
+      headers: {
+        'Authorization': `Bearer ${this._access_token}`,
+        'Accept': "application/json",
+        "Content-Type": "application/json",
+      },
+      signal: abortSignal,
+    };
+    const response = await fetch(url, options);
     if (!response.ok) {
-      console.log("this is not ok");
+      console.log(`Gretchen, this fetch is so not ok! ${response.status}: ${url}`);
       throw await response.json();
     }
     return response.json();
