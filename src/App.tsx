@@ -1,8 +1,8 @@
 import React from 'react';
 import './App.css';
 import { Section } from 'react-bulma-components';
-import { Profile } from './spots/profile';
-import { PersonalPanel } from './PersonalPanel';
+import { Profile } from './components/profile';
+import { PersonalPanel } from './components/PersonalPanel';
 
 function App() {
   return (
