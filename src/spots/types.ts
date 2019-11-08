@@ -10,7 +10,41 @@ export interface SpotifyError {
   }
 }
 
-export interface ResponseType {
+export interface PaginatedResponse<T> {
+  items: T[];
+  total: number;  // 50,
+  limit: number;  // 20,
+  offset: number;  // 0,
+  previous: null | string;
+  href: string;  // "https://api.spotify.com/v1/me/top/artists",
+  next: string | null;  // "https://api.spotify.com/v1/me/top/artists?limit=20&offset=20"
+}
+
+export interface Profile {
+  country: string;  // US
+  display_name: string;  // Collin Choy
+  email: string;
+  explicit_content: {
+    "filter_enabled" : boolean,  // false
+    "filter_locked" : boolean,  // false
+  };
+  external_urls: {
+    spotify: string,  // "https://open.spotify.com/user/1295067065"
+  };
+  followers : {
+    "href": null | string,
+    "total": number
+  };
+  href: string;  // "https://api.spotify.com/v1/users/1295067065"
+  id: number;
+  images:  {
+    "height" : number | null,
+    "url" : string,
+    "width" : number | null
+  }[];
+  product: string;  //"premium",
+  type: string; // "user",
+  uri: string;  // "spotify:user:1295067065"
 }
 
 export interface ArtistImage {
@@ -19,7 +53,13 @@ export interface ArtistImage {
   width: number;
 }
 
-export interface ArtistResponse extends ResponseType {
+export interface ArtistResponse extends PaginatedResponse<Artist> {}
+
+enum AlbumType {
+  ALBUM = "ALBUM",
+}
+
+export type Artist = {
   href: string;
   id: string;
   name: string;
@@ -32,20 +72,7 @@ export interface ArtistResponse extends ResponseType {
     href?: string | null;
     total: number;
   }[];
-  external_urls: any;
-}
-
-enum AlbumType {
-  ALBUM = "ALBUM",
-}
-
-type Artist = {
-  href: string,
-  id: string,
-  name: string,
-  type: string,
-  uri: string,
-  external_urls?: {spotify: string},
+  external_urls: {spotify: string};
 }
 
 type Album = {
@@ -63,6 +90,8 @@ type Album = {
   type: "album",
   uri: string,
 }
+
+export interface TrackResponse extends PaginatedResponse<Track> {}
 
 export type Track = {
   "album": Album,

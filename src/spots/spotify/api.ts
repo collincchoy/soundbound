@@ -1,5 +1,3 @@
-import { ResponseType } from "./types";
-
 class Spotify {
   baseUrl = "https://api.spotify.com/v1";
   redirectUri = "http://localhost:3000/"
@@ -16,13 +14,14 @@ class Spotify {
     // Parse query string to see if page request is coming from OAuth 2.0 server.
     var params: any = {};
     var regex = /([^&=]+)=([^&]*)/g, m;
+    // eslint-disable-next-line no-cond-assign
     while (m = regex.exec(fragmentString)) {
       params[decodeURIComponent(m[1])] = decodeURIComponent(m[2]);
     }
     this._access_token = params["access_token"];
   }
 
-  async get(endpoint: string, abortSignal?: AbortSignal): Promise<ResponseType> {
+  async get(endpoint: string, abortSignal?: AbortSignal) {
     if (this._access_token == null) {
       this.handleOAuthCallback();
     }

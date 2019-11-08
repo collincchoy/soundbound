@@ -1,36 +1,23 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import 'react-bulma-components/dist/react-bulma-components.min.css';
 import { Card, Heading, Columns, Modal, Image, Tag } from 'react-bulma-components';
 
-import { spotify } from './auth'
-import { ArtistResponse, ArtistImage, SpotifyError } from "./types";
-import { SpotifyErrorMessage, CardGallery } from './cardGallery';
+import { ArtistResponse, ArtistImage, Artist } from "./types";
+import { CardGallery } from './cardGallery';
+import { SpotifyErrorMessage } from './spotify/error';
+import { useSpotifyApi } from "./spotify/hooks";
 
 export function ArtistGallery() {
-  const [artists, setArtists] = useState<ArtistResponse[]>([]);
+  const [artistOnDisplay, setArtistOnDisplay] = useState<Artist | undefined>();
 
-  const [artistOnDisplay, setArtistOnDisplay] = useState<ArtistResponse | undefined>(undefined);
-
-  const showDetails = (artist: ArtistResponse) => setArtistOnDisplay(artist);
+  const showDetails = (artist: Artist) => setArtistOnDisplay(artist);
   const closeDetails = () => setArtistOnDisplay(undefined);
 
-  const [error, setError] = useState<{ status: number, message: string }>();
-
-  useEffect(() => {
-    const endpoint = "/me/top/artists";
-    const abortController = new AbortController();
-    const { signal } = abortController;
-    spotify.get(endpoint, signal)
-      .then((data: any) => {
-        console.log(`bah data is: ${data}`);
-        setArtists(data.items);
-      }).catch((error: SpotifyError) => setError(error.error));
-
-    return () => abortController.abort();
-  }, []);
+  const {data, error} = useSpotifyApi<ArtistResponse>("/me/top/artists");
+  const artists = (data && data.items) || [];
 
   if (error) {
-    return <SpotifyErrorMessage status={error.status} message={error.message} />
+    return <SpotifyErrorMessage {...error} />
   }
 
   return (

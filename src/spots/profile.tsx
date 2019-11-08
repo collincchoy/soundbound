@@ -1,42 +1,27 @@
 import React from 'react';
 import { Image, Heading, Box, Columns } from 'react-bulma-components';
 
-import { spotify } from './auth';
+import { useSpotifyApi } from './spotify/hooks';
+import { Profile as ProfileResponse } from './types';
+import { SpotifyErrorMessage } from './spotify/error';
 
-export class Profile extends React.Component<{}, {name: string, imageUrl: string}> {
-  constructor(props: {}) {
-    super(props);
-    this.state = {
-      name: "",
-      imageUrl: "",
-    }
-  }
-  componentDidMount() {
-    spotify.get("/me")
-      .then((data: any) => {
-        console.log(data);
-        this.setState({
-          name: data.display_name,
-          imageUrl: data.images[0].url,
-        });
-      });
-  }
+export function Profile() {
+  const {data, error} = useSpotifyApi<ProfileResponse>("/me");
+  console.log(JSON.stringify(data));
 
-  render() {
-    return (
-      <Columns>
-        <Columns.Column size="half" offset="one-quarter">
-          <Box>
-            <Heading size={3}>{this.state.name}</Heading>
-            <Image
-              style={{ textAlign: "center", display: "inline-block" }}
-              size={128}
-              src={this.state.imageUrl}
-              alt="MyProfile"
-            />
-          </Box>
-        </Columns.Column>
-      </Columns>
-    );
-  }
+  return (error) ? <SpotifyErrorMessage {...error} /> : (
+    <Columns>
+      <Columns.Column size="half" offset="one-quarter">
+        <Box>
+          <Heading size={3}>{data && data.display_name}</Heading>
+          <Image
+            style={{ textAlign: "center", display: "inline-block" }}
+            size={128}
+            src={data && data.images[0].url}
+            alt="MyProfile"
+          />
+        </Box>
+      </Columns.Column>
+    </Columns>
+  );
 }

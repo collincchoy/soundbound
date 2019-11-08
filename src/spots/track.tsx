@@ -2,104 +2,58 @@ import React from 'react'
 import 'react-bulma-components/dist/react-bulma-components.min.css';
 import { Card, Columns } from 'react-bulma-components';
 
-import { spotify } from './auth'
-import { SpotifyError, Track } from "./types";
-import { CardGallery, SpotifyErrorMessage } from './cardGallery';
+import { Track, TrackResponse } from "./types";
+import { CardGallery } from './cardGallery';
+import { SpotifyErrorMessage } from './spotify/error';
+import { useSpotifyApi } from './spotify/hooks';
 
-interface TrackGalleryState {
-  tracks: Track[];
-  error?: {
-    status: number,
-    message: string,
-  };
-}
+export function TrackGallery() {
+  const { data, error } = useSpotifyApi<TrackResponse>("/me/top/tracks");
+  const tracks = (data && data.items) || [];
 
-export class TrackGallery extends React.Component<{}, TrackGalleryState> {
-  _abortController: AbortController;
-  constructor(props: {}) {
-    super(props);
-    this.state = {
-      tracks: [],
-    };
-    this._abortController = new AbortController();
-  }
-
-  componentDidMount() {
-    const endpoint = "/me/top/tracks";
-    spotify.get(
-      endpoint, 
-      this._abortController.signal,
-    ).then((data: any) => {
-      console.log(`bah data is: ${data.items.length}`);
-      this.setState({
-        tracks: data.items,
-      });
-    }).catch((error: SpotifyError) => this.setState({ error: error.error }));
-  }
-
-  componentWillUnmount() {
-    this._abortController.abort();
-  }
-
-  render() {
-    console.log("rendering trackgallery")
-    const {error, tracks} = this.state;
-    if (error) {
-      return <SpotifyErrorMessage status={error.status} message={error.message} />
-    }
-
-    const trackCards = tracks.map(track => 
-      <Columns.Column size={3} key={track.id}>
-        <TrackCard data={track} />
-      </Columns.Column>
-    );
-
-    return (
-      <CardGallery>
-        {trackCards}
-      </CardGallery>
-    )
-  }
+  return (error) ? <SpotifyErrorMessage { ...error } /> : (
+    <CardGallery>
+      {tracks.map(track => 
+        <Columns.Column size={3} key={track.id}>
+          <TrackCard track={track} />
+        </Columns.Column>
+      )}
+    </CardGallery>
+  );
 }
 
 interface TrackCardProps {
-  data: Track,
+  track: Track,
 }
 
-class TrackCard extends React.Component<TrackCardProps, {}> {
-  render() {
-    console.log("rendering a track");
-    const artistName = this.props.data.artists[0].name,
-          trackTitle = this.props.data.name,
-          trackLink = this.props.data.href,
-          trackPreviewLink = this.props.data.preview_url,
-          trackAlbumName = this.props.data.album.name,
-          trackAlbumImage = this.props.data.album.images[1].url;
-    return (
-      <Card>
-        <Card.Header>
-          <p className="card-header-title">
-            <a href={trackLink}>{trackTitle}</a>
-          </p>
-          <span className="card-header-icon">
-            {this.props.data.popularity}
-          </span>
-        </Card.Header>
-        <Card.Image src={trackAlbumImage} alt={trackAlbumName} size="square"/>
-        <Card.Content>
-          <span>Artist: {artistName}</span>
-          <br/>
-          <span>Album: {trackAlbumName}</span>
-        </Card.Content>
-        <Card.Footer>
-          <Card.Footer.Item>
-          <audio controls>
-            <source src={trackPreviewLink}/>
-            <p>Your browser doesn't support HTML5 audio. Here is a <a href={trackPreviewLink}>link to the audio</a> instead.</p>
-          </audio>
-          </Card.Footer.Item>
-        </Card.Footer>
-      </Card>
-    )
-  }
+function TrackCard(props: TrackCardProps) {
+  console.log("rendering a track");
+  const { name, artists, href, preview_url, album, popularity } = props.track;
+
+  return (
+    <Card>
+      <Card.Header>
+        <p className="card-header-title">
+          <a href={href}>{name}</a>
+        </p>
+        <span className="card-header-icon">
+          {popularity}
+        </span>
+      </Card.Header>
+      <Card.Image src={album.images[1].url} alt={album.name} size="square"/>
+      <Card.Content>
+        <span>Artist(s): {artists.map(artist => artist.name).join(", ")}</span>
+        <br/>
+        <span>Album: {album.name}</span>
+      </Card.Content>
+      <Card.Footer>
+        <Card.Footer.Item>
+        <audio controls>
+          <source src={preview_url}/>
+          <p>Your browser doesn't support HTML5 audio. Here is a <a href={preview_url}>link to the audio</a> instead.</p>
+        </audio>
+        </Card.Footer.Item>
+      </Card.Footer>
+    </Card>
+  )
 }
