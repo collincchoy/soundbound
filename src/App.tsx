@@ -3,23 +3,19 @@ import './App.css';
 import { Section } from 'react-bulma-components';
 import { Profile } from './components/profile';
 import { PersonalPanel } from './components/PersonalPanel';
+import MusicPlayer from './components/musicPlayer';
+import { MusicPlayerProvider } from './components/musicPlayer/MusicPlayerContext';
 
 function App() {
   return (
     <div className="App">
-      <Section>
-        <Profile />
-
-        <PersonalPanel />
-      </Section>
-      <a
-        className="App-link"
-        href="https://reactjs.org"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        Learn bread
-      </a>
+      <MusicPlayerProvider>
+        <Section>
+          <Profile />
+          <PersonalPanel />
+        </Section>
+        <MusicPlayer />
+      </MusicPlayerProvider>
     </div>
   );
 }

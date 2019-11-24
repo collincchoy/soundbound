@@ -1,11 +1,14 @@
-import React from 'react'
+import React, { useContext } from 'react';
 import 'react-bulma-components/dist/react-bulma-components.min.css';
-import { Card, Columns } from 'react-bulma-components';
+import { Card, Columns, Button } from 'react-bulma-components';
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faPlay, faPause} from "@fortawesome/free-solid-svg-icons";
 
 import { Track, TrackResponse } from "./types";
 import { CardGallery } from './cardGallery';
 import { SpotifyErrorMessage } from './spotify/error';
 import { useSpotifyApi } from './spotify/hooks';
+import {MusicPlayerContext} from './musicPlayer/MusicPlayerContext';
 
 export function TrackGallery() {
   const { data, error } = useSpotifyApi<TrackResponse>("/me/top/tracks");
@@ -28,7 +31,21 @@ interface TrackCardProps {
 
 function TrackCard(props: TrackCardProps) {
   console.log("rendering a track");
-  const { name, artists, href, preview_url, album, popularity } = props.track;
+  const { name, artists, href, id, album, popularity } = props.track;
+  const {currentTrack, changeTrack, play, pause, isPlaying} = useContext(MusicPlayerContext);
+
+  function togglePlayTrack() {
+    if (currentTrack && currentTrack.id === id) {
+      if (isPlaying) {
+        pause();
+      } else {
+        play();
+      }
+    } else {
+      changeTrack(props.track);
+      play();
+    }
+  }
 
   return (
     <Card>
@@ -48,10 +65,9 @@ function TrackCard(props: TrackCardProps) {
       </Card.Content>
       <Card.Footer>
         <Card.Footer.Item>
-        <audio controls>
-          <source src={preview_url}/>
-          <p>Your browser doesn't support HTML5 audio. Here is a <a href={preview_url}>link to the audio</a> instead.</p>
-        </audio>
+          <Button onClick={() => togglePlayTrack()}>
+          {(currentTrack && currentTrack.id === id && isPlaying) ? <FontAwesomeIcon icon={faPause} /> : <FontAwesomeIcon icon={faPlay} />}
+          </Button>
         </Card.Footer.Item>
       </Card.Footer>
     </Card>

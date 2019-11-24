@@ -8,8 +8,6 @@ enum ViewType {
   TOP_TRACKS = 'Top Tracks',
 }
 
-const activeStyle = { color: "#ffffff" };
-
 export class PersonalPanel extends React.Component<{}, { currentView: ViewType }> {
   constructor(props: {}) {
     super(props);
