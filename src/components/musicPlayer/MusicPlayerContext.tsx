@@ -16,28 +16,16 @@ const MusicPlayerContext = React.createContext<MusicPlayerContextType>({
 });
 
 function useMusicPlayer() {
-  const {currentTrack, setCurrentTrack, player, playQueue, isPlaying, setIsPlaying} = useContext(MusicPlayerContext);
-
-  function changeTrack(track: Track) {
-    player.src = track.preview_url;
-    setCurrentTrack(track);
-  }
-
-  function play() {
-    player.play();
-    setIsPlaying(true);
-  }
-
-  function pause() {
-    player.pause();
-    setIsPlaying(false);
-  }
+  const {currentTrack, setCurrentTrack, player, playQueue, isPlaying} = useContext(MusicPlayerContext);
 
   return {
     currentTrack,
-    changeTrack,
-    play,
-    pause,
+    changeTrack: (track: Track) => {
+      player.src = track.preview_url;
+      setCurrentTrack(track);
+    },
+    play: () => player.play(),
+    pause: () => player.pause(),
     isPlaying,
     playQueue,
   }
@@ -49,10 +37,17 @@ function MusicPlayerProvider(props: React.PropsWithChildren<any>) {
   const [player, setPlayer] = useState(new Audio());
   const [isPlaying, setIsPlaying] = useState(false);
   useEffect(() => {
-    const handleOnEnded = () => setIsPlaying(false);
-    player.addEventListener("ended", handleOnEnded);
+    const handleOnStop = () => setIsPlaying(false);
+    player.addEventListener("ended", handleOnStop);
+    player.addEventListener("pause", handleOnStop);
+    const handleOnPlay = () => setIsPlaying(true);
+    player.addEventListener("play", handleOnPlay);
 
-    return () => player.removeEventListener("ended", handleOnEnded);
+    return () => {
+      player.removeEventListener("ended", handleOnStop);
+      player.removeEventListener("pause", handleOnStop);
+      player.removeEventListener("play", handleOnPlay);
+    }
   }, [player]);
 
   const MusicPlayerContextValues = {
