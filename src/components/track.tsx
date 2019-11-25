@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import 'react-bulma-components/dist/react-bulma-components.min.css';
 import { Card, Columns, Button } from 'react-bulma-components';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
@@ -8,7 +8,7 @@ import { Track, TrackResponse } from "./types";
 import { CardGallery } from './cardGallery';
 import { SpotifyErrorMessage } from './spotify/error';
 import { useSpotifyApi } from './spotify/hooks';
-import {MusicPlayerContext} from './musicPlayer/MusicPlayerContext';
+import { useMusicPlayer } from './musicPlayer/MusicPlayerContext';
 
 export function TrackGallery() {
   const { data, error } = useSpotifyApi<TrackResponse>("/me/top/tracks");
@@ -32,7 +32,7 @@ interface TrackCardProps {
 function TrackCard(props: TrackCardProps) {
   console.log("rendering a track");
   const { name, artists, href, id, album, popularity } = props.track;
-  const {currentTrack, changeTrack, play, pause, isPlaying} = useContext(MusicPlayerContext);
+  const {currentTrack, changeTrack, play, pause, isPlaying} = useMusicPlayer();
 
   function togglePlayTrack() {
     if (currentTrack && currentTrack.id === id) {

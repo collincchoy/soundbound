@@ -1,13 +1,13 @@
-import React, { useContext } from "react";
+import React from "react";
 
 import './musicPlayer.css'
-import {MusicPlayerContext} from "./MusicPlayerContext";
+import { useMusicPlayer } from "./MusicPlayerContext";
 import { Container, Button } from "react-bulma-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPause, faPlay } from "@fortawesome/free-solid-svg-icons";
 
 export function MusicPlayer() {
-  const {currentTrack, isPlaying, pause, play} = useContext(MusicPlayerContext);
+  const {currentTrack, isPlaying, pause, play} = useMusicPlayer();
 
   let contents;
   if (!currentTrack) {

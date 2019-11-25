@@ -1,3 +1,3 @@
-import { MusicPlayer } from './musicPlayer';
+import { useMusicPlayer, MusicPlayerProvider } from './MusicPlayerContext';
 
-export default MusicPlayer;
+export { useMusicPlayer, MusicPlayerProvider };

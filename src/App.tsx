@@ -3,8 +3,7 @@ import './App.css';
 import { Section } from 'react-bulma-components';
 import { Profile } from './components/profile';
 import { PersonalPanel } from './components/PersonalPanel';
-import MusicPlayer from './components/musicPlayer';
-import { MusicPlayerProvider } from './components/musicPlayer/MusicPlayerContext';
+import { MusicPlayerProvider } from './components/musicPlayer';
 
 function App() {
   return (
@@ -14,7 +13,6 @@ function App() {
           <Profile />
           <PersonalPanel />
         </Section>
-        <MusicPlayer />
       </MusicPlayerProvider>
     </div>
   );

@@ -1,24 +1,22 @@
 import {Track} from '../types';
-import React, { useState } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
+import { MusicPlayer } from './musicPlayer';
 
 type MusicPlayerContextType = {
-  currentTrack: Track | null,
-  changeTrack: (track: Track) => void,
-  play: () => void,
-  pause: () => void,
-  isPlaying: boolean,
-  playQueue: Track[],
+  currentTrack: Track | null, setCurrentTrack: (track: Track) => void,
+  player: HTMLAudioElement, setPlayer: (newAudio: HTMLAudioElement) => void,
+  playQueue: Track[], setPlayQueue: React.Dispatch<React.SetStateAction<never[]>>,
+  isPlaying: boolean, setIsPlaying: (_: boolean) => void,
 }
 const MusicPlayerContext = React.createContext<MusicPlayerContextType>({
-  currentTrack: null, changeTrack: () => {},
-  play: () => {}, pause: () => {}, isPlaying: false,
-  playQueue: [],
+  currentTrack: null, setCurrentTrack: () => {},
+  player: new Audio(), setPlayer: (_) => {},
+  playQueue: [], setPlayQueue: (_) => {},
+  isPlaying: false, setIsPlaying: _ => {},
 });
 
-function MusicPlayerProvider(props: React.PropsWithChildren<any>) {
-  const [currentTrack, setCurrentTrack] = useState<Track | null>(null);
-  const [player] = useState(new Audio());
-  const [isPlaying, setIsPlaying] = useState(false);
+function useMusicPlayer() {
+  const {currentTrack, setCurrentTrack, player, playQueue, isPlaying, setIsPlaying} = useContext(MusicPlayerContext);
 
   function changeTrack(track: Track) {
     player.src = track.preview_url;
@@ -35,9 +33,7 @@ function MusicPlayerProvider(props: React.PropsWithChildren<any>) {
     setIsPlaying(false);
   }
 
-  const [playQueue, setPlayQueue] = useState([]);
-
-  const MusicPlayerContextValues = {
+  return {
     currentTrack,
     changeTrack,
     play,
@@ -45,11 +41,32 @@ function MusicPlayerProvider(props: React.PropsWithChildren<any>) {
     isPlaying,
     playQueue,
   }
+}
+
+function MusicPlayerProvider(props: React.PropsWithChildren<any>) {
+  const [currentTrack, setCurrentTrack] = useState<Track | null>(null);
+  const [playQueue, setPlayQueue] = useState([]);
+  const [player, setPlayer] = useState(new Audio());
+  const [isPlaying, setIsPlaying] = useState(false);
+  useEffect(() => {
+    const handleOnEnded = () => setIsPlaying(false);
+    player.addEventListener("ended", handleOnEnded);
+
+    return () => player.removeEventListener("ended", handleOnEnded);
+  }, [player]);
+
+  const MusicPlayerContextValues = {
+    currentTrack, setCurrentTrack,
+    player, setPlayer,
+    playQueue, setPlayQueue,
+    isPlaying, setIsPlaying,
+  }
   return (
     <MusicPlayerContext.Provider value={MusicPlayerContextValues}>
       {props.children}
+      <MusicPlayer />
     </MusicPlayerContext.Provider>
   );
 }
 
-export {MusicPlayerContext, MusicPlayerProvider};
+export {useMusicPlayer, MusicPlayerProvider};
