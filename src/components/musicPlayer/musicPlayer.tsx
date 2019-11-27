@@ -7,7 +7,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPause, faPlay } from "@fortawesome/free-solid-svg-icons";
 
 export function MusicPlayer() {
-  const {currentTrack, isPlaying, pause, play} = useMusicPlayer();
+  const { currentTrack, isPlaying, pause, play } = useMusicPlayer();
 
   let contents;
   if (!currentTrack) {
@@ -15,10 +15,15 @@ export function MusicPlayer() {
   } else {
     contents = (
       <Container>
-        <span>{currentTrack.name}</span>
-        <Button onClick={(isPlaying) ? pause : play}>
-          {(isPlaying) ? <FontAwesomeIcon icon={faPause} /> : <FontAwesomeIcon icon={faPlay} />}
-        </Button>
+        <p>{currentTrack.name}</p>
+        {(isPlaying) ?
+          <Button onClick={pause} >
+            <FontAwesomeIcon icon={faPause} />
+          </Button> :
+          <Button onClick={play}>
+            <FontAwesomeIcon icon={faPlay} />
+          </Button>
+        }
       </Container>
     );
   }

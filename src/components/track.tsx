@@ -2,7 +2,7 @@ import React from 'react';
 import 'react-bulma-components/dist/react-bulma-components.min.css';
 import { Card, Columns, Button } from 'react-bulma-components';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faPlay, faPause} from "@fortawesome/free-solid-svg-icons";
+import {faPlay, faPause, faPlusCircle} from "@fortawesome/free-solid-svg-icons";
 
 import { Track, TrackResponse } from "./types";
 import { CardGallery } from './cardGallery';
@@ -32,7 +32,7 @@ interface TrackCardProps {
 function TrackCard(props: TrackCardProps) {
   console.log("rendering a track");
   const { name, artists, href, id, album, popularity } = props.track;
-  const {currentTrack, changeTrack, play, pause, isPlaying} = useMusicPlayer();
+  const {currentTrack, changeTrack, play, pause, isPlaying, addToPlayQueue} = useMusicPlayer();
 
   function togglePlayTrack() {
     if (currentTrack && currentTrack.id === id) {
@@ -67,6 +67,9 @@ function TrackCard(props: TrackCardProps) {
         <Card.Footer.Item>
           <Button onClick={() => togglePlayTrack()}>
           {(currentTrack && currentTrack.id === id && isPlaying) ? <FontAwesomeIcon icon={faPause} /> : <FontAwesomeIcon icon={faPlay} />}
+          </Button>
+          <Button onClick={() => addToPlayQueue(props.track)}>
+            <FontAwesomeIcon icon={faPlusCircle} />
           </Button>
         </Card.Footer.Item>
       </Card.Footer>

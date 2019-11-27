@@ -9,7 +9,7 @@ function App() {
   return (
     <div className="App">
       <MusicPlayerProvider>
-        <Section>
+        <Section id="content">
           <Profile />
           <PersonalPanel />
         </Section>

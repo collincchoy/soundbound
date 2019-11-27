@@ -3,20 +3,23 @@ import React, { useState, useContext, useEffect } from 'react';
 import { MusicPlayer } from './musicPlayer';
 
 type MusicPlayerContextType = {
-  currentTrack: Track | null, setCurrentTrack: (track: Track) => void,
-  player: HTMLAudioElement, setPlayer: (newAudio: HTMLAudioElement) => void,
-  playQueue: Track[], setPlayQueue: React.Dispatch<React.SetStateAction<never[]>>,
-  isPlaying: boolean, setIsPlaying: (_: boolean) => void,
+  currentTrack: Track | null, setCurrentTrack: React.Dispatch<React.SetStateAction<Track | null>>,
+  player: HTMLAudioElement, setPlayer: React.Dispatch<React.SetStateAction<HTMLAudioElement>>,
+  playQueue: Track[], setPlayQueue: React.Dispatch<React.SetStateAction<Track[]>>,
+  isPlaying: boolean, setIsPlaying: React.Dispatch<React.SetStateAction<boolean>>,
 }
 const MusicPlayerContext = React.createContext<MusicPlayerContextType>({
-  currentTrack: null, setCurrentTrack: () => {},
-  player: new Audio(), setPlayer: (_) => {},
-  playQueue: [], setPlayQueue: (_) => {},
+  currentTrack: null, setCurrentTrack: _ => {},
+  player: new Audio(), setPlayer: _ => {},
+  playQueue: [], setPlayQueue: _ => {},
   isPlaying: false, setIsPlaying: _ => {},
 });
 
 function useMusicPlayer() {
-  const {currentTrack, setCurrentTrack, player, playQueue, isPlaying} = useContext(MusicPlayerContext);
+  const {currentTrack, setCurrentTrack,
+         player, isPlaying,
+         playQueue, setPlayQueue,
+        } = useContext(MusicPlayerContext);
 
   return {
     currentTrack,
@@ -26,6 +29,12 @@ function useMusicPlayer() {
     },
     play: () => player.play(),
     pause: () => player.pause(),
+    addToPlayQueue: (track: Track) => {
+      setPlayQueue((prev) => [...prev, track]);
+    },
+    addBatchToPlayQueue: (tracks: Track[]) => {
+      setPlayQueue((prev) => [...prev, ...tracks]);
+    },
     isPlaying,
     playQueue,
   }
@@ -33,22 +42,34 @@ function useMusicPlayer() {
 
 function MusicPlayerProvider(props: React.PropsWithChildren<any>) {
   const [currentTrack, setCurrentTrack] = useState<Track | null>(null);
-  const [playQueue, setPlayQueue] = useState([]);
+  const [playQueue, setPlayQueue] = useState<Track[]>([]);
   const [player, setPlayer] = useState(new Audio());
   const [isPlaying, setIsPlaying] = useState(false);
+
   useEffect(() => {
-    const handleOnStop = () => setIsPlaying(false);
-    player.addEventListener("ended", handleOnStop);
-    player.addEventListener("pause", handleOnStop);
+    const handleOnEnd = () => {
+      const nextTrack = playQueue.shift();
+      if (nextTrack) {
+        player.src = nextTrack.preview_url;
+        setCurrentTrack(nextTrack);
+        player.play();
+      } else {
+        setIsPlaying(false);
+      }
+    }
+    player.addEventListener("ended", handleOnEnd);
+    const handleOnPause = () => setIsPlaying(false);
+    player.addEventListener("pause", handleOnPause);
     const handleOnPlay = () => setIsPlaying(true);
     player.addEventListener("play", handleOnPlay);
 
     return () => {
-      player.removeEventListener("ended", handleOnStop);
-      player.removeEventListener("pause", handleOnStop);
+      console.log("CLEANUP!")
+      player.removeEventListener("ended", handleOnEnd);
+      player.removeEventListener("pause", handleOnPause);
       player.removeEventListener("play", handleOnPlay);
     }
-  }, [player]);
+  }, [player, playQueue]);
 
   const MusicPlayerContextValues = {
     currentTrack, setCurrentTrack,
