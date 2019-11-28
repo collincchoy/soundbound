@@ -1,21 +1,43 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import 'react-bulma-components/dist/react-bulma-components.min.css';
 import { Card, Columns, Button } from 'react-bulma-components';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faPlay, faPause, faPlusCircle} from "@fortawesome/free-solid-svg-icons";
 
-import { Track, TrackResponse } from "./types";
+import { Track, TrackResponse, SpotifyError } from "./types";
 import { CardGallery } from './cardGallery';
 import { SpotifyErrorMessage } from './spotify/error';
 import { useSpotifyApi } from './spotify/hooks';
 import { useMusicPlayer } from './musicPlayer/MusicPlayerContext';
 
+import { spotify } from "./spotify/api";
+
 export function TrackGallery() {
-  const { data, error } = useSpotifyApi<TrackResponse>("/me/top/tracks");
-  const tracks = (data && data.items) || [];
+  //const { data, error, setData, setError} = useSpotifyApi<TrackResponse>("/me/top/tracks");
+  // const tracks = (data && data.items) || [];
+
+  const [tracks, setTracks] = useState<Track[]>([]);
+  const [nextPage, setNextPage] = useState<string | null>(null);
+  const [error, setError] = useState<{ status: number, message: string }>();
+  useEffect(() => {
+    const abortController = new AbortController();
+    const { signal } = abortController;
+    loadTrackData("/me/top/tracks", signal);
+    return () => abortController.abort();
+  }, []);
+
+  function loadTrackData(endpoint: string, abortSignal?: AbortSignal) {
+    spotify.get(endpoint, abortSignal)
+      .then((data: TrackResponse) => {
+        data.items && setTracks((prev) => [...prev, ...data.items]);
+        setNextPage(data.next && data.next.split("v1")[1]);
+      }).catch((error: SpotifyError) => setError(error.error));
+  }
+
+  const loadMoreTrackData = (page: number) => { nextPage && loadTrackData(nextPage) };
 
   return (error) ? <SpotifyErrorMessage { ...error } /> : (
-    <CardGallery>
+    <CardGallery loadFunc={loadMoreTrackData} hasMore={!!nextPage}>
       {tracks.map(track => 
         <Columns.Column size={3} key={track.id}>
           <TrackCard track={track} />
