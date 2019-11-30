@@ -24,7 +24,7 @@ export function ArtistGallery() {
       <CardGallery loadFunc={loadMoreItems} hasMore={!!nextPage}>
         {artists.map(artist =>
           <Columns.Column size={3} key={artist.id} >
-            <ArtistCard name={artist.name} image={artist.images[2]} onClick={() => showDetails(artist)} />
+            <ArtistCard name={artist.name} image={artist.images[1]} onClick={() => showDetails(artist)} />
           </Columns.Column>
         )}
       </CardGallery>
@@ -78,8 +78,6 @@ function ArtistCard(props: ArtistCardProps) {
           src={image.url}
           alt={name}
           size="square"
-          style={{ height: image.height }}
-        /*width={this.props.image.width} height={this.props.image.height}*/
         />
       </a>
     </Card>
