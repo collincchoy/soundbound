@@ -2,10 +2,10 @@ import React, { useState } from 'react'
 import 'react-bulma-components/dist/react-bulma-components.min.css';
 import { Card, Heading, Columns, Modal, Image, Tag } from 'react-bulma-components';
 
-import { ArtistResponse, ArtistImage, Artist } from "./types";
+import { ArtistImage, Artist } from "./types";
 import { CardGallery } from './cardGallery';
 import { SpotifyErrorMessage } from './spotify/error';
-import { useSpotifyApi } from "./spotify/hooks";
+import { usePaginatedSpotifyApi } from "./spotify/hooks";
 
 export function ArtistGallery() {
   const [artistOnDisplay, setArtistOnDisplay] = useState<Artist | undefined>();
@@ -13,8 +13,7 @@ export function ArtistGallery() {
   const showDetails = (artist: Artist) => setArtistOnDisplay(artist);
   const closeDetails = () => setArtistOnDisplay(undefined);
 
-  const {data, error} = useSpotifyApi<ArtistResponse>("/me/top/artists");
-  const artists = (data && data.items) || [];
+  const { items: artists, error, loadMoreItems, nextPage } = usePaginatedSpotifyApi<Artist>("/me/top/artists");
 
   if (error) {
     return <SpotifyErrorMessage {...error} />
@@ -22,7 +21,7 @@ export function ArtistGallery() {
 
   return (
     <>
-      <CardGallery>
+      <CardGallery loadFunc={loadMoreItems} hasMore={!!nextPage}>
         {artists.map(artist =>
           <Columns.Column size={3} key={artist.id} >
             <ArtistCard name={artist.name} image={artist.images[2]} onClick={() => showDetails(artist)} />

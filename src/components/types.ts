@@ -53,8 +53,6 @@ export interface ArtistImage {
   width: number;
 }
 
-export interface ArtistResponse extends PaginatedResponse<Artist> {}
-
 enum AlbumType {
   ALBUM = "ALBUM",
 }
@@ -90,8 +88,6 @@ type Album = {
   type: "album",
   uri: string,
 }
-
-export interface TrackResponse extends PaginatedResponse<Track> {}
 
 export type Track = {
   "album": Album,
