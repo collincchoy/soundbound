@@ -15,6 +15,14 @@ const MusicPlayerContext = React.createContext<MusicPlayerContextType>({
   isPlaying: false, setIsPlaying: _ => {},
 });
 
+const handleNullPreviewUrl = (badTrack: Track) => {
+  alert(`The next track ${badTrack.name} by ${badTrack.artists.map(artist => artist.name).join(", ")} does not have a preview_url. 😢
+
+The full track info is below:
+
+${JSON.stringify(badTrack)}`)
+}
+
 function useMusicPlayer() {
   const {currentTrack, setCurrentTrack,
          player, isPlaying,
@@ -23,9 +31,13 @@ function useMusicPlayer() {
 
   return {
     currentTrack,
-    changeTrack: (track: Track) => {
-      player.src = track.preview_url;
-      setCurrentTrack(track);
+    changeTrack: (next: Track) => {
+      if (next.preview_url == null) {
+        handleNullPreviewUrl(next);
+      } else {
+        player.src = next.preview_url;
+        setCurrentTrack(next);
+      }
     },
     play: () => player.play(),
     pause: () => player.pause(),
@@ -50,8 +62,13 @@ function MusicPlayerProvider(props: React.PropsWithChildren<any>) {
     const handleOnEnd = () => {
       const nextTrack = playQueue.shift();
       if (nextTrack) {
-        player.src = nextTrack.preview_url;
-        setCurrentTrack(nextTrack);
+        if (nextTrack.preview_url == null) {
+          handleNullPreviewUrl(nextTrack);
+          handleOnEnd();  // skip this track
+        } else {
+          player.src = nextTrack.preview_url;
+          setCurrentTrack(nextTrack);
+        }
         player.play();
       } else {
         setIsPlaying(false);

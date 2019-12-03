@@ -105,7 +105,7 @@ export type Track = {
   "is_local": boolean,
   "name": string,
   "popularity": number,
-  "preview_url": string,
+  "preview_url": string | null,
   "track_number": number,
   "type": "track",
   "uri": string,
