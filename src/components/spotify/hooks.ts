@@ -29,7 +29,7 @@ export function usePaginatedSpotifyApi<T>(endpoint: string) {
     const { signal } = abortController;
     loadItems(endpoint, signal);
     return () => abortController.abort();
-  }, []);
+  }, [endpoint]);
 
   function loadItems(endpoint: string, abortSignal?: AbortSignal) {
     spotify.get(endpoint, abortSignal)
@@ -41,5 +41,5 @@ export function usePaginatedSpotifyApi<T>(endpoint: string) {
 
   const loadMoreItems = (page: number) => { nextPage && loadItems(nextPage) };
 
-  return {items, error, loadMoreItems, nextPage}
+  return {items, setItems, error, loadMoreItems, nextPage}
 }

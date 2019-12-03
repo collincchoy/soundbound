@@ -110,3 +110,9 @@ export type Track = {
   "type": "track",
   "uri": string,
 }
+
+export enum PersonalizationTimeRange {
+  "SHORT" = "short_term",
+  "MEDIUM" = "medium_term",
+  "LONG" = "long_term",
+}

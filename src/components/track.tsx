@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import 'react-bulma-components/dist/react-bulma-components.min.css';
 import { Card, Columns, Button } from 'react-bulma-components';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlay, faPause, faPlusCircle } from "@fortawesome/free-solid-svg-icons";
 
-import { Track } from "./types";
+import { Track, PersonalizationTimeRange } from "./types";
 import { CardGallery } from './cardGallery';
 import { SpotifyErrorMessage } from './spotify/error';
 import { usePaginatedSpotifyApi } from './spotify/hooks';
@@ -12,16 +12,46 @@ import { useMusicPlayer } from './musicPlayer/MusicPlayerContext';
 
 
 export function TrackGallery() {
-  const { items: tracks, error, loadMoreItems, nextPage } = usePaginatedSpotifyApi<Track>("/me/top/tracks");
+  const [period, setPeriod] = useState<string>(PersonalizationTimeRange.MEDIUM);
+  const { items: tracks, setItems: setTracks, error, loadMoreItems, nextPage } = usePaginatedSpotifyApi<Track>(`/me/top/tracks?time_range=${period}`);
+  const changePeriod = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setPeriod(e.currentTarget.value);
+    setTracks([]);
+  };
 
   return (error) ? <SpotifyErrorMessage {...error} /> : (
-    <CardGallery loadFunc={loadMoreItems} hasMore={!!nextPage}>
-      {tracks.map(track =>
-        <Columns.Column size={3} key={track.id}>
-          <TrackCard track={track} />
-        </Columns.Column>
-      )}
-    </CardGallery>
+    <>
+      <TimeRangePicker selected={period as PersonalizationTimeRange} onChange={changePeriod} />
+      <CardGallery loadFunc={loadMoreItems} hasMore={!!nextPage}>
+        {tracks.map(track =>
+          <Columns.Column size={3} key={track.id}>
+            <TrackCard track={track} />
+          </Columns.Column>
+        )}
+      </CardGallery>
+    </>
+  );
+}
+
+function TimeRangePicker(props: {
+  selected: PersonalizationTimeRange,
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
+}) {
+  const options = Object.entries(PersonalizationTimeRange);
+  return (
+    <div className="control" style={{padding: "0.75rem"}}>
+      {options.map(([key, value]) => {
+        return (
+          <label className="radio" key={key}>
+            <input type="radio"
+              name={key}
+              value={value}
+              checked={(props.selected === value) ? true : false}
+              onChange={props.onChange}/>
+            {key}
+          </label>);
+      })}
+    </div>
   );
 }
 
