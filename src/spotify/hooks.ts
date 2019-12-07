@@ -4,42 +4,57 @@ import { spotify } from "./api";
 
 export function useSpotifyApi<T>(endpoint: string) {
   const [data, setData] = useState<T>();
-  const [error, setError] = useState<{ status: number, message: string }>();
+  const [error, setError] = useState<{ status: number; message: string }>();
 
   useEffect(() => {
     const abortController = new AbortController();
     const { signal } = abortController;
-    spotify.get(endpoint, signal)
+    spotify
+      .get(endpoint, signal)
       .then((data: any) => {
         console.log(`bah data is: ${data}`);
         setData(data);
-      }).catch((error: SpotifyError) => setError(error.error));
+      })
+      .catch((error: SpotifyError) => setError(error.error));
 
     return () => abortController.abort();
   }, [endpoint]);
-  return {data, error};
+  return { data, error };
 }
 
 export function usePaginatedSpotifyApi<T>(endpoint: string) {
   const [items, setItems] = useState<T[]>([]);
   const [nextPage, setNextPage] = useState<string | null>(null);
-  const [error, setError] = useState<{ status: number, message: string }>();
+  const [error, setError] = useState<{ status: number; message: string }>();
   useEffect(() => {
     const abortController = new AbortController();
     const { signal } = abortController;
+    console.log(`Requesting ${endpoint}!`);
     loadItems(endpoint, signal);
-    return () => {console.log("aborting"); abortController.abort()};
+    return () => {
+      console.log(`Aborting request to: ${endpoint}`);
+      abortController.abort();
+    };
   }, [endpoint]);
 
   function loadItems(endpoint: string, abortSignal?: AbortSignal) {
-    spotify.get(endpoint, abortSignal)
+    spotify
+      .get(endpoint, abortSignal)
       .then((resp: PaginatedResponse<T>) => {
-        resp.items && setItems((prev) => [...prev, ...resp.items]);
+        resp.items && setItems(prev => [...prev, ...resp.items]);
         setNextPage(resp.next && resp.next.split("v1")[1]);
-      }).catch((error: SpotifyError) => setError(error.error));
+      })
+      .catch((error: SpotifyError) => setError(error.error));
   }
 
-  const loadMoreItems = (page: number) => { nextPage && loadItems(nextPage) };
+  const loadMoreItems = (page: number) => {
+    nextPage && loadItems(nextPage);
+  };
 
-  return {items, setItems, error, loadMoreItems, nextPage}
+  const reset = () => {
+    setItems([]);
+    setNextPage(null);
+  };
+
+  return { items, error, loadMoreItems, nextPage, reset };
 }

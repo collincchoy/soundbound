@@ -1,6 +1,6 @@
 import React from "react";
 import "react-bulma-components/dist/react-bulma-components.min.css";
-import { Container, Columns } from "react-bulma-components";
+import { Columns } from "react-bulma-components";
 import InfiniteScroll from "react-infinite-scroller";
 
 type CardGalleryProps<T> = {
@@ -23,8 +23,7 @@ export function CardGallery<ItemType>(props: CardGalleryProps<ItemType>) {
       ))}
     </Columns>
   );
-  if (loadFunc) {
-    content = (
+  return (loadFunc) ? (
       <InfiniteScroll
         pageStart={0}
         loadMore={loadFunc}
@@ -37,7 +36,5 @@ export function CardGallery<ItemType>(props: CardGalleryProps<ItemType>) {
       >
         {content}
       </InfiniteScroll>
-    );
-  }
-  return <Container>{content}</Container>;
+    ) : content;
 }

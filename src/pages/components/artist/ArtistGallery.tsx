@@ -1,34 +1,32 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import "react-bulma-components/dist/react-bulma-components.min.css";
-import { Modal, Image, Tag } from "react-bulma-components";
+import { Modal, Image, Tag, Container } from "react-bulma-components";
 
 import { Artist, PersonalizationTimeRange } from "../../../spotify/types";
 import { CardGallery } from "../../../components/CardGallery";
 import SpotifyErrorMessage from "../../../spotify/SpotifyErrorMessage";
 import { usePaginatedSpotifyApi } from "../../../spotify/hooks";
 import ArtistCard from "./ArtistCard";
+import TimeRangePicker from "../TimeRangePicker";
 
-export default function ArtistGallery(props: { timeRange: PersonalizationTimeRange }) {
+export default function ArtistGallery() {
   const [artistOnDisplay, setArtistOnDisplay] = useState<Artist | undefined>();
 
   const showDetails = (artist: Artist) => setArtistOnDisplay(artist);
   const closeDetails = () => setArtistOnDisplay(undefined);
 
-  const { timeRange } = props;
+  const [timeRange, setTimeRange] = useState<string>(PersonalizationTimeRange.MEDIUM);
   const {
     items: artists,
-    setItems: setArtists,
     error,
     loadMoreItems,
-    nextPage
+    nextPage,
+    reset
   } = usePaginatedSpotifyApi<Artist>(`/me/top/artists?time_range=${timeRange}`);
-  useEffect(() => {
-    if (artists.length > 0) setArtists([]);
-  }, [timeRange]);
-
-  if (error) {
-    return <SpotifyErrorMessage {...error} />;
-  }
+  const changeTimeRange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setTimeRange(e.currentTarget.value);
+    reset();
+  };
 
   const renderArtist = (artist: Artist) => (
     <ArtistCard
@@ -37,8 +35,14 @@ export default function ArtistGallery(props: { timeRange: PersonalizationTimeRan
       onClick={() => showDetails(artist)}
     />
   );
-  return (
-    <>
+  return error ? (
+    <SpotifyErrorMessage { ...error } />
+  ) : (
+    <Container>
+      <TimeRangePicker
+        selected={timeRange as PersonalizationTimeRange}
+        onChange={changeTimeRange}
+      />
       <CardGallery
         items={artists}
         renderItem={renderArtist}
@@ -83,6 +87,6 @@ export default function ArtistGallery(props: { timeRange: PersonalizationTimeRan
           </Modal.Card.Foot>
         </Modal.Card>
       </Modal>
-    </>
+    </Container>
   );
 }

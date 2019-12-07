@@ -7,19 +7,20 @@ import { CardGallery } from "../../../components/CardGallery";
 import SpotifyErrorMessage from "../../../spotify/SpotifyErrorMessage";
 import { usePaginatedSpotifyApi } from "../../../spotify/hooks";
 import TrackCard from "./TrackCard";
+import { Container } from "react-bulma-components";
 
 export default function TrackGallery() {
-  const [period, setPeriod] = useState<string>(PersonalizationTimeRange.MEDIUM);
+  const [timeRange, setTimeRange] = useState<string>(PersonalizationTimeRange.MEDIUM);
   const {
     items: tracks,
-    setItems: setTracks,
     error,
     loadMoreItems,
-    nextPage
-  } = usePaginatedSpotifyApi<Track>(`/me/top/tracks?time_range=${period}`);
-  const changePeriod = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setPeriod(e.currentTarget.value);
-    setTracks([]);
+    nextPage, 
+    reset,
+  } = usePaginatedSpotifyApi<Track>(`/me/top/tracks?time_range=${timeRange}`);
+  const changeTimeRange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    reset();
+    setTimeRange(e.currentTarget.value);
   };
 
   const renderTrack = (track: Track) => <TrackCard track={track} />;
@@ -27,10 +28,10 @@ export default function TrackGallery() {
   return error ? (
     <SpotifyErrorMessage {...error} />
   ) : (
-    <>
+    <Container>
       <TimeRangePicker
-        selected={period as PersonalizationTimeRange}
-        onChange={changePeriod}
+        selected={timeRange as PersonalizationTimeRange}
+        onChange={changeTimeRange}
       />
       <CardGallery
         items={tracks}
@@ -39,6 +40,6 @@ export default function TrackGallery() {
         loadFunc={loadMoreItems}
         hasMore={!!nextPage}
       />
-    </>
+    </Container>
   );
 }

@@ -7,7 +7,8 @@ export default function TimeRangePicker(props: {
 }) {
   const options = Object.entries(PersonalizationTimeRange);
   return (
-    <div className="control" style={{ padding: "0.75rem" }}>
+    <div className="control" style={{ padding: "0.75rem", textAlign: "center", color: "white"}}>
+      <label>Time Range: </label>
       {options.map(([key, value]) => {
         return (
           <label className="radio" key={key}>
@@ -18,6 +19,7 @@ export default function TimeRangePicker(props: {
               checked={props.selected === value ? true : false}
               onChange={props.onChange}
             />
+            &nbsp;
             {key}
           </label>
         );
