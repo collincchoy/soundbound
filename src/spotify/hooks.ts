@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { SpotifyError, PaginatedResponse } from "../types";
+import { SpotifyError, PaginatedResponse } from "./types";
 import { spotify } from "./api";
 
 export function useSpotifyApi<T>(endpoint: string) {
@@ -28,7 +28,7 @@ export function usePaginatedSpotifyApi<T>(endpoint: string) {
     const abortController = new AbortController();
     const { signal } = abortController;
     loadItems(endpoint, signal);
-    return () => abortController.abort();
+    return () => {console.log("aborting"); abortController.abort()};
   }, [endpoint]);
 
   function loadItems(endpoint: string, abortSignal?: AbortSignal) {

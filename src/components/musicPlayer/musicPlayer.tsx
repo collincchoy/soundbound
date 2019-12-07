@@ -1,12 +1,12 @@
 import React from "react";
 
-import './musicPlayer.css'
+import './MusicPlayer.css';
 import { useMusicPlayer } from "./MusicPlayerContext";
 import { Container, Button } from "react-bulma-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPause, faPlay } from "@fortawesome/free-solid-svg-icons";
 
-export function MusicPlayer() {
+export default function MusicPlayer() {
   const { currentTrack, isPlaying, pause, play } = useMusicPlayer();
 
   let contents;

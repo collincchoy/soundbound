@@ -1,33 +1,47 @@
-import {Track} from '../types';
-import React, { useState, useContext, useEffect } from 'react';
-import { MusicPlayer } from './musicPlayer';
+import { Track } from "../../spotify/types";
+import React, { useState, useContext, useEffect } from "react";
+import MusicPlayer from "./MusicPlayer";
 
 type MusicPlayerContextType = {
-  currentTrack: Track | null, setCurrentTrack: React.Dispatch<React.SetStateAction<Track | null>>,
-  player: HTMLAudioElement, setPlayer: React.Dispatch<React.SetStateAction<HTMLAudioElement>>,
-  playQueue: Track[], setPlayQueue: React.Dispatch<React.SetStateAction<Track[]>>,
-  isPlaying: boolean, setIsPlaying: React.Dispatch<React.SetStateAction<boolean>>,
-}
+  currentTrack: Track | null;
+  setCurrentTrack: React.Dispatch<React.SetStateAction<Track | null>>;
+  player: HTMLAudioElement;
+  setPlayer: React.Dispatch<React.SetStateAction<HTMLAudioElement>>;
+  playQueue: Track[];
+  setPlayQueue: React.Dispatch<React.SetStateAction<Track[]>>;
+  isPlaying: boolean;
+  setIsPlaying: React.Dispatch<React.SetStateAction<boolean>>;
+};
 const MusicPlayerContext = React.createContext<MusicPlayerContextType>({
-  currentTrack: null, setCurrentTrack: _ => {},
-  player: new Audio(), setPlayer: _ => {},
-  playQueue: [], setPlayQueue: _ => {},
-  isPlaying: false, setIsPlaying: _ => {},
+  currentTrack: null,
+  setCurrentTrack: _ => {},
+  player: new Audio(),
+  setPlayer: _ => {},
+  playQueue: [],
+  setPlayQueue: _ => {},
+  isPlaying: false,
+  setIsPlaying: _ => {}
 });
 
 const handleNullPreviewUrl = (badTrack: Track) => {
-  alert(`The next track ${badTrack.name} by ${badTrack.artists.map(artist => artist.name).join(", ")} does not have a preview_url. 😢
+  alert(`The next track ${badTrack.name} by ${badTrack.artists
+    .map(artist => artist.name)
+    .join(", ")} does not have a preview_url. 😢
 
 The full track info is below:
 
-${JSON.stringify(badTrack)}`)
-}
+${JSON.stringify(badTrack)}`);
+};
 
 function useMusicPlayer() {
-  const {currentTrack, setCurrentTrack,
-         player, isPlaying,
-         playQueue, setPlayQueue,
-        } = useContext(MusicPlayerContext);
+  const {
+    currentTrack,
+    setCurrentTrack,
+    player,
+    isPlaying,
+    playQueue,
+    setPlayQueue
+  } = useContext(MusicPlayerContext);
 
   return {
     currentTrack,
@@ -42,14 +56,14 @@ function useMusicPlayer() {
     play: () => player.play(),
     pause: () => player.pause(),
     addToPlayQueue: (track: Track) => {
-      setPlayQueue((prev) => [...prev, track]);
+      setPlayQueue(prev => [...prev, track]);
     },
     addBatchToPlayQueue: (tracks: Track[]) => {
-      setPlayQueue((prev) => [...prev, ...tracks]);
+      setPlayQueue(prev => [...prev, ...tracks]);
     },
     isPlaying,
-    playQueue,
-  }
+    playQueue
+  };
 }
 
 function MusicPlayerProvider(props: React.PropsWithChildren<any>) {
@@ -64,7 +78,7 @@ function MusicPlayerProvider(props: React.PropsWithChildren<any>) {
       if (nextTrack) {
         if (nextTrack.preview_url == null) {
           handleNullPreviewUrl(nextTrack);
-          handleOnEnd();  // skip this track
+          handleOnEnd(); // skip this track
         } else {
           player.src = nextTrack.preview_url;
           setCurrentTrack(nextTrack);
@@ -73,7 +87,7 @@ function MusicPlayerProvider(props: React.PropsWithChildren<any>) {
       } else {
         setIsPlaying(false);
       }
-    }
+    };
     player.addEventListener("ended", handleOnEnd);
     const handleOnPause = () => setIsPlaying(false);
     player.addEventListener("pause", handleOnPause);
@@ -81,19 +95,23 @@ function MusicPlayerProvider(props: React.PropsWithChildren<any>) {
     player.addEventListener("play", handleOnPlay);
 
     return () => {
-      console.log("CLEANUP!")
+      console.log("CLEANUP!");
       player.removeEventListener("ended", handleOnEnd);
       player.removeEventListener("pause", handleOnPause);
       player.removeEventListener("play", handleOnPlay);
-    }
+    };
   }, [player, playQueue]);
 
   const MusicPlayerContextValues = {
-    currentTrack, setCurrentTrack,
-    player, setPlayer,
-    playQueue, setPlayQueue,
-    isPlaying, setIsPlaying,
-  }
+    currentTrack,
+    setCurrentTrack,
+    player,
+    setPlayer,
+    playQueue,
+    setPlayQueue,
+    isPlaying,
+    setIsPlaying
+  };
   return (
     <MusicPlayerContext.Provider value={MusicPlayerContextValues}>
       {props.children}
@@ -102,4 +120,4 @@ function MusicPlayerProvider(props: React.PropsWithChildren<any>) {
   );
 }
 
-export {useMusicPlayer, MusicPlayerProvider};
+export { useMusicPlayer, MusicPlayerProvider };

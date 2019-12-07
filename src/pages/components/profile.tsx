@@ -1,11 +1,11 @@
 import React from 'react';
 import { Image, Heading, Box, Columns } from 'react-bulma-components';
 
-import { useSpotifyApi } from './spotify/hooks';
-import { Profile as ProfileResponse } from './types';
-import { SpotifyErrorMessage } from './spotify/error';
+import { useSpotifyApi } from '../../spotify/hooks';
+import { Profile as ProfileResponse } from '../../spotify/types';
+import { SpotifyErrorMessage } from '../../spotify/error';
 
-export function Profile() {
+export default function Profile() {
   const {data, error} = useSpotifyApi<ProfileResponse>("/me");
   console.log(JSON.stringify(data));
 
