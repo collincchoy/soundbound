@@ -1,15 +1,17 @@
-import React from 'react';
-import { Image, Heading, Box, Columns } from 'react-bulma-components';
+import React from "react";
+import { Image, Heading, Box, Columns } from "react-bulma-components";
 
-import { useSpotifyApi } from '../../spotify/hooks';
-import { Profile as ProfileResponse } from '../../spotify/types';
-import { SpotifyErrorMessage } from '../../spotify/error';
+import { useSpotifyApi } from "../../spotify/hooks";
+import { Profile as ProfileResponse } from "../../spotify/types";
+import SpotifyErrorMessage from "../../spotify/SpotifyErrorMessage";
 
 export default function Profile() {
-  const {data, error} = useSpotifyApi<ProfileResponse>("/me");
+  const { data, error } = useSpotifyApi<ProfileResponse>("/me");
   console.log(JSON.stringify(data));
 
-  return (error) ? <SpotifyErrorMessage {...error} /> : (
+  return error ? (
+    <SpotifyErrorMessage {...error} />
+  ) : (
     <Columns>
       <Columns.Column size="half" offset="one-quarter">
         <Box>

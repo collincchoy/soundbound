@@ -4,7 +4,7 @@ import { Modal, Image, Tag } from "react-bulma-components";
 
 import { Artist, PersonalizationTimeRange } from "../../../spotify/types";
 import { CardGallery } from "../../../components/CardGallery";
-import { SpotifyErrorMessage } from "../../../spotify/error";
+import SpotifyErrorMessage from "../../../spotify/SpotifyErrorMessage";
 import { usePaginatedSpotifyApi } from "../../../spotify/hooks";
 import ArtistCard from "./ArtistCard";
 

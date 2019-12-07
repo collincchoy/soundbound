@@ -3,7 +3,7 @@ import { Tabs } from "react-bulma-components";
 import { ArtistGallery } from "./components/artist";
 import { TrackGallery } from "./components/track";
 import { PersonalizationTimeRange } from "../spotify/types";
-import Profile from './components/Profile';
+import Profile from "./components/Profile";
 import TimeRangePicker from "./components/TimeRangePicker";
 
 enum ViewType {
@@ -35,7 +35,7 @@ export function PersonalPage() {
 
   return (
     <>
-      <Profile/>
+      <Profile />
       <Tabs className="header" align="centered" type="boxed" size="large">
         {renderTab(ViewType.TOP_ARTISTS)}
         {renderTab(ViewType.TOP_TRACKS)}

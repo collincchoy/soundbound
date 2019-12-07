@@ -3,20 +3,20 @@ import "react-bulma-components/dist/react-bulma-components.min.css";
 import { Container, Columns } from "react-bulma-components";
 import InfiniteScroll from "react-infinite-scroller";
 
-type CardGalleryProps = {
-  items: any;
-  renderItem: (item: any) => React.ReactNode;
-  renderKey: (item: any) => number | string;
+type CardGalleryProps<T> = {
+  items: T[];
+  renderItem: (item: T) => React.ReactNode;
+  renderKey: (item: T) => number | string;
   loadFunc?: (page: number) => void;
   hasMore?: boolean;
 };
 
-export const CardGallery: React.FC<CardGalleryProps> = props => {
+export function CardGallery<ItemType>(props: CardGalleryProps<ItemType>) {
   const { items, renderItem, renderKey, loadFunc, hasMore = true } = props;
 
   let content = (
     <Columns>
-      {items.map((item: any) => (
+      {items.map(item => (
         <Columns.Column size={3} key={renderKey(item)}>
           {renderItem(item)}
         </Columns.Column>
@@ -40,4 +40,4 @@ export const CardGallery: React.FC<CardGalleryProps> = props => {
     );
   }
   return <Container>{content}</Container>;
-};
+}

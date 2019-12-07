@@ -1,6 +1,6 @@
-class Spotify {
+class SpotifyClient {
   baseUrl = "https://api.spotify.com/v1";
-  redirectUri = "http://localhost:3000/"
+  redirectUri = "http://localhost:3000/";
   clientId = "56b3e61755c4412da05579ef18851833";
   _access_token?: string;
   constructor(access_token?: string) {
@@ -15,7 +15,7 @@ class Spotify {
     var params: any = {};
     var regex = /([^&=]+)=([^&]*)/g, m;
     // eslint-disable-next-line no-cond-assign
-    while (m = regex.exec(fragmentString)) {
+    while ((m = regex.exec(fragmentString))) {
       params[decodeURIComponent(m[1])] = decodeURIComponent(m[2]);
     }
     this._access_token = params["access_token"];
@@ -28,17 +28,19 @@ class Spotify {
 
     const url: string = this.baseUrl + endpoint;
     const options: RequestInit = {
-      method: 'GET',
+      method: "GET",
       headers: {
-        'Authorization': `Bearer ${this._access_token}`,
-        'Accept': "application/json",
-        "Content-Type": "application/json",
+        Authorization: `Bearer ${this._access_token}`,
+        Accept: "application/json",
+        "Content-Type": "application/json"
       },
-      signal: abortSignal,
+      signal: abortSignal
     };
     const response = await fetch(url, options);
     if (!response.ok) {
-      console.log(`Gretchen, this fetch is so not ok! ${response.status}: ${url}`);
+      console.log(
+        `Gretchen, this fetch is so not ok! ${response.status}: ${url}`
+      );
       throw await response.json();
     }
     return response.json();
@@ -52,11 +54,11 @@ class Spotify {
       redirect_uri: this.redirectUri,
       // state: undefined,
       scope: "user-read-private user-read-email user-top-read",
-      show_dialog: true.toString(),
+      show_dialog: true.toString()
     };
     authUrl.search = String(new URLSearchParams(params));
     return authUrl;
   }
 }
 
-export const spotify = new Spotify();
+export const spotify = new SpotifyClient();

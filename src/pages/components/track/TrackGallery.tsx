@@ -4,7 +4,7 @@ import "react-bulma-components/dist/react-bulma-components.min.css";
 import { Track, PersonalizationTimeRange } from "../../../spotify/types";
 import TimeRangePicker from "../TimeRangePicker";
 import { CardGallery } from "../../../components/CardGallery";
-import { SpotifyErrorMessage } from "../../../spotify/error";
+import SpotifyErrorMessage from "../../../spotify/SpotifyErrorMessage";
 import { usePaginatedSpotifyApi } from "../../../spotify/hooks";
 import TrackCard from "./TrackCard";
 

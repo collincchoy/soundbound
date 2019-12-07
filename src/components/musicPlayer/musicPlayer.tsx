@@ -1,6 +1,6 @@
 import React from "react";
 
-import './MusicPlayer.css';
+import "./MusicPlayer.css";
 import { useMusicPlayer } from "./MusicPlayerContext";
 import { Container, Button } from "react-bulma-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -16,20 +16,17 @@ export default function MusicPlayer() {
     contents = (
       <Container>
         <p>{currentTrack.name}</p>
-        {(isPlaying) ?
-          <Button onClick={pause} >
+        {isPlaying ? (
+          <Button onClick={pause}>
             <FontAwesomeIcon icon={faPause} />
-          </Button> :
+          </Button>
+        ) : (
           <Button onClick={play}>
             <FontAwesomeIcon icon={faPlay} />
           </Button>
-        }
+        )}
       </Container>
     );
   }
-  return (
-    <div className="MusicPlayer">
-      {contents}
-    </div>
-  );
+  return <div className="MusicPlayer">{contents}</div>;
 }

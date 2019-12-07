@@ -4,7 +4,7 @@ import React from "react";
 
 import { spotify } from "./api";
 
-export function SpotifyErrorMessage(props: { status: number, message: string }) {
+export default function SpotifyErrorMessage(props: { status: number, message: string }) {
   const { status, message } = props;
   if (status === 401) {
     return (
