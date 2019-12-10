@@ -7,7 +7,7 @@ export default function TimeRangePicker(props: {
 }) {
   const options = Object.entries(PersonalizationTimeRange);
   return (
-    <div className="control" style={{ padding: "0.75rem", textAlign: "center", color: "white"}}>
+    <div className="control has-text-white has-text-centered" style={{ padding: "0.75rem"}}>
       <label>Time Range: </label>
       {options.map(([key, value]) => {
         return (
