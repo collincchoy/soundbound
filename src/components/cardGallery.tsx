@@ -17,7 +17,7 @@ export function CardGallery<ItemType>(props: CardGalleryProps<ItemType>) {
   let content = (
     <Columns>
       {items.map(item => (
-        <Columns.Column size={3} key={renderKey(item)}>
+        <Columns.Column size={"one-fifth"} key={renderKey(item)}>
           {renderItem(item)}
         </Columns.Column>
       ))}
