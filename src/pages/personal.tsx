@@ -29,7 +29,7 @@ export function PersonalPage() {
 
   return (
     <>
-      <Profile />
+      {/* <Profile /> */}
       <Tabs className="header" align="centered" type="boxed" size="large">
         {renderTab(ViewType.TOP_ARTISTS)}
         {renderTab(ViewType.TOP_TRACKS)}

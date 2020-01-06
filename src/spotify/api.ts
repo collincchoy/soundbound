@@ -46,7 +46,7 @@ class SpotifyClient {
     return response.json();
   }
 
-  get authorizeUrl(): URL {
+  get authorizeUrl() {
     const authUrl = new URL("https://accounts.spotify.com/authorize");
     const params: Record<string, string> = {
       client_id: this.clientId,
@@ -58,6 +58,10 @@ class SpotifyClient {
     };
     authUrl.search = String(new URLSearchParams(params));
     return authUrl;
+  }
+
+  login = () => {
+    window.location.href = this.authorizeUrl.toString();
   }
 }
 
