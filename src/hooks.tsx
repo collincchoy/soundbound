@@ -23,6 +23,7 @@ export function useLoginContext() {
   return {
     isLoggedIn: !!currentUser,
     currentUser,
-    login: spotify.login
+    login: spotify.login,
+    logout: spotify.logout,
   }
 }

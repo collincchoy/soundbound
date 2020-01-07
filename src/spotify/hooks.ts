@@ -32,7 +32,6 @@ export function usePaginatedSpotifyApi<T>(endpoint: string) {
     console.log(`Requesting ${endpoint}!`);
     loadItems(endpoint, signal);
     return () => {
-      console.log(`Aborting request to: ${endpoint}`);
       abortController.abort();
     };
   }, [endpoint]);

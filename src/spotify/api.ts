@@ -19,6 +19,7 @@ class SpotifyClient {
       params[decodeURIComponent(m[1])] = decodeURIComponent(m[2]);
     }
     this._access_token = params["access_token"];
+    window.history.pushState("", "", "/");
   }
 
   async get(endpoint: string, abortSignal?: AbortSignal) {
@@ -62,6 +63,11 @@ class SpotifyClient {
 
   login = () => {
     window.location.href = this.authorizeUrl.toString();
+  }
+
+  logout = () => {
+    this._access_token = undefined;
+    window.history.go(0);
   }
 }
 

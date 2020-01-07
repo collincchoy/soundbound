@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { useLoginContext } from "../hooks";
 
-function CurrentUser(props: { pictureUrl: string; name: string }) {
-  const { name, pictureUrl } = props;
+function CurrentUser(props: { pictureUrl: string; name: string, logout: () => void}) {
+  const { name, pictureUrl, logout } = props;
   const [isClicked, setIsClicked] = useState(false);
   return (
     <div className={`navbar-item has-dropdown ${isClicked ? "is-active" : ""}`}>
@@ -20,14 +20,14 @@ function CurrentUser(props: { pictureUrl: string; name: string }) {
         </button>
       </div>
       <div className={`navbar-dropdown is-right`}>
-        <a className="navbar-item">Logout</a>
+        <a className="navbar-item" onClick={logout}>Logout</a>
       </div>
     </div>
   );
 }
 
 function LoggedInUser() {
-  const { isLoggedIn, currentUser, login } = useLoginContext();
+  const { isLoggedIn, currentUser, login, logout } = useLoginContext();
 
   const logInButton = (
     <button className="button is-light" onClick={() => login()}>
@@ -35,10 +35,13 @@ function LoggedInUser() {
     </button>
   );
 
-  const name = currentUser?.display_name ?? "John Smith",
-    pictureUrl = currentUser?.images[0]?.url ?? "#";
+  const currentUserProps = {
+    name: currentUser?.display_name ?? "John Smith",
+    pictureUrl: currentUser?.images[0]?.url ?? "#",
+    logout
+  }
   return isLoggedIn ? (
-    <CurrentUser name={name} pictureUrl={pictureUrl} />
+    <CurrentUser {...currentUserProps}/>
   ) : (
     <div className="navbar-item">{logInButton}</div>
   );
@@ -80,25 +83,33 @@ export default function NavHeader() {
       <LoggedInUser />
     </div>
   );
+
+  const [isBurgerActive, setIsBurgerActive] = useState(false);
+  const NavBurger = () => {
+    return (
+      <a
+        role="button"
+        className={`navbar-burger burger ${isBurgerActive ? "is-active": ""}`}
+        onClick={() => setIsBurgerActive(!isBurgerActive)}
+        aria-label="menu"
+        aria-expanded="false"
+        data-target="navbarBasicExample"
+        href="#"
+      >
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+      </a>
+    );
+  };
   return (
     <nav className="navbar" role="navigation" aria-label="main navigation">
       <div className="navbar-brand">
         {Logo}
-        <a
-          role="button"
-          className="navbar-burger burger"
-          aria-label="menu"
-          aria-expanded="false"
-          data-target="navbarBasicExample"
-          href="#"
-        >
-          <span aria-hidden="true"></span>
-          <span aria-hidden="true"></span>
-          <span aria-hidden="true"></span>
-        </a>
+        <NavBurger />
       </div>
-      <div id="navbarBasicExample" className="navbar-menu">
-        {NavMenuLeft}
+      <div id="navbarBasicExample" className={`navbar-menu ${isBurgerActive ? "is-active": ""}`}>
+        {/* {NavMenuLeft} */}
         {NavMenuRight}
       </div>
     </nav>
