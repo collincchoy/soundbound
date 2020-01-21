@@ -14,12 +14,17 @@ export default function ArtistCard(props: ArtistCardProps) {
   const { name, image } = props;
   return (
     <Card>
+      <Card.Header >
+        <Card.Header.Title className="has-text-centered">
+        {/* <Heading size={4}>{props.name}</Heading> */}
+          {props.name}
+        </Card.Header.Title>
+      </Card.Header>
       <Card.Content>
-        <Heading size={4}>{props.name}</Heading>
+        <a>
+          <Card.Image {...props} src={image.url} alt={name} size="square" />
+        </a>
       </Card.Content>
-      <a>
-        <Card.Image {...props} src={image.url} alt={name} size="square" />
-      </a>
     </Card>
   );
 };
