@@ -14,9 +14,12 @@ export default function ArtistCard(props: ArtistCardProps) {
   const { name, image } = props;
   return (
     <Card>
-      <Card.Header >
-        <Card.Header.Title className="has-text-centered">
-        {/* <Heading size={4}>{props.name}</Heading> */}
+      <Card.Header>
+        <Card.Header.Title
+          className="has-text-centered"
+          style={{ justifyContent: "center" }}
+        >
+          {/* <Heading size={4}>{props.name}</Heading> */}
           {props.name}
         </Card.Header.Title>
       </Card.Header>
@@ -27,4 +30,4 @@ export default function ArtistCard(props: ArtistCardProps) {
       </Card.Content>
     </Card>
   );
-};
+}
