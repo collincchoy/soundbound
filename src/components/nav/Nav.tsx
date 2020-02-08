@@ -18,9 +18,13 @@ function CurrentUser(props: {
         >
           <div className="media">
             <figure className="media-left">
-              <img src={pictureUrl} alt="Current user profile" />
+              <div className="image is-32x32">
+                <img className="is-rounded" style={{width: 'auto', height: 'auto'}} src={pictureUrl} alt="Current user profile" />
+              </div>
             </figure>
-            <h2>{name}</h2>
+            <div className="media-content">
+              <h2>{name}</h2>
+            </div>
           </div>
         </div>
       </div>
