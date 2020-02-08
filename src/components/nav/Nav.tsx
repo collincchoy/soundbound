@@ -10,17 +10,29 @@ function CurrentUser(props: {
   const { name, pictureUrl, logout } = props;
   const [isClicked, setIsClicked] = useState(false);
   return (
-    <div className={`navbar-item has-dropdown ${isClicked ? "is-active" : ""}`}>
-      <div className="navbar-link is-arrowless">
+    <div
+      className={`navbar-item has-dropdown ${isClicked ? "is-active" : ""}`}
+      style={{ alignItems: "center" }}
+    >
+      <div className="is-arrowless">
         <div
           className="button is-dark"
           onClick={() => setIsClicked(!isClicked)}
         >
           <div className="media">
             <figure className="media-left">
-              <img src={pictureUrl} alt="Current user profile" />
+              <div className="image is-32x32">
+                <img
+                  className="is-rounded"
+                  style={{ width: "auto", height: "auto" }}
+                  src={pictureUrl}
+                  alt="Current user profile"
+                />
+              </div>
             </figure>
-            <h2>{name}</h2>
+            <div className="media-content">
+              <h2>{name}</h2>
+            </div>
           </div>
         </div>
       </div>
@@ -60,15 +72,23 @@ export default function NavHeader() {
       <a className="navbar-item" href="/">
         Top
       </a>
-      
-      <a className="navbar-item" href="/">Lab</a>
+
+      <a className="navbar-item" href="/">
+        Lab
+      </a>
 
       <div className="navbar-item has-dropdown is-hoverable">
-        <a className="navbar-link" href="/">Discover</a>
+        <a className="navbar-link" href="/">
+          Discover
+        </a>
 
         <div className="navbar-dropdown">
-          <a className="navbar-item" href="/">Artists</a>
-          <a className="navbar-item" href="/">Genres</a>
+          <a className="navbar-item" href="/">
+            Artists
+          </a>
+          <a className="navbar-item" href="/">
+            Genres
+          </a>
           <hr className="navbar-divider" />
           <a className="navbar-item">Report an issue</a>
         </div>
@@ -101,7 +121,11 @@ export default function NavHeader() {
     );
   };
   return (
-    <nav className="navbar is-dark" role="navigation" aria-label="main navigation">
+    <nav
+      className="navbar is-dark"
+      role="navigation"
+      aria-label="main navigation"
+    >
       <div className="navbar-brand">
         <a className="navbar-item" href="/">
           <img src={sb} alt="logo" />
