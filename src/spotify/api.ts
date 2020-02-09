@@ -2,10 +2,27 @@ class SpotifyClient {
   baseUrl = "https://api.spotify.com/v1";
   redirectUri = "http://localhost:3000/";
   clientId = "56b3e61755c4412da05579ef18851833";
-  _access_token?: string;
+  private _access_token: string; // DO NOT EDIT THIS DIRECTLY - use setter/getter
   constructor(access_token?: string) {
     console.log(access_token);
-    this._access_token = access_token;
+    this._access_token = access_token ?? '';
+  }
+
+  get access_token() {
+    if (this._access_token === '') {
+      this.handleOAuthCallback();
+    }
+    return this._access_token || localStorage.getItem("token");
+  }
+
+  set access_token(token: string | null) {
+    if (!!token) {
+      localStorage.setItem("token", token);
+      this._access_token = token;
+    } else {
+      localStorage.removeItem("token");
+      this._access_token = '';
+    }
   }
 
   handleOAuthCallback() {
@@ -18,20 +35,20 @@ class SpotifyClient {
     while ((m = regex.exec(fragmentString))) {
       params[decodeURIComponent(m[1])] = decodeURIComponent(m[2]);
     }
-    this._access_token = params["access_token"];
-    window.history.pushState("", "", "/");
+
+    if (params["access_token"]) {
+      this.access_token = params["access_token"];
+      // clear the url bar
+      window.history.pushState("", "", "/");
+    }
   }
 
   async get(endpoint: string, abortSignal?: AbortSignal) {
-    if (this._access_token == null) {
-      this.handleOAuthCallback();
-    }
-
     const url: string = this.baseUrl + endpoint;
     const options: RequestInit = {
       method: "GET",
       headers: {
-        Authorization: `Bearer ${this._access_token}`,
+        Authorization: `Bearer ${this.access_token}`,
         Accept: "application/json",
         "Content-Type": "application/json"
       },
@@ -66,7 +83,8 @@ class SpotifyClient {
   }
 
   logout = () => {
-    this._access_token = undefined;
+    this.access_token = null;
+    // refresh page
     window.history.go(0);
   }
 }
