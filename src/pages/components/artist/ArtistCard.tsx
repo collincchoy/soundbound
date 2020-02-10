@@ -23,11 +23,9 @@ export default function ArtistCard(props: ArtistCardProps) {
           {props.name}
         </Card.Header.Title>
       </Card.Header>
-      <Card.Content>
         <a>
           <Card.Image {...props} src={image.url} alt={name} size="square" />
         </a>
-      </Card.Content>
     </Card>
   );
 }
