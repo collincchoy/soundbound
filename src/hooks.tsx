@@ -10,7 +10,7 @@ interface ILoginContext {
 const LoginContext = React.createContext<ILoginContext>({});
 
 export function LoginContextProvider(props: {children: any}) {
-  const { data: profile, error } = useSpotifyApi<Profile>("/me");
+  const { data: profile } = useSpotifyApi<Profile>("/me");
   return (
     <LoginContext.Provider value={{currentUser: profile}}>
       {props.children}
@@ -23,6 +23,7 @@ export function useLoginContext() {
   return {
     isLoggedIn: !!currentUser,
     currentUser,
-    login: spotify.login
+    login: spotify.login,
+    logout: spotify.logout,
   }
 }

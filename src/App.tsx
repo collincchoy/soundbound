@@ -3,7 +3,7 @@ import "./App.css";
 import { Section } from "react-bulma-components";
 import { PersonalPage } from "./pages/Personal";
 import { MusicPlayerProvider } from "./components/musicPlayer";
-import NavHeader from "./components/Nav";
+import NavHeader from "./components/nav/Nav";
 import { LoginContextProvider } from "./hooks";
 
 function App() {
