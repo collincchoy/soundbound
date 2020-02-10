@@ -19,7 +19,7 @@ export default function MusicPlayer() {
       <Container className="level">
         <div className="level-item level-left">
           <div className="level-item" style={{justifyContent: "flex-start"}}>
-            <img src={albumArt.url} width={albumArt.width} height={albumArt.height} />
+            <img src={albumArt.url} alt="Current track album art" width={albumArt.width} height={albumArt.height} />
             <p>{currentTrack.name}</p>
           </div>
         </div>

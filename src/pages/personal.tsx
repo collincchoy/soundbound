@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { Tabs } from "react-bulma-components";
 import { ArtistGallery } from "./components/artist";
 import { TrackGallery } from "./components/track";
-import Profile from "./components/Profile";
 
 enum ViewType {
   TOP_ARTISTS = "Top Artists",

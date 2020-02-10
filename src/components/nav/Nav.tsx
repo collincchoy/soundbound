@@ -37,7 +37,7 @@ function CurrentUser(props: {
         </div>
       </div>
       <div className={`navbar-dropdown is-right`}>
-        <a className="navbar-item" onClick={logout}>
+        <a className="navbar-item" href="." onClick={logout}>
           Logout
         </a>
       </div>
@@ -90,7 +90,7 @@ export default function NavHeader() {
             Genres
           </a>
           <hr className="navbar-divider" />
-          <a className="navbar-item">Report an issue</a>
+          <a className="navbar-item" href="/">Report an issue</a>
         </div>
       </div>
     </div>
@@ -105,6 +105,7 @@ export default function NavHeader() {
   const [isBurgerActive, setIsBurgerActive] = useState(false);
   const NavBurger = () => {
     return (
+      /* eslint-disable-next-line jsx-a11y/anchor-is-valid */
       <a
         role="button"
         className={`navbar-burger burger ${isBurgerActive ? "is-active" : ""}`}
