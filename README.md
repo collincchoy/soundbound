@@ -1,4 +1,4 @@
-# **Schoopify**
+# **Soundbound**
 
 Playing with the Spotify API, es6/TypeScript, and React.
 
