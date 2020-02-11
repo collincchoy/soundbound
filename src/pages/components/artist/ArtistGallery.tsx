@@ -2,34 +2,27 @@ import React, { useState } from "react";
 import "react-bulma-components/dist/react-bulma-components.min.css";
 import { Image, Tag, Container } from "react-bulma-components";
 
-import { Artist, PersonalizationTimeRange } from "../../../spotify/types";
+import { Artist } from "../../../spotify/types";
 import { CardGallery } from "../../../components/CardGallery";
-import SpotifyErrorMessage from "../../../spotify/SpotifyErrorMessage";
-import { usePaginatedSpotifyApi } from "../../../spotify/hooks";
 import ArtistCard from "./ArtistCard";
-import TimeRangePicker from "../TimeRangePicker";
 import { ArtistModal } from "./ArtistModal";
 
-export default function ArtistGallery() {
+export type ArtistGalleryProps = {
+  artists: Artist[];
+  loadMoreArtists?: (page: number) => void;
+  moreArtistsAvailable?: boolean;
+};
+
+export default function ArtistGallery(props: ArtistGalleryProps) {
+  const {
+    artists,
+    loadMoreArtists,
+    moreArtistsAvailable: canLoadMoreArtists
+  } = props;
   const [artistOnDisplay, setArtistOnDisplay] = useState<Artist | undefined>();
 
   const showDetails = (artist: Artist) => setArtistOnDisplay(artist);
   const closeDetails = () => setArtistOnDisplay(undefined);
-
-  const [timeRange, setTimeRange] = useState<string>(
-    PersonalizationTimeRange.MEDIUM
-  );
-  const {
-    items: artists,
-    error,
-    loadMoreItems,
-    nextPage,
-    reset
-  } = usePaginatedSpotifyApi<Artist>(`/me/top/artists?time_range=${timeRange}`);
-  const changeTimeRange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setTimeRange(e.currentTarget.value);
-    reset();
-  };
 
   const renderArtist = (artist: Artist) => (
     <ArtistCard
@@ -38,20 +31,14 @@ export default function ArtistGallery() {
       onClick={() => showDetails(artist)}
     />
   );
-  return error ? (
-    <SpotifyErrorMessage {...error} />
-  ) : (
+  return (
     <Container>
-      <TimeRangePicker
-        selected={timeRange as PersonalizationTimeRange}
-        onChange={changeTimeRange}
-      />
       <CardGallery
         items={artists}
         renderItem={renderArtist}
         renderKey={artist => artist.id}
-        loadFunc={loadMoreItems}
-        hasMore={!!nextPage}
+        loadFunc={loadMoreArtists}
+        hasMore={canLoadMoreArtists}
       />
       <ArtistModal
         title={artistOnDisplay?.name}

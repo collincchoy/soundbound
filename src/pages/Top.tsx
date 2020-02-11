@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Tabs } from "react-bulma-components";
-import { ArtistGallery } from "./components/artist";
-import { TrackGallery } from "./components/track";
+import TopArtistsPage from "./Top/Artists";
+import TopTracksPage from "./Top/Tracks";
 
 enum ViewType {
   TOP_ARTISTS = "Top Artists",
@@ -34,9 +34,9 @@ export function TopPage() {
         {renderTab(ViewType.TOP_TRACKS)}
       </Tabs>
       {currentView === ViewType.TOP_TRACKS ? (
-        <TrackGallery />
+        <TopTracksPage />
       ) : (
-        <ArtistGallery />
+        <TopArtistsPage />
       )}
     </>
   );
