@@ -1,14 +1,14 @@
 import React, { useState } from "react";
 import { Tabs } from "react-bulma-components";
-import { ArtistGallery } from "./components/artist";
-import { TrackGallery } from "./components/track";
+import TopArtistsPage from "./Top/Artists";
+import TopTracksPage from "./Top/Tracks";
 
 enum ViewType {
   TOP_ARTISTS = "Top Artists",
   TOP_TRACKS = "Top Tracks"
 }
 
-export function PersonalPage() {
+export function TopPage() {
   const [currentView, setCurrentView] = useState(ViewType.TOP_ARTISTS);
 
   const handleTabChange = (nextView: ViewType) => {
@@ -28,15 +28,14 @@ export function PersonalPage() {
 
   return (
     <>
-      {/* <Profile /> */}
       <Tabs className="header" align="centered" type="boxed" size="large">
         {renderTab(ViewType.TOP_ARTISTS)}
         {renderTab(ViewType.TOP_TRACKS)}
       </Tabs>
       {currentView === ViewType.TOP_TRACKS ? (
-        <TrackGallery />
+        <TopTracksPage />
       ) : (
-        <ArtistGallery />
+        <TopArtistsPage />
       )}
     </>
   );

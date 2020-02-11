@@ -10,7 +10,11 @@ type PlayQueueProps = {
   right?: boolean;
 };
 
-export default function PlayQueue({ queue, currentIndex, right=true }: PlayQueueProps) {
+export default function PlayQueue({
+  queue,
+  currentIndex,
+  right = true
+}: PlayQueueProps) {
   const renderQueueButton = () => (
     <Button>
       <FontAwesomeIcon className="icon" icon={faList} />
@@ -37,13 +41,17 @@ function DropUpList<T>({
   items,
   renderItem,
   renderTrigger,
-  right=true,
+  right = true
 }: DropUpListProps<T>) {
   const [active, setActive] = useState(false);
-  const classnames = `dropdown is-up ${active ? "is-active": ""} ${right ? "is-right": ""}`;
+  const classnames = `dropdown is-up ${active ? "is-active" : ""} ${
+    right ? "is-right" : ""
+  }`;
   return (
     <div className={classnames}>
-      <div className="dropdown-trigger" onClick={() => setActive(!active)}>{renderTrigger()}</div>
+      <div className="dropdown-trigger" onClick={() => setActive(!active)}>
+        {renderTrigger()}
+      </div>
       <div className="dropdown-menu">
         <div className="dropdown-content">
           {items
@@ -52,14 +60,17 @@ function DropUpList<T>({
               // <div className="dropdown-item">{renderItem(item)}</div>
               // <div className="dropdown-divider"></div>
               // </>
-              return <div className="dropdown-item">{renderItem(item)}</div>
-            }).reduce((prev, current) => {
-              return (<>
-              {prev}
-              <div className="dropdown-divider"></div>
-              {current}
-              </>);
-            }, <span style={{display: "None"}}>Empty</span>)}
+              return <div className="dropdown-item">{renderItem(item)}</div>;
+            })
+            .reduce((prev, current) => {
+              return (
+                <>
+                  {prev}
+                  <div className="dropdown-divider"></div>
+                  {current}
+                </>
+              );
+            }, <span style={{ display: "None" }}>Empty</span>)}
         </div>
       </div>
     </div>

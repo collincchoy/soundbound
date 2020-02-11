@@ -23,18 +23,20 @@ export function CardGallery<ItemType>(props: CardGalleryProps<ItemType>) {
       ))}
     </Columns>
   );
-  return (loadFunc) ? (
-      <InfiniteScroll
-        pageStart={0}
-        loadMore={loadFunc}
-        hasMore={hasMore}
-        loader={
-          <div className="loader" key={0}>
-            Loading ...
-          </div>
-        }
-      >
-        {content}
-      </InfiniteScroll>
-    ) : content;
+  return loadFunc ? (
+    <InfiniteScroll
+      pageStart={0}
+      loadMore={loadFunc}
+      hasMore={hasMore}
+      loader={
+        <div className="loader" key={0}>
+          Loading ...
+        </div>
+      }
+    >
+      {content}
+    </InfiniteScroll>
+  ) : (
+    content
+  );
 }

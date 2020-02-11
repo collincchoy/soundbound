@@ -1,7 +1,7 @@
 import React from "react";
 
-import "./MusicPlayer.css";
-import { useMusicPlayer } from "./MusicPlayerContext";
+import "./index.css";
+import { useMusicPlayer } from "./Context";
 import { Container, Button } from "react-bulma-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPause, faPlay } from "@fortawesome/free-solid-svg-icons";
@@ -14,28 +14,34 @@ export default function MusicPlayer() {
   if (!currentTrack) {
     contents = <span>No track to play.</span>;
   } else {
-    const albumArt = currentTrack.album.images[currentTrack.album.images.length-1];
+    const albumArt =
+      currentTrack.album.images[currentTrack.album.images.length - 1];
     contents = (
       <Container className="level">
         <div className="level-item level-left">
-          <div className="level-item" style={{justifyContent: "flex-start"}}>
-            <img src={albumArt.url} alt="Current track album art" width={albumArt.width} height={albumArt.height} />
+          <div className="level-item" style={{ justifyContent: "flex-start" }}>
+            <img
+              src={albumArt.url}
+              alt="Current track album art"
+              width={albumArt.width}
+              height={albumArt.height}
+            />
             <p>{currentTrack.name}</p>
           </div>
         </div>
         <div className="level-item">
-        {isPlaying ? (
-          <Button onClick={pause}>
-            <FontAwesomeIcon className="icon" icon={faPause} />
-          </Button>
-        ) : (
-          <Button onClick={play}>
-            <FontAwesomeIcon className="icon" icon={faPlay} />
-          </Button>
-        )}
+          {isPlaying ? (
+            <Button onClick={pause}>
+              <FontAwesomeIcon className="icon" icon={faPause} />
+            </Button>
+          ) : (
+            <Button onClick={play}>
+              <FontAwesomeIcon className="icon" icon={faPlay} />
+            </Button>
+          )}
         </div>
         <div className="level-item level-right">
-        <PlayQueue queue={playQueue} currentIndex={2} />
+          <PlayQueue queue={playQueue} currentIndex={2} />
         </div>
       </Container>
     );

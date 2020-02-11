@@ -15,6 +15,7 @@
     "react-bulma-components": "3.1.3",
     "react-dom": "^16.10.2",
     "react-infinite-scroller": "^1.2.4",
+    "react-router-dom": "^5.1.2",
     "react-scripts": "3.2.0",
     "typescript": "^3.7.2"
   },
@@ -40,6 +41,7 @@
     ]
   },
   "devDependencies": {
+    "@types/react-router-dom": "^5.1.3",
     "prettier": "^1.19.1"
   }
 }
