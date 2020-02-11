@@ -28,7 +28,6 @@ export function TopPage() {
 
   return (
     <>
-      {/* <Profile /> */}
       <Tabs className="header" align="centered" type="boxed" size="large">
         {renderTab(ViewType.TOP_ARTISTS)}
         {renderTab(ViewType.TOP_TRACKS)}

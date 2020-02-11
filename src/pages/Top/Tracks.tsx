@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { Container } from "react-bulma-components";
-import { TrackGallery } from "../components/track";
+import { TrackGallery } from "../../components/track";
 import { PersonalizationTimeRange, Track } from "../../spotify/types";
 import { usePaginatedSpotifyApi } from "../../spotify/hooks";
 import SpotifyErrorMessage from "../../spotify/SpotifyErrorMessage";
-import TimeRangePicker from "../components/TimeRangePicker";
+import TimeRangePicker from "../../components/TimeRangePicker";
 
 export default function TopTracksPage() {
   const [timeRange, setTimeRange] = useState<string>(

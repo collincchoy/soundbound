@@ -8,8 +8,8 @@ import {
   faPlusCircle
 } from "@fortawesome/free-solid-svg-icons";
 
-import { Track } from "../../../spotify/types";
-import { useMusicPlayer } from "../../../components/musicPlayer/MusicPlayerContext";
+import { Track } from "../../spotify/types";
+import { useMusicPlayer } from "../musicPlayer/Context";
 
 type TrackCardProps = {
   track: Track;

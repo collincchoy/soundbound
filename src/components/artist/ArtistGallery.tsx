@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import "react-bulma-components/dist/react-bulma-components.min.css";
 import { Image, Tag, Container } from "react-bulma-components";
 
-import { Artist } from "../../../spotify/types";
-import { CardGallery } from "../../../components/CardGallery";
+import { Artist } from "../../spotify/types";
+import { CardGallery } from "../CardGallery";
 import ArtistCard from "./ArtistCard";
 import { ArtistModal } from "./ArtistModal";
 

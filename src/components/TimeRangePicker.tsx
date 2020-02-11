@@ -1,5 +1,5 @@
 import React from "react";
-import { PersonalizationTimeRange } from "../../spotify/types";
+import { PersonalizationTimeRange } from "../spotify/types";
 
 export default function TimeRangePicker(props: {
   selected: PersonalizationTimeRange;
@@ -7,7 +7,10 @@ export default function TimeRangePicker(props: {
 }) {
   const options = Object.entries(PersonalizationTimeRange);
   return (
-    <div className="control has-text-white has-text-centered" style={{ padding: "0.75rem"}}>
+    <div
+      className="control has-text-white has-text-centered"
+      style={{ padding: "0.75rem" }}
+    >
       <label>Time Range: </label>
       {options.map(([key, value]) => {
         return (

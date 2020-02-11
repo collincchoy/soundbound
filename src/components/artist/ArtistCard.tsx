@@ -2,7 +2,7 @@ import React from "react";
 import "react-bulma-components/dist/react-bulma-components.min.css";
 import { Card } from "react-bulma-components";
 
-import { ArtistImage } from "../../../spotify/types";
+import { ArtistImage } from "../../spotify/types";
 
 type ArtistCardProps = {
   name: string;
@@ -23,10 +23,10 @@ export default function ArtistCard(props: ArtistCardProps) {
           {props.name}
         </Card.Header.Title>
       </Card.Header>
-        {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
-        <a>
-          <Card.Image {...props} src={image.url} alt={name} size="square" />
-        </a>
+      {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
+      <a>
+        <Card.Image {...props} src={image.url} alt={name} size="square" />
+      </a>
     </Card>
   );
 }

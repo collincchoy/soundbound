@@ -1,8 +1,8 @@
 import React from "react";
 import "react-bulma-components/dist/react-bulma-components.min.css";
 
-import { Track } from "../../../spotify/types";
-import { CardGallery } from "../../../components/CardGallery";
+import { Track } from "../../spotify/types";
+import { CardGallery } from "../CardGallery";
 import TrackCard from "./TrackCard";
 
 export type TrackGalleryProps = {
