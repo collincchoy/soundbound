@@ -3,7 +3,7 @@ import "./App.css";
 import { Section } from "react-bulma-components";
 import { TopPage } from "./pages/Top";
 import { MusicPlayerProvider } from "./components/MusicPlayer/Context";
-import NavHeader from "./components/nav/Nav";
+import NavBar from "./components/Nav/Bar";
 import { LoginContextProvider } from "./hooks";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import MusicPlayer from "./components/MusicPlayer";
@@ -13,7 +13,7 @@ function App() {
     <div className="App">
       <LoginContextProvider>
         <Router>
-          <NavHeader />
+          <NavBar />
           <MusicPlayerProvider>
             <Section id="content">
               <Switch>
