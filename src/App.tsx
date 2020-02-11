@@ -2,10 +2,11 @@ import React from "react";
 import "./App.css";
 import { Section } from "react-bulma-components";
 import { TopPage } from "./pages/Top";
-import { MusicPlayerProvider } from "./components/musicPlayer";
+import { MusicPlayerProvider } from "./components/MusicPlayer/Context";
 import NavHeader from "./components/nav/Nav";
 import { LoginContextProvider } from "./hooks";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import MusicPlayer from "./components/MusicPlayer";
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
                 </Route>
               </Switch>
             </Section>
+            <MusicPlayer />
           </MusicPlayerProvider>
         </Router>
       </LoginContextProvider>

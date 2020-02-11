@@ -3,7 +3,7 @@ import "react-bulma-components/dist/react-bulma-components.min.css";
 
 import { Track } from "../../spotify/types";
 import { CardGallery } from "../CardGallery";
-import TrackCard from "./TrackCard";
+import TrackCard from "./Card";
 
 export type TrackGalleryProps = {
   tracks: Track[];

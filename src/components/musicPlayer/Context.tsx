@@ -1,6 +1,5 @@
 import { Track } from "../../spotify/types";
 import React, { useState, useContext, useEffect } from "react";
-import MusicPlayer from "./MusicPlayer";
 
 type MusicPlayerContextType = {
   currentTrack: Track | null;
@@ -115,7 +114,6 @@ function MusicPlayerProvider(props: React.PropsWithChildren<any>) {
   return (
     <MusicPlayerContext.Provider value={MusicPlayerContextValues}>
       {props.children}
-      <MusicPlayer />
     </MusicPlayerContext.Provider>
   );
 }

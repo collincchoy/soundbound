@@ -9,9 +9,9 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 import { Track } from "../../spotify/types";
-import { useMusicPlayer } from "../musicPlayer/Context";
+import { useMusicPlayer } from "../MusicPlayer/Context";
 
-type TrackCardProps = {
+export type TrackCardProps = {
   track: Track;
 };
 

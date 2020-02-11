@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Container } from "react-bulma-components";
-import { TrackGallery } from "../../components/track";
+import TrackGallery from "../../components/Track/Gallery";
 import { PersonalizationTimeRange, Track } from "../../spotify/types";
 import { usePaginatedSpotifyApi } from "../../spotify/hooks";
 import SpotifyErrorMessage from "../../spotify/SpotifyErrorMessage";

@@ -4,8 +4,8 @@ import { Image, Tag, Container } from "react-bulma-components";
 
 import { Artist } from "../../spotify/types";
 import { CardGallery } from "../CardGallery";
-import ArtistCard from "./ArtistCard";
-import { ArtistModal } from "./ArtistModal";
+import ArtistCard from "./Card";
+import { ArtistModal } from "./Modal";
 
 export type ArtistGalleryProps = {
   artists: Artist[];
