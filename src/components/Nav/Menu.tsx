@@ -1,33 +1,52 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 export default function NavMenu() {
   return (
     <>
-      <Link className="navbar-item" to="/top">
-        Top
-      </Link>
-
-      <Link className="navbar-item" to="/">
-        Lab
-      </Link>
-
       <div className="navbar-item has-dropdown is-hoverable">
-        <Link className="navbar-link" to="/">
-          Discover
-        </Link>
+        <NavLink className="navbar-link" to="/top" activeClassName="is-active">
+          Top
+        </NavLink>
 
         <div className="navbar-dropdown">
-          <Link className="navbar-item" to="/">
+          <NavLink
+            className="navbar-item"
+            activeClassName="is-active"
+            to="/top/artists"
+          >
             Artists
-          </Link>
-          <Link className="navbar-item" to="/">
+          </NavLink>
+          <NavLink
+            className="navbar-item"
+            activeClassName="is-active"
+            to="/top/tracks"
+          >
+            Tracks
+          </NavLink>
+        </div>
+      </div>
+
+      <NavLink className="navbar-item" to="/">
+        Lab
+      </NavLink>
+
+      <div className="navbar-item has-dropdown is-hoverable">
+        <NavLink className="navbar-link" to="/">
+          Discover
+        </NavLink>
+
+        <div className="navbar-dropdown">
+          <NavLink className="navbar-item" to="/">
+            Artists
+          </NavLink>
+          <NavLink className="navbar-item" to="/">
             Genres
-          </Link>
+          </NavLink>
           <hr className="navbar-divider" />
-          <Link className="navbar-item" to="/">
+          <NavLink className="navbar-item" to="/">
             Report an issue
-          </Link>
+          </NavLink>
         </div>
       </div>
     </>
