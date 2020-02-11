@@ -8,7 +8,7 @@ enum ViewType {
   TOP_TRACKS = "Top Tracks"
 }
 
-export function PersonalPage() {
+export function TopPage() {
   const [currentView, setCurrentView] = useState(ViewType.TOP_ARTISTS);
 
   const handleTabChange = (nextView: ViewType) => {

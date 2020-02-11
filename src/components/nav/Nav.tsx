@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useLoginContext } from "../../hooks";
-import sb from "./soundbound.png";
+import soundboundLogo from "./soundbound.png";
+import { Link } from "react-router-dom";
 
 function CurrentUser(props: {
   pictureUrl: string;
@@ -69,28 +70,30 @@ function LoggedInUser() {
 export default function NavHeader() {
   const NavMenuLeft = (
     <div className="navbar-start">
-      <a className="navbar-item" href="/">
+      <Link className="navbar-item" to="/top">
         Top
-      </a>
+      </Link>
 
-      <a className="navbar-item" href="/">
+      <Link className="navbar-item" to="/">
         Lab
-      </a>
+      </Link>
 
       <div className="navbar-item has-dropdown is-hoverable">
-        <a className="navbar-link" href="/">
+        <Link className="navbar-link" to="/">
           Discover
-        </a>
+        </Link>
 
         <div className="navbar-dropdown">
-          <a className="navbar-item" href="/">
+          <Link className="navbar-item" to="/">
             Artists
-          </a>
-          <a className="navbar-item" href="/">
+          </Link>
+          <Link className="navbar-item" to="/">
             Genres
-          </a>
+          </Link>
           <hr className="navbar-divider" />
-          <a className="navbar-item" href="/">Report an issue</a>
+          <Link className="navbar-item" to="/">
+            Report an issue
+          </Link>
         </div>
       </div>
     </div>
@@ -128,9 +131,9 @@ export default function NavHeader() {
       aria-label="main navigation"
     >
       <div className="navbar-brand">
-        <a className="navbar-item" href="/">
-          <img src={sb} alt="logo" />
-        </a>
+        <Link className="navbar-item" to="/">
+          <img src={soundboundLogo} alt="logo" />
+        </Link>
         <NavBurger />
       </div>
       <div
