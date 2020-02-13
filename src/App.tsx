@@ -1,6 +1,5 @@
 import React from "react";
 import "./App.css";
-import { Section } from "react-bulma-components";
 import { TopPage } from "./pages/Top";
 import { MusicPlayerProvider } from "./components/MusicPlayer/Context";
 import NavBar from "./components/Nav/Bar";
@@ -17,7 +16,7 @@ function App() {
         <Router>
           <NavBar />
           <MusicPlayerProvider>
-            <Section id="content">
+            <div id="content">
               <Switch>
                 <Route path="/top/artists">
                   <TopArtistsPage />
@@ -29,7 +28,7 @@ function App() {
                   <TopPage />
                 </Route>
               </Switch>
-            </Section>
+            </div>
             <MusicPlayer />
           </MusicPlayerProvider>
         </Router>
