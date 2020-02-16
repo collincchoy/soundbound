@@ -52,6 +52,13 @@ enum AlbumType {
   ALBUM = "ALBUM"
 }
 
+export type SearchArtistResults = {
+  artists: {
+    href: string;
+    items: Artist[];
+  };
+};
+
 export type Artist = {
   href: string;
   id: string;
@@ -82,6 +89,13 @@ type Album = {
   total_tracks: number;
   type: "album";
   uri: string;
+};
+
+export type SearchTrackResults = {
+  tracks: {
+    href: string;
+    items?: Track[];
+  };
 };
 
 export type Track = {
