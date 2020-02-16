@@ -27,7 +27,7 @@ export default function NavMenu() {
         </div>
       </div>
 
-      <NavLink className="navbar-item" to="/">
+      <NavLink className="navbar-item" to="/lab" activeClassName="is-active">
         Lab
       </NavLink>
 

@@ -1,9 +1,9 @@
-.App {
+.page {
   text-align: center;
   background-color: #282c34;
 }
 
-#content {
+.content {
   padding-top: 20px;
   padding-bottom: 100px; /*Account for music player(80px) + 20px*/
 }
