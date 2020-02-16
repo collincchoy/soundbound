@@ -5,11 +5,11 @@ class SpotifyClient {
   private _access_token: string; // DO NOT EDIT THIS DIRECTLY - use setter/getter
   constructor(access_token?: string) {
     console.log(access_token);
-    this._access_token = access_token ?? '';
+    this._access_token = access_token ?? "";
   }
 
   get access_token() {
-    if (this._access_token === '') {
+    if (this._access_token === "") {
       this.handleOAuthCallback();
     }
     return this._access_token || localStorage.getItem("token");
@@ -21,7 +21,7 @@ class SpotifyClient {
       this._access_token = token;
     } else {
       localStorage.removeItem("token");
-      this._access_token = '';
+      this._access_token = "";
     }
   }
 
@@ -30,7 +30,8 @@ class SpotifyClient {
 
     // Parse query string to see if page request is coming from OAuth 2.0 server.
     var params: any = {};
-    var regex = /([^&=]+)=([^&]*)/g, m;
+    var regex = /([^&=]+)=([^&]*)/g,
+      m;
     // eslint-disable-next-line no-cond-assign
     while ((m = regex.exec(fragmentString))) {
       params[decodeURIComponent(m[1])] = decodeURIComponent(m[2]);
@@ -43,7 +44,11 @@ class SpotifyClient {
     }
   }
 
-  async get(endpoint: string, abortSignal?: AbortSignal) {
+  async get(endpoint: string, abortSignal?: AbortSignal, params?: {}) {
+    if (params) {
+      params = new URLSearchParams(params);
+      endpoint = `${endpoint}?${params.toString()}`;
+    }
     const url: string = this.baseUrl + endpoint;
     const options: RequestInit = {
       method: "GET",
@@ -80,13 +85,13 @@ class SpotifyClient {
 
   login = () => {
     window.location.href = this.authorizeUrl.toString();
-  }
+  };
 
   logout = () => {
     this.access_token = null;
     // refresh page
     window.history.go(0);
-  }
+  };
 }
 
 export const spotify = new SpotifyClient();
