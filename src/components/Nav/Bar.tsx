@@ -30,21 +30,23 @@ export default function NavBar() {
       role="navigation"
       aria-label="main navigation"
     >
-      <div className="navbar-brand">
-        <Link className="navbar-item" to="/">
-          <img src={soundboundLogo} alt="logo" />
-        </Link>
-        <NavBurger />
-      </div>
-      <div
-        id="navbarBasicExample"
-        className={`navbar-menu ${isBurgerActive ? "is-active" : ""}`}
-      >
-        <div className="navbar-start">
-          <NavMenu />
+      <div className="container">
+        <div className="navbar-brand">
+          <Link className="navbar-item" to="/">
+            <img src={soundboundLogo} alt="logo" />
+          </Link>
+          <NavBurger />
         </div>
-        <div className="navbar-end">
-          <LoggedInUser />
+        <div
+          id="navbarBasicExample"
+          className={`navbar-menu ${isBurgerActive ? "is-active" : ""}`}
+        >
+          <div className="navbar-start">
+            <NavMenu />
+          </div>
+          <div className="navbar-end">
+            <LoggedInUser />
+          </div>
         </div>
       </div>
     </nav>

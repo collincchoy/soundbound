@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { SpotifyError, PaginatedResponse } from "./types";
 import { spotify } from "./api";
 
-export function useSpotifyApi<T>(endpoint: string) {
+export function useSpotifyApi<T>(endpoint: string, params?: {}) {
   const [data, setData] = useState<T>();
   const [error, setError] = useState<{ status: number; message: string }>();
 
@@ -10,15 +10,18 @@ export function useSpotifyApi<T>(endpoint: string) {
     const abortController = new AbortController();
     const { signal } = abortController;
     spotify
-      .get(endpoint, signal)
+      .get(endpoint, signal, params)
       .then((data: any) => {
-        console.log(`bah data is: ${data}`);
+        console.log(`bah data is: ${JSON.stringify(data)}`);
         setData(data);
       })
-      .catch((error: SpotifyError) => setError(error.error));
+      .catch((error: SpotifyError) => {
+        console.error(`ERR: ${JSON.stringify(error)}`);
+        setError(error.error);
+      });
 
     return () => abortController.abort();
-  }, [endpoint]);
+  }, [endpoint, params]);
   return { data, error };
 }
 

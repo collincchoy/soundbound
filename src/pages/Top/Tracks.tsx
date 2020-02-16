@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import styles from "./index.module.css";
 import { Container } from "react-bulma-components";
 import TrackGallery from "../../components/Track/Gallery";
 import { PersonalizationTimeRange, Track } from "../../spotify/types";
@@ -22,19 +23,23 @@ export default function TopTracksPage() {
     setTimeRange(e.currentTarget.value);
     reset();
   };
-  return error ? (
-    <SpotifyErrorMessage {...error} />
-  ) : (
-    <Container>
-      <TimeRangePicker
-        selected={timeRange as PersonalizationTimeRange}
-        onChange={changeTimeRange}
-      />
-      <TrackGallery
-        tracks={items}
-        loadMoreTracks={loadMoreItems}
-        moreTracksAvailable={!!nextPage}
-      />
-    </Container>
+  return (
+    <div className={styles.page}>
+      {error ? (
+        <SpotifyErrorMessage {...error} />
+      ) : (
+        <Container className={styles.content}>
+          <TimeRangePicker
+            selected={timeRange as PersonalizationTimeRange}
+            onChange={changeTimeRange}
+          />
+          <TrackGallery
+            tracks={items}
+            loadMoreTracks={loadMoreItems}
+            moreTracksAvailable={!!nextPage}
+          />
+        </Container>
+      )}
+    </div>
   );
 }
