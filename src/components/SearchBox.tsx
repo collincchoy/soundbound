@@ -10,32 +10,66 @@ type SearchBoxProps<T> = {
 
 export default function SearchBox<T>({
   getSuggestions,
+  suggestionKey,
   ...props
 }: SearchBoxProps<T>) {
+  const [selectedItem, setSelectedItem] = useState<T>();
   const [isSearching, setIsSearching] = useState(false);
   const [suggestions, setSuggestions] = useState<T[]>([]);
+  const clearSuggestions = () => {
+    setSuggestions([]);
+  };
 
-  const [field, meta] = useField(props.name);
+  const [field, meta, helpers] = useField(props.name);
   const handleChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const input = event.target as HTMLInputElement;
-    setIsSearching(true);
-    let searchResults = getSuggestions(input.value);
     field.onChange(event);
-    setSuggestions(await searchResults);
+    let searchResults = getSuggestions(input.value);
+    if (input.value !== "") {
+      setIsSearching(true);
+      setSuggestions(await searchResults);
+    } else {
+      clearSuggestions();
+    }
     setIsSearching(false);
+  };
+  const handleBlur = async (event: React.FocusEvent) => {
+    field.onBlur(event);
+    setIsSearching(false);
+    clearSuggestions();
   };
 
   return (
-    <div className={`control ${styles.searchbox}`}>
-      <input {...field} {...props} onChange={handleChange} autoComplete="off" />
-      {isSearching ? (
-        <div className="loader" />
-      ) : suggestions.length > 0 ? (
+    <div
+      className={`control ${styles.searchbox} ${
+        isSearching ? "is-loading" : ""
+      }`}
+    >
+      <input
+        {...field}
+        {...props}
+        onChange={handleChange}
+        onBlur={handleBlur}
+        autoComplete="off"
+      />
+      {suggestions.length > 0 ? (
         <ol className={styles.suggestions}>
           {suggestions.map((item: any) => {
-            const { key, value } = props.suggestionKey(item);
+            const { key, value } = suggestionKey(item);
             return (
-              <li className={styles.suggestion} key={key}>
+              <li
+                className={styles.suggestion}
+                key={key}
+                onClick={() => {
+                  console.log("hey - ", value);
+                  helpers.setValue(value);
+                  clearSuggestions();
+                }}
+                onMouseDown={
+                  /*Prevent blur event to avoid race condition with click event.*/
+                  e => e.preventDefault()
+                }
+              >
                 {value}
               </li>
             );

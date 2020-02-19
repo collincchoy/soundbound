@@ -64,7 +64,9 @@ const LabForm = (props: LabFormProps) => (
             <button
               type="submit"
               disabled={isSubmitting}
-              className="button is-primary"
+              className={`button is-primary ${
+                isSubmitting ? "is-loading" : ""
+              }`}
             >
               Submit
             </button>
