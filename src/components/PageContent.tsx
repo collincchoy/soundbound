@@ -6,7 +6,7 @@ const styles = {
   paddingBottom: "100px"
 };
 
-export default function div(props: { children?: any }) {
+export default function PageContent(props: { children?: any }) {
   return (
     <div className="section" style={styles}>
       {props.children}
