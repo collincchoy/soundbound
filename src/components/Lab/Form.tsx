@@ -53,11 +53,26 @@ const LabForm = (props: LabFormProps) => (
     }) => (
       <div className={`container has-background-light ${styles.content}`}>
         <form onSubmit={handleSubmit}>
-          <SeedInput name="artists" getSuggestions={getArtistId} />
-          <SeedInput name="tracks" getSuggestions={getTrackId} />
+          <SeedInput
+            name="artists"
+            getSuggestions={searchForArtist}
+            suggestionKey={(item: any) => ({
+              key: item.id,
+              value: item.name
+            })}
+          />
+          <SeedInput
+            name="tracks"
+            getSuggestions={searchForTrack}
+            suggestionKey={(item: any) => ({
+              key: item.id,
+              value: item.name
+            })}
+          />
           <SeedInput
             name="genres"
-            getSuggestions={async _ => ["pop", "chicago-blues"]}
+            getSuggestions={getAvailableGenres}
+            suggestionKey={item => ({ key: item, value: item })}
           />
 
           <div className="control">
@@ -77,7 +92,7 @@ const LabForm = (props: LabFormProps) => (
   </Formik>
 );
 
-async function getArtistId(artistName: string) {
+async function searchForArtist(artistName: string) {
   const params = {
     q: artistName,
     type: "artist"
@@ -90,7 +105,7 @@ async function getArtistId(artistName: string) {
   return resp?.artists?.items;
 }
 
-async function getTrackId(trackName: string) {
+async function searchForTrack(trackName: string) {
   const params = {
     q: trackName,
     type: "track"
@@ -101,6 +116,18 @@ async function getTrackId(trackName: string) {
     params
   );
   return resp?.tracks?.items ?? [];
+}
+
+let _cached_genres: string[] = [];
+
+async function getAvailableGenres() {
+  if (_cached_genres.length <= 0) {
+    const resp: { genres: string[] } = await spotify.get(
+      "/recommendations/available-genre-seeds"
+    );
+    _cached_genres = resp.genres;
+  }
+  return _cached_genres;
 }
 
 export default LabForm;

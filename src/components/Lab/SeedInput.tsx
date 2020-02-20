@@ -5,6 +5,7 @@ import { ErrorMessage } from "formik";
 type SeedInputProps<T> = {
   name: string;
   getSuggestions: (inputValue: string) => Promise<T[]>;
+  suggestionKey: (item: T) => { key: string; value: string };
 };
 
 export default function SeedInput<T>({
@@ -14,21 +15,21 @@ export default function SeedInput<T>({
 }: SeedInputProps<T>) {
   const displayName = name[0].toUpperCase() + name.slice(1);
   return (
-    <div className="field">
-      <label htmlFor="tracks" className="label">
-        {displayName}
-      </label>
-      <SearchBox
-        name={name}
-        className="input"
-        getSuggestions={getSuggestions}
-        suggestionKey={(item: any) => ({
-          key: item.id,
-          value: item.name
-        })}
-        {...props}
-      />
-      <ErrorMessage name={name} className="help" />
+    <div className="field is-horizontal">
+      <div className="field-label is-normal">
+        <label htmlFor={name} className="label">
+          {displayName}
+        </label>
+      </div>
+      <div className="field-body">
+        <SearchBox
+          name={name}
+          className="input"
+          getSuggestions={getSuggestions}
+          {...props}
+        />
+        <ErrorMessage name={name} className="help" />
+      </div>
     </div>
   );
 }
