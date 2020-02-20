@@ -24,7 +24,7 @@ export default function SearchBox<T>({
   const handleChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const input = event.target as HTMLInputElement;
     field.onChange(event);
-    let searchResults = getSuggestions(input.value);
+      let searchResults = getSuggestions(input.value);
     if (input.value !== "") {
       setIsSearching(true);
       setSuggestions(await searchResults);
