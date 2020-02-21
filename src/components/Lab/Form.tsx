@@ -71,7 +71,7 @@ const LabForm = (props: LabFormProps) => (
           />
           <SeedInput
             name="genres"
-            getSuggestions={getAvailableGenres}
+            getSuggestions={searchForGenre}
             suggestionKey={item => ({ key: item, value: item })}
           />
 
@@ -119,6 +119,23 @@ async function searchForTrack(trackName: string) {
 }
 
 let _cached_genres: string[] = [];
+
+async function searchForGenre(genre: string) {
+  return sortGenresByMatch(await getAvailableGenres(), genre);
+}
+
+function sortGenresByMatch(genres: string[], query: string) {
+  const suggestions: string[] = [];
+  const rest: string[] = [];
+  genres.forEach(genre => {
+    if (genre.startsWith(query)) {
+      suggestions.push(genre);
+    } else {
+      rest.push(genre);
+    }
+  });
+  return [...suggestions, ...rest];
+}
 
 async function getAvailableGenres() {
   if (_cached_genres.length <= 0) {
