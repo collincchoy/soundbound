@@ -1,11 +1,10 @@
 import React, { useState } from "react";
-import styles from "./index.module.css";
-import { Container } from "react-bulma-components";
 import ArtistGallery from "../../components/Artist/Gallery";
 import { PersonalizationTimeRange, Artist } from "../../spotify/types";
 import { usePaginatedSpotifyApi } from "../../spotify/hooks";
 import SpotifyErrorMessage from "../../spotify/SpotifyErrorMessage";
 import TimeRangePicker from "../../components/TimeRangePicker";
+import PageContent from "components/PageContent";
 
 export default function TopArtistsPage() {
   const [timeRange, setTimeRange] = useState<string>(
@@ -24,11 +23,11 @@ export default function TopArtistsPage() {
     reset();
   };
   return (
-    <div className={styles.page}>
+    <PageContent>
       {error ? (
         <SpotifyErrorMessage {...error} />
       ) : (
-        <Container>
+        <>
           <TimeRangePicker
             selected={timeRange as PersonalizationTimeRange}
             onChange={changeTimeRange}
@@ -38,8 +37,8 @@ export default function TopArtistsPage() {
             loadMoreArtists={loadMoreItems}
             moreArtistsAvailable={!!nextPage}
           />
-        </Container>
+        </>
       )}
-    </div>
+    </PageContent>
   );
 }

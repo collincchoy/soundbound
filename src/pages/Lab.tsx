@@ -1,10 +1,13 @@
 import React, { useState } from "react";
 import LabForm, { LabFormValues } from "../components/Lab/Form";
-import { useSpotifyApi } from "../spotify/hooks";
-import TrackGallery from "../components/Track/Gallery";
 import PageContent from "../components/PageContent";
 import { spotify } from "../spotify/api";
-import { SearchArtistResults, SearchTrackResults } from "../spotify/types";
+import {
+  SearchArtistResults,
+  SearchTrackResults,
+  RecommendationsQuery
+} from "../spotify/types";
+import LabResults from "components/Lab/Results";
 
 async function getArtistId(artistName: string) {
   const params = {
@@ -59,42 +62,17 @@ async function formToQuery(values: LabFormValues) {
   return query;
 }
 
-type RecommendationsQuery = {
-  seed_artists?: string;
-  seed_tracks?: string;
-  seed_genres?: string;
-};
-
 export default function LabPage() {
   const [query, setQuery] = useState<RecommendationsQuery | undefined>();
-  const { data: results, error } = useSpotifyApi("/recommendations", query);
+
   const handleSubmit = async (values: LabFormValues) => {
-    const q = await formToQuery(values);
+    const q = await formToQuery(values); // TODO: handle errors thrown from spotify client
     setQuery(q);
   };
   return (
     <PageContent>
-      <div className="container">
-        <div className="content">
-          <p>Tune your own playlist generator here!</p>
-        </div>
-        <LabForm onSubmit={handleSubmit} />
-        <div style={{ marginTop: "10px" }}>
-          {results ? (
-            <TrackGallery tracks={results.tracks} />
-          ) : error ? (
-            <article className="message is-danger">
-              <div className="message-header">
-                <p>Error</p>
-                <button className="delete" aria-label="delete"></button>
-              </div>
-              <div className="message-body">{JSON.stringify(error)}</div>
-            </article>
-          ) : (
-            ""
-          )}
-        </div>
-      </div>
+      <LabForm onSubmit={handleSubmit} />
+      {query ? <LabResults query={query} /> : ""}
     </PageContent>
   );
 }

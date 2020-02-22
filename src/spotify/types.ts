@@ -125,3 +125,21 @@ export enum PersonalizationTimeRange {
   "MEDIUM" = "medium_term",
   "LONG" = "long_term"
 }
+
+export type Recommendations = {
+  tracks: Track[];
+  seeds: {
+    initialPoolSize: number; // 250;
+    afterFilteringSize: number; // 250;
+    afterRelinkingSize: number; // 250;
+    id: string; // "4tZwfgrHOc3mvqYlEYSvVi";
+    type: string; // "ARTIST";
+    href: string; // "https://api.spotify.com/v1/artists/4tZwfgrHOc3mvqYlEYSvVi";
+  }[];
+};
+
+export type RecommendationsQuery = {
+  seed_artists?: string;
+  seed_tracks?: string;
+  seed_genres?: string;
+};
