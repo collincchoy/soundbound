@@ -71,13 +71,8 @@ export default function LabPage() {
   };
   return (
     <PageContent>
-      <div className="container">
-        <div className="content">
-          <p>Tune your own playlist generator here!</p>
-        </div>
-        <LabForm onSubmit={handleSubmit} />
-        {query ? <LabResults query={query} /> : ""}
-      </div>
+      <LabForm onSubmit={handleSubmit} />
+      {query ? <LabResults query={query} /> : ""}
     </PageContent>
   );
 }

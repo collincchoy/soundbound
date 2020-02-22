@@ -52,6 +52,9 @@ const LabForm = (props: LabFormProps) => (
       /* and other goodies */
     }) => (
       <div className={`container has-background-light ${styles.content}`}>
+        <div className="content">
+          <p>Tune your own playlist generator here!</p>
+        </div>
         <form onSubmit={handleSubmit}>
           <SeedInput
             name="artists"
