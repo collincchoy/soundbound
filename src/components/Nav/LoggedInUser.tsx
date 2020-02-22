@@ -18,16 +18,14 @@ function CurrentUser(props: {
           className="button is-dark"
           onClick={() => setIsClicked(!isClicked)}
         >
-          <div className="media">
-            <figure className="media-left">
-              <div className="image is-32x32">
-                <img
-                  className="is-rounded"
-                  style={{ width: "auto", height: "auto" }}
-                  src={pictureUrl}
-                  alt="Current user profile"
-                />
-              </div>
+          <div className="media" style={{ alignItems: "center" }}>
+            <figure className="media-left image">
+              <img
+                className="is-rounded"
+                style={{ width: "auto", height: "auto" }}
+                src={pictureUrl}
+                alt="Current user profile"
+              />
             </figure>
             <div className="media-content">
               <h2>{name}</h2>
