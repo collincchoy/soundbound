@@ -35,7 +35,6 @@ const LabForm = (props: LabFormProps) => (
     validate={validate}
     onSubmit={(values, { setSubmitting }) => {
       setTimeout(() => {
-        alert(JSON.stringify(values, null, 2));
         props.onSubmit(values);
         setSubmitting(false);
       }, 400);
@@ -131,7 +130,7 @@ function sortGenresByMatch(genres: string[], query: string) {
   const suggestions: string[] = [];
   const rest: string[] = [];
   genres.forEach(genre => {
-    if (genre.startsWith(query)) {
+    if (genre.toLowerCase().startsWith(query.toLowerCase())) {
       suggestions.push(genre);
     } else {
       rest.push(genre);
