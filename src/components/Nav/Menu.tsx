@@ -31,7 +31,7 @@ export default function NavMenu() {
         Lab
       </NavLink>
 
-      <div className="navbar-item has-dropdown is-hoverable">
+      {/* <div className="navbar-item has-dropdown is-hoverable">
         <NavLink className="navbar-link" to="/">
           Discover
         </NavLink>
@@ -48,7 +48,7 @@ export default function NavMenu() {
             Report an issue
           </NavLink>
         </div>
-      </div>
+      </div> */}
     </>
   );
 }
