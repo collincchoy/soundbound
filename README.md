@@ -21,6 +21,7 @@ Playing with the Spotify API, es6/TypeScript, and React.
     * Basic track info
     * Play/Pause track
     * Add to and View Play Queue
+* Lab - generate playlists given 1 artist, track, and/or genre (under construction)
 
 ## To the Future
 * Full-featured music player: Skip/Prev, GoTo/TimeSlider, Pic-In-Pic
