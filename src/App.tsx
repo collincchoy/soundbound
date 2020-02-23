@@ -2,9 +2,13 @@ import React from "react";
 import { MusicPlayerProvider } from "./components/MusicPlayer/Context";
 import NavBar from "./components/Nav/Bar";
 import { LoginContextProvider } from "./hooks";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect
+} from "react-router-dom";
 import MusicPlayer from "./components/MusicPlayer";
-import TopPage from "./pages/Top";
 import TopArtistsPage from "./pages/Top/Artists";
 import TopTracksPage from "./pages/Top/Tracks";
 import LabPage from "./pages/Lab";
@@ -26,7 +30,7 @@ function App() {
               <TopTracksPage />
             </Route>
             <Route path="/">
-              <TopPage />
+              <Redirect to="/top/artists" />
             </Route>
           </Switch>
           <MusicPlayer />
