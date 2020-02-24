@@ -1,5 +1,5 @@
 import React from "react";
-import "react-bulma-components/dist/react-bulma-components.min.css";
+import "_variables.scss";
 import { MusicPlayerProvider } from "./components/MusicPlayer/Context";
 import NavBar from "./components/Nav/Bar";
 import { LoginContextProvider } from "./hooks";
