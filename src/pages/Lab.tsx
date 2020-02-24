@@ -54,6 +54,11 @@ async function formToQuery(values: LabFormValues) {
       }
     }
   }
+
+  if (values.numberOfTracks) {
+    query.limit = values.numberOfTracks.toString();
+  }
+
   if (waitFors.length > 0) {
     for (const { key, val } of waitFors) {
       query[`seed_${key}`] = await val;

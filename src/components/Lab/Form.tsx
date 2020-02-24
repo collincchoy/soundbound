@@ -2,14 +2,16 @@ import React from "react";
 import styles from "./Form.module.css";
 import { Formik } from "formik";
 import SeedInput from "./SeedInput";
+import NumberOfTracksInput from "./NumberOfTracksInput";
 import { SearchArtistResults, SearchTrackResults } from "spotify/types";
 import { spotify } from "spotify/api";
 
 export type LabFormValues = {
-  [key: string]: string; // FIXME: typescript hack to allow computed key values
+  [key: string]: any; // FIXME: typescript hack to allow computed key values
   artists: string;
   tracks: string;
   genres: string;
+  numberOfTracks?: number;
 };
 
 type LabFormProps = {
@@ -31,8 +33,13 @@ const validate = (values: { [key: string]: any }) => {
 
 const LabForm = (props: LabFormProps) => (
   <Formik
-    initialValues={{ artists: "", tracks: "", genres: "" }}
-    validate={validate}
+    initialValues={{
+      artists: "",
+      tracks: "",
+      genres: "",
+      numberOfTracks: 20
+    }}
+    // validate={validate}
     onSubmit={(values, { setSubmitting }) => {
       setTimeout(() => {
         props.onSubmit(values);
@@ -76,6 +83,8 @@ const LabForm = (props: LabFormProps) => (
             getSuggestions={searchForGenre}
             suggestionKey={item => ({ key: item, value: item })}
           />
+
+          <NumberOfTracksInput />
 
           <div className="control">
             <button
