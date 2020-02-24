@@ -17,14 +17,15 @@ export default function ArtistCard(props: ArtistCardProps) {
           {props.name}
         </p>
       </header>
-      {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
-      <a>
-        <div className="card-image" onClick={onClick}>
-          <figure className="image is-square">
-            <img src={image.url} alt={name} />
-          </figure>
-        </div>
-      </a>
+      <div
+        className="card-image"
+        onClick={onClick}
+        style={{ cursor: "pointer" }}
+      >
+        <figure className="image is-square">
+          <img src={image.url} alt={name} />
+        </figure>
+      </div>
     </div>
   );
 }
