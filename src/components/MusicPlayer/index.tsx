@@ -2,7 +2,6 @@ import React from "react";
 
 import "./index.css";
 import { useMusicPlayer } from "./Context";
-import { Container, Button } from "react-bulma-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPause, faPlay } from "@fortawesome/free-solid-svg-icons";
 import PlayQueue from "./PlayQueue";
@@ -17,7 +16,7 @@ export default function MusicPlayer() {
     const albumArt =
       currentTrack.album.images[currentTrack.album.images.length - 1];
     contents = (
-      <Container className="level">
+      <div className="container level">
         <div className="level-item level-left">
           <div className="level-item" style={{ justifyContent: "flex-start" }}>
             <img
@@ -31,19 +30,19 @@ export default function MusicPlayer() {
         </div>
         <div className="level-item">
           {isPlaying ? (
-            <Button onClick={pause}>
+            <button className="button" onClick={pause}>
               <FontAwesomeIcon className="icon" icon={faPause} />
-            </Button>
+            </button>
           ) : (
-            <Button onClick={play}>
+            <button className="button" onClick={play}>
               <FontAwesomeIcon className="icon" icon={faPlay} />
-            </Button>
+            </button>
           )}
         </div>
         <div className="level-item level-right">
           <PlayQueue queue={playQueue} currentIndex={2} />
         </div>
-      </Container>
+      </div>
     );
   }
   return <div className="MusicPlayer">{contents}</div>;

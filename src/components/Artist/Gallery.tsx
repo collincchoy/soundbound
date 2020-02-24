@@ -1,11 +1,10 @@
 import React, { useState } from "react";
-import "react-bulma-components/dist/react-bulma-components.min.css";
-import { Image, Tag, Container } from "react-bulma-components";
 
 import { Artist } from "../../spotify/types";
 import { CardGallery } from "../CardGallery";
 import ArtistCard from "./Card";
 import { ArtistModal } from "./Modal";
+import Image from "../Image";
 
 export type ArtistGalleryProps = {
   artists: Artist[];
@@ -32,7 +31,7 @@ export default function ArtistGallery(props: ArtistGalleryProps) {
     />
   );
   return (
-    <Container>
+    <div className="container">
       <CardGallery
         items={artists}
         renderItem={renderArtist}
@@ -50,9 +49,9 @@ export default function ArtistGallery(props: ArtistGalleryProps) {
         <div className="tags">
           {artistOnDisplay &&
             artistOnDisplay?.genres.map(genre => (
-              <Tag color="dark" key={genre}>
+              <span className="tag is-dark" key={genre}>
                 {genre}
-              </Tag>
+              </span>
             ))}
         </div>
         <p>
@@ -63,6 +62,6 @@ export default function ArtistGallery(props: ArtistGalleryProps) {
           alt="Large Profile"
         />
       </ArtistModal>
-    </Container>
+    </div>
   );
 }

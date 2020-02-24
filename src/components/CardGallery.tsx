@@ -1,6 +1,4 @@
 import React from "react";
-import "react-bulma-components/dist/react-bulma-components.min.css";
-import { Columns } from "react-bulma-components";
 import InfiniteScroll from "react-infinite-scroller";
 
 type CardGalleryProps<T> = {
@@ -15,13 +13,13 @@ export function CardGallery<ItemType>(props: CardGalleryProps<ItemType>) {
   const { items, renderItem, renderKey, loadFunc, hasMore = true } = props;
 
   let content = (
-    <Columns>
+    <div className="columns is-multiline">
       {items.map(item => (
-        <Columns.Column size={"one-fifth"} key={renderKey(item)}>
+        <div className="column is-one-fifth" key={renderKey(item)}>
           {renderItem(item)}
-        </Columns.Column>
+        </div>
       ))}
-    </Columns>
+    </div>
   );
   return loadFunc ? (
     <InfiniteScroll

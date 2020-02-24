@@ -1,4 +1,5 @@
 import React from "react";
+import "react-bulma-components/dist/react-bulma-components.min.css";
 import { MusicPlayerProvider } from "./components/MusicPlayer/Context";
 import NavBar from "./components/Nav/Bar";
 import { LoginContextProvider } from "./hooks";
@@ -30,7 +31,8 @@ function App() {
               <TopTracksPage />
             </Route>
             <Route path="/">
-              <Redirect to="/top/artists" />
+              <TopArtistsPage />
+              {/* <Redirect to="/top/artists" /> Note: this breaks auth flow - race condition in token parsing and this redirect*/}
             </Route>
           </Switch>
           <MusicPlayer />

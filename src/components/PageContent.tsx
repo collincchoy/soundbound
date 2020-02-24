@@ -1,7 +1,7 @@
 import React from "react";
 
 const styles = {
-  "min-height": "100vh",
+  minHeight: "100vh",
   paddingTop: "20px",
   /*Account for music player(80px) + 20px*/
   paddingBottom: "100px",

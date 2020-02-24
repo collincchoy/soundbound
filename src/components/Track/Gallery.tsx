@@ -1,5 +1,4 @@
 import React from "react";
-import "react-bulma-components/dist/react-bulma-components.min.css";
 
 import { Track } from "../../spotify/types";
 import { CardGallery } from "../CardGallery";

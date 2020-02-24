@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { Track } from "../../spotify/types";
-import { Button } from "react-bulma-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faList } from "@fortawesome/free-solid-svg-icons";
 
@@ -16,9 +15,9 @@ export default function PlayQueue({
   right = true
 }: PlayQueueProps) {
   const renderQueueButton = () => (
-    <Button>
+    <button className="button">
       <FontAwesomeIcon className="icon" icon={faList} />
-    </Button>
+    </button>
   );
   return (
     <DropUpList<Track>

@@ -1,6 +1,4 @@
 import React from "react";
-import "react-bulma-components/dist/react-bulma-components.min.css";
-import { Card } from "react-bulma-components";
 
 import { ArtistImage } from "../../spotify/types";
 
@@ -11,22 +9,22 @@ type ArtistCardProps = {
 };
 
 export default function ArtistCard(props: ArtistCardProps) {
-  const { name, image } = props;
+  const { name, image, onClick } = props;
   return (
-    <Card>
-      <Card.Header>
-        <Card.Header.Title
-          className="has-text-centered"
-          style={{ justifyContent: "center" }}
-        >
-          {/* <Heading size={4}>{props.name}</Heading> */}
+    <div className="card">
+      <header className="card-header">
+        <p className="card-header-title" style={{ justifyContent: "center" }}>
           {props.name}
-        </Card.Header.Title>
-      </Card.Header>
+        </p>
+      </header>
       {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
       <a>
-        <Card.Image {...props} src={image.url} alt={name} size="square" />
+        <div className="card-image" onClick={onClick}>
+          <figure className="image is-square">
+            <img src={image.url} alt={name} />
+          </figure>
+        </div>
       </a>
-    </Card>
+    </div>
   );
 }
