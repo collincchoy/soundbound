@@ -7,12 +7,14 @@ type NumberInputProps = {
   defaultValue?: number;
   minValue?: number;
   maxValue?: number;
+  width?: number;
 };
 
 export default function NumberInput({
   name,
   label,
   defaultValue,
+  width,
   ...props
 }: NumberInputProps) {
   const validate = (value: number) => {
@@ -25,7 +27,7 @@ export default function NumberInput({
     }
   };
   return (
-    <div className="field is-horizontal">
+    <div className="field is-horizontal" style={{ width: "8em" }}>
       <div className="field-label is-normal">
         <label htmlFor={name} className="label">
           {label}

@@ -1,10 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 import styles from "./Form.module.css";
 import { Formik } from "formik";
 import SeedInput from "./SeedInput";
 import NumberOfTracksInput from "./NumberOfTracksInput";
 import { SearchArtistResults, SearchTrackResults } from "spotify/types";
 import { spotify } from "spotify/api";
+import AdvancedTuner from "./AdvancedTuner";
+import { trackAttributes } from "../../spotify/constants";
 
 export type LabFormValues = {
   [key: string]: any; // FIXME: typescript hack to allow computed key values
@@ -31,77 +33,97 @@ const validate = (values: { [key: string]: any }) => {
   return errors;
 };
 
-const LabForm = (props: LabFormProps) => (
-  <Formik
-    initialValues={{
-      artists: "",
-      tracks: "",
-      genres: "",
-      numberOfTracks: 20
-    }}
-    // validate={validate}
-    onSubmit={(values, { setSubmitting }) => {
-      setTimeout(() => {
-        props.onSubmit(values);
-        setSubmitting(false);
-      }, 400);
-    }}
-  >
-    {({
-      values,
-      errors,
-      touched,
-      handleChange,
-      handleBlur,
-      handleSubmit,
-      isSubmitting
-      /* and other goodies */
-    }) => (
-      <div className={`container has-background-light ${styles.content}`}>
-        <div className="content">
-          <p>Tune your own playlist generator here!</p>
-        </div>
-        <form onSubmit={handleSubmit}>
-          <SeedInput
-            name="artists"
-            getSuggestions={searchForArtist}
-            suggestionKey={(item: any) => ({
-              key: item.id,
-              value: item.name
-            })}
-          />
-          <SeedInput
-            name="tracks"
-            getSuggestions={searchForTrack}
-            suggestionKey={(item: any) => ({
-              key: item.id,
-              value: item.name
-            })}
-          />
-          <SeedInput
-            name="genres"
-            getSuggestions={searchForGenre}
-            suggestionKey={item => ({ key: item, value: item })}
-          />
-
-          <NumberOfTracksInput />
-
-          <div className="control">
-            <button
-              type="submit"
-              disabled={isSubmitting}
-              className={`button is-primary ${
-                isSubmitting ? "is-loading" : ""
-              }`}
-            >
-              Submit
-            </button>
+const LabForm = (props: LabFormProps) => {
+  const [showTuners, setShowTuners] = useState(false);
+  const handleClick = () => {
+    setShowTuners(!showTuners);
+  };
+  return (
+    <Formik
+      initialValues={{
+        artists: "",
+        tracks: "",
+        genres: "",
+        numberOfTracks: 20
+      }}
+      // validate={validate}
+      onSubmit={(values, { setSubmitting }) => {
+        setTimeout(() => {
+          props.onSubmit(values);
+          setSubmitting(false);
+        }, 400);
+      }}
+    >
+      {({
+        values,
+        errors,
+        touched,
+        handleChange,
+        handleBlur,
+        handleSubmit,
+        isSubmitting
+        /* and other goodies */
+      }) => (
+        <div className={`container has-background-light ${styles.content}`}>
+          <div className="content">
+            <p>Tune your own playlist generator here!</p>
           </div>
-        </form>
-      </div>
-    )}
-  </Formik>
-);
+          <form onSubmit={handleSubmit}>
+            <SeedInput
+              name="artists"
+              getSuggestions={searchForArtist}
+              suggestionKey={(item: any) => ({
+                key: item.id,
+                value: item.name
+              })}
+            />
+            <SeedInput
+              name="tracks"
+              getSuggestions={searchForTrack}
+              suggestionKey={(item: any) => ({
+                key: item.id,
+                value: item.name
+              })}
+            />
+            <SeedInput
+              name="genres"
+              getSuggestions={searchForGenre}
+              suggestionKey={item => ({ key: item, value: item })}
+            />
+
+            <NumberOfTracksInput />
+
+            <div
+              className={styles.advancedTuning}
+              style={showTuners ? {} : { display: "none" }}
+            >
+              {trackAttributes.map((attribute: any) => (
+                <AdvancedTuner {...attribute} />
+              ))}
+            </div>
+
+            <div className="field is-grouped">
+              <div className="control">
+                <button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className={`button is-primary ${
+                    isSubmitting ? "is-loading" : ""
+                  }`}
+                >
+                  Submit
+                </button>
+              </div>
+              <button className="button" type="button" onClick={handleClick}>
+                Advanced Tuning
+              </button>
+            </div>
+          </form>
+        </div>
+      )}
+    </Formik>
+  );
+};
 
 async function searchForArtist(artistName: string) {
   const params = {

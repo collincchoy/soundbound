@@ -2,3 +2,9 @@
   border-radius: 6px;
   padding: 10px;
 }
+
+.advancedTuning {
+  border: solid 1px black;
+  padding: 10px;
+  display: flex;
+}
