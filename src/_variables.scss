@@ -26,6 +26,9 @@ $control-border-width: 2px;
 $input-border-color: transparent;
 $input-shadow: none;
 
+@import "~bulma/sass/utilities/initial-variables.sass";
+$navbar-breakpoint: $tablet;
+
 // Import only what you need from Bulma
 // @import "../node_modules/bulma/sass/utilities/_all.sass";
 // @import "../node_modules/bulma/sass/base/_all.sass";
