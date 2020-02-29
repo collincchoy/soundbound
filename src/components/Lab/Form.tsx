@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import styles from "./Form.module.css";
+import classes from "./Form.module.css";
 import { Formik } from "formik";
 import SeedInput from "./SeedInput";
 import NumberOfTracksInput from "./NumberOfTracksInput";
@@ -64,7 +64,7 @@ const LabForm = (props: LabFormProps) => {
         isSubmitting
         /* and other goodies */
       }) => (
-        <div className={`container has-background-light ${styles.content}`}>
+        <div className={`container has-background-light ${classes.content}`}>
           <div className="content">
             <p>Tune your own playlist generator here!</p>
           </div>
@@ -94,7 +94,7 @@ const LabForm = (props: LabFormProps) => {
             <NumberOfTracksInput />
 
             <div
-              className={styles.advancedTuning}
+              className={classes.advancedTuning}
               style={showTuners ? {} : { display: "none" }}
             >
               {trackAttributes.map((attribute: any) => (

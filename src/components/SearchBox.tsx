@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import styles from "./SearchBox.module.css";
+import classes from "./SearchBox.module.css";
 import { useField } from "formik";
 
 type SearchBoxProps<T> = {
@@ -48,7 +48,7 @@ export default function SearchBox<T>({
 
   return (
     <div
-      className={`control ${styles.searchbox} ${
+      className={`control ${classes.searchbox} ${
         isSearching ? "is-loading" : ""
       }`}
     >
@@ -92,15 +92,15 @@ export default function SearchBox<T>({
       />
       {suggestions.length > 0 ? (
         <ol
-          className={styles.suggestions}
+          className={classes.suggestions}
           onMouseOut={() => setSelectedSuggestionIndex(-1)}
         >
           {suggestions.map((item: any, index: number) => {
             const { key, value } = suggestionKey(item);
             return (
               <li
-                className={`${styles.suggestion} ${
-                  index === selectedSuggestionIndex ? styles.hover : ""
+                className={`${classes.suggestion} ${
+                  index === selectedSuggestionIndex ? classes.hover : ""
                 }`}
                 key={key}
                 onClick={() => selectItem(value)}
