@@ -10,6 +10,7 @@
   border-top: 3px solid darkgray;
   background-color: #282c34;
   color: whitesmoke;
+  z-index: 100;
 }
 
 .MusicPlayer .level .level-item {
