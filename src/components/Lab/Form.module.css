@@ -8,3 +8,7 @@
   padding: 10px;
   display: flex;
 }
+
+.advancedTuner {
+  flex: 1;
+}

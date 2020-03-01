@@ -1,36 +1,25 @@
 import React, { useState } from "react";
 import classes from "./Form.module.css";
-import { Formik } from "formik";
+import { Formik, Form } from "formik";
 import SeedInput from "./SeedInput";
 import NumberOfTracksInput from "./NumberOfTracksInput";
 import { SearchArtistResults, SearchTrackResults } from "spotify/types";
 import { spotify } from "spotify/api";
 import AdvancedTuner from "./AdvancedTuner";
-import { trackAttributes } from "../../spotify/constants";
+import { trackAttributes, TrackAttribute } from "../../spotify/constants";
 
 export type LabFormValues = {
-  [key: string]: any; // FIXME: typescript hack to allow computed key values
   artists: string;
   tracks: string;
   genres: string;
-  numberOfTracks?: number;
+  numberOfTracks: number;
+  /* Advanced Tuning Values */
+  danceability?: TrackAttribute;
+  loudness?: TrackAttribute;
 };
 
 type LabFormProps = {
   onSubmit: (values: LabFormValues) => void;
-};
-
-const validate = (values: { [key: string]: any }) => {
-  const errors = {};
-  // const errors: { email?: string } = {};
-  // if (!values.email) {
-  //   errors.email = "Required";
-  // } else if (
-  //   !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)
-  // ) {
-  //   errors.email = "Invalid email address";
-  // }
-  return errors;
 };
 
 const LabForm = (props: LabFormProps) => {
@@ -39,36 +28,29 @@ const LabForm = (props: LabFormProps) => {
     setShowTuners(!showTuners);
   };
   return (
-    <Formik
-      initialValues={{
-        artists: "",
-        tracks: "",
-        genres: "",
-        numberOfTracks: 20
-      }}
-      // validate={validate}
-      onSubmit={(values, { setSubmitting }) => {
-        setTimeout(() => {
-          props.onSubmit(values);
-          setSubmitting(false);
-        }, 400);
-      }}
-    >
-      {({
-        values,
-        errors,
-        touched,
-        handleChange,
-        handleBlur,
-        handleSubmit,
-        isSubmitting
-        /* and other goodies */
-      }) => (
-        <div className={`container has-background-light ${classes.content}`}>
-          <div className="content">
-            <p>Tune your own playlist generator here!</p>
-          </div>
-          <form onSubmit={handleSubmit}>
+    <div className={`container has-background-light ${classes.content}`}>
+      <div className="content">
+        <p>Tune your own playlist generator here!</p>
+      </div>
+      <Formik
+        initialValues={{
+          artists: "",
+          tracks: "",
+          genres: "",
+          numberOfTracks: 20,
+          /* Advanced Tuning Values */
+          danceability: undefined,
+          loudness: undefined
+        }}
+        // validate={validate}
+        onSubmit={(values, { setSubmitting }) => {
+          setTimeout(() => {
+            props.onSubmit(values);
+            setSubmitting(false);
+          }, 400);
+        }}
+        render={formProps => (
+          <Form>
             <SeedInput
               name="artists"
               getSuggestions={searchForArtist}
@@ -94,11 +76,14 @@ const LabForm = (props: LabFormProps) => {
             <NumberOfTracksInput />
 
             <div
-              className={classes.advancedTuning}
-              style={showTuners ? {} : { display: "none" }}
+              className={`${classes.advancedTuning} ${!showTuners &&
+                "is-hidden"}`}
             >
-              {trackAttributes.map((attribute: any) => (
-                <AdvancedTuner {...attribute} />
+              {trackAttributes.map(attribute => (
+                <AdvancedTuner
+                  className={classes.advancedTuner}
+                  {...attribute}
+                />
               ))}
             </div>
 
@@ -106,9 +91,9 @@ const LabForm = (props: LabFormProps) => {
               <div className="control">
                 <button
                   type="submit"
-                  disabled={isSubmitting}
+                  disabled={formProps.isSubmitting}
                   className={`button is-primary ${
-                    isSubmitting ? "is-loading" : ""
+                    formProps.isSubmitting ? "is-loading" : ""
                   }`}
                 >
                   Submit
@@ -118,10 +103,10 @@ const LabForm = (props: LabFormProps) => {
                 Advanced Tuning
               </button>
             </div>
-          </form>
-        </div>
-      )}
-    </Formik>
+          </Form>
+        )}
+      />
+    </div>
   );
 };
 

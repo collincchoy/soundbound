@@ -8,6 +8,7 @@ import {
   RecommendationsQuery
 } from "../spotify/types";
 import LabResults from "components/Lab/Results";
+import { trackAttributes, TrackAttribute } from "spotify/constants";
 
 async function getArtistId(artistName: string) {
   const params = {
@@ -37,28 +38,35 @@ async function getTrackId(trackName: string) {
 
 async function formToQuery(values: LabFormValues) {
   const query: { [key: string]: string } = {};
-  const seedValues = ["artists", "tracks", "genres"]; // FIXME: convert to string enum
   const waitFors: { key: string; val: Promise<any> }[] = [];
-  for (const seedValue of seedValues) {
-    if (values[seedValue].length > 0) {
-      if (seedValue === "artists" || seedValue === "tracks") {
-        waitFors.push({
-          key: seedValue,
-          val:
-            seedValue === "artists"
-              ? getArtistId(values[seedValue])
-              : getTrackId(values[seedValue])
-        });
-      } else {
-        query[`seed_${seedValue}`] = values[seedValue];
-      }
-    }
+
+  /* Seed inputs */
+  if (values.artists.length > 0) {
+    waitFors.push({ key: "artists", val: getArtistId(values.artists) });
+  }
+  if (values.tracks.length > 0) {
+    waitFors.push({ key: "tracks", val: getTrackId(values.tracks) });
+  }
+  if (values.genres.length > 0) {
+    query.seed_genres = values.genres;
   }
 
   if (values.numberOfTracks) {
     query.limit = values.numberOfTracks.toString();
   }
 
+  /* Advanced Tuning Inputs */
+  trackAttributes.forEach(attribute => {
+    const tunedValue: TrackAttribute | undefined = (values as any)[
+      attribute.name
+    ];
+    if (tunedValue !== undefined) {
+      query[`min_${attribute.name}`] = tunedValue.minValue.toString();
+      query[`max_${attribute.name}`] = tunedValue.maxValue.toString();
+    }
+  });
+
+  // Do this at the end to take adv of async
   if (waitFors.length > 0) {
     for (const { key, val } of waitFors) {
       query[`seed_${key}`] = await val;

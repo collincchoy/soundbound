@@ -14,9 +14,7 @@ export default function SearchBox<T>({
   ...props
 }: SearchBoxProps<T>) {
   const [isSearching, setIsSearching] = useState(false);
-  const [selectedSuggestionIndex, setSelectedSuggestionIndex] = useState<
-    number
-  >(-1);
+  const [selectedSuggestionIndex, setSelectedSuggestionIndex] = useState(-1);
   const [suggestions, setSuggestions] = useState<T[]>([]);
   const clearSuggestions = () => {
     setSuggestions([]);
@@ -45,6 +43,35 @@ export default function SearchBox<T>({
     helpers.setValue(value);
     clearSuggestions();
   };
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    switch (e.key) {
+      case "ArrowUp": {
+        e.preventDefault(); // Moves cursor to start of input box
+        if (selectedSuggestionIndex > -1)
+          setSelectedSuggestionIndex(selectedSuggestionIndex - 1);
+        break;
+      }
+      case "ArrowDown": {
+        // Note: do not preventDefault here b/c moves cursor to end of input box is useful
+        if (selectedSuggestionIndex < suggestions.length)
+          setSelectedSuggestionIndex(selectedSuggestionIndex + 1);
+        break;
+      }
+      case "Enter": {
+        if (
+          -1 < selectedSuggestionIndex &&
+          selectedSuggestionIndex < suggestions.length
+        ) {
+          e.preventDefault(); // Do not submit form
+          const { value } = suggestionKey(suggestions[selectedSuggestionIndex]);
+          selectItem(value);
+        }
+        break;
+      }
+      default: {
+      }
+    }
+  };
 
   return (
     <div
@@ -57,37 +84,7 @@ export default function SearchBox<T>({
         {...props}
         onChange={handleChange}
         onBlur={handleBlur}
-        onKeyDown={(e: React.KeyboardEvent) => {
-          switch (e.key) {
-            case "ArrowUp": {
-              e.preventDefault(); // Moves cursor to start of input box
-              if (selectedSuggestionIndex > -1)
-                setSelectedSuggestionIndex(selectedSuggestionIndex - 1);
-              break;
-            }
-            case "ArrowDown": {
-              // Note: do not preventDefault here b/c moves cursor to end of input box is useful
-              if (selectedSuggestionIndex < suggestions.length)
-                setSelectedSuggestionIndex(selectedSuggestionIndex + 1);
-              break;
-            }
-            case "Enter": {
-              if (
-                -1 < selectedSuggestionIndex &&
-                selectedSuggestionIndex < suggestions.length
-              ) {
-                e.preventDefault(); // Do not submit form
-                const { value } = suggestionKey(
-                  suggestions[selectedSuggestionIndex]
-                );
-                selectItem(value);
-              }
-              break;
-            }
-            default: {
-            }
-          }
-        }}
+        onKeyDown={handleKeyDown}
         autoComplete="off"
       />
       {suggestions.length > 0 ? (
