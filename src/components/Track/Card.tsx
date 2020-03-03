@@ -9,13 +9,13 @@ import {
 import { Track } from "../../spotify/types";
 import { useMusicPlayer } from "../MusicPlayer/Context";
 import Image from "components/Image";
+import { useOverflowTextHandler } from "hooks";
 
 export type TrackCardProps = {
   track: Track;
 };
 
 export default function TrackCard(props: TrackCardProps) {
-  console.log("rendering a track");
   const { name, artists, href, id, album, popularity } = props.track;
   const {
     currentTrack,
@@ -39,13 +39,27 @@ export default function TrackCard(props: TrackCardProps) {
     }
   }
 
+  const { hasOverflowingText, elRef } = useOverflowTextHandler<
+    HTMLAnchorElement
+  >();
+
   return (
     <div className="card">
       <header className="card-header">
-        <p className="card-header-title">
-          <a href={href}>{name}</a>
+        <p className="card-header-title" style={{ paddingRight: "0.25em" }}>
+          <a
+            href={href}
+            ref={elRef}
+            className={`scroll-on-overflow ${
+              hasOverflowingText ? "overflowing" : ""
+            }`}
+          >
+            {name}
+          </a>
         </p>
-        <span className="card-header-icon">{popularity}</span>
+        <span className="card-header-icon" style={{ paddingLeft: 0 }}>
+          {popularity}
+        </span>
       </header>
       <div className="card-image">
         <Image
@@ -61,7 +75,11 @@ export default function TrackCard(props: TrackCardProps) {
       </div>
       <footer className="card-footer">
         <div className="card-footer-item">
-          <button className="button" onClick={() => togglePlayTrack()}>
+          <button
+            className="button"
+            onClick={() => togglePlayTrack()}
+            disabled={!props.track.preview_url}
+          >
             {currentTrack && currentTrack.id === id && isPlaying ? (
               <FontAwesomeIcon icon={faPause} />
             ) : (
@@ -71,6 +89,7 @@ export default function TrackCard(props: TrackCardProps) {
           <button
             className="button"
             onClick={() => addToPlayQueue(props.track)}
+            disabled={!props.track.preview_url}
           >
             <FontAwesomeIcon icon={faPlusCircle} />
           </button>

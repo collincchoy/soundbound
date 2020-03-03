@@ -1,6 +1,7 @@
 import React from "react";
 
 import { ArtistImage } from "../../spotify/types";
+import { useOverflowTextHandler } from "hooks";
 
 type ArtistCardProps = {
   name: string;
@@ -8,14 +9,23 @@ type ArtistCardProps = {
   onClick?: () => void;
 };
 
-export default function ArtistCard(props: ArtistCardProps) {
-  const { name, image, onClick } = props;
+export default function ArtistCard({ name, image, onClick }: ArtistCardProps) {
+  const { hasOverflowingText, elRef } = useOverflowTextHandler<
+    HTMLParagraphElement
+  >();
   return (
     <div className="card">
       <header className="card-header">
-        <p className="card-header-title" style={{ justifyContent: "center" }}>
-          {props.name}
-        </p>
+        <div className="card-header-title">
+          <p
+            ref={elRef}
+            className={`has-text-centered scroll-on-overflow ${
+              hasOverflowingText ? "overflowing" : ""
+            }`}
+          >
+            {name}
+          </p>
+        </div>
       </header>
       <div
         className="card-image"

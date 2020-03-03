@@ -27,14 +27,14 @@ export default function NumberInput({
     }
   };
   return (
-    <div className="field is-horizontal" style={{ width: "8em" }}>
+    <div className="field is-horizontal">
       <div className="field-label is-normal">
         <label htmlFor={name} className="label">
           {label}
         </label>
       </div>
       <div className="field-body">
-        <div className="control">
+        <div className="control" style={{ width: "5em" }}>
           <Field
             name={name}
             className="input"
