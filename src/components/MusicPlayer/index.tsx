@@ -1,6 +1,6 @@
 import React from "react";
 
-import "./index.css";
+import classes from "./index.module.css";
 import { useMusicPlayer } from "./Context";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPause, faPlay } from "@fortawesome/free-solid-svg-icons";
@@ -45,5 +45,5 @@ export default function MusicPlayer() {
       </div>
     );
   }
-  return <div className="MusicPlayer">{contents}</div>;
+  return <div className={classes.MusicPlayer}>{contents}</div>;
 }

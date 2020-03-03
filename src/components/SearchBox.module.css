@@ -4,7 +4,7 @@
 
 .suggestions {
   position: absolute;
-  z-index: 2;
+  z-index: 400;
   background-color: hsl(0, 0%, 90%);
   list-style-type: none;
   border-radius: 5px;

@@ -11,7 +11,7 @@ export default function SpotifyErrorMessage(props: {
     <div className="container">
       {status === 401 ? (
         <span>
-          Oops you need to authorize this app
+          Oops you need to authorize this app&nbsp;
           <a href={spotify.authorizeUrl.toString()}>Click here to authorize.</a>
         </span>
       ) : (

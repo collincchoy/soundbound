@@ -14,6 +14,7 @@
     "bulma": "^0.8.0",
     "formik": "^2.1.4",
     "react": "^16.10.2",
+    "react-compound-slider": "^2.5.0",
     "react-dom": "^16.10.2",
     "react-infinite-scroller": "^1.2.4",
     "react-router-dom": "^5.1.2",
