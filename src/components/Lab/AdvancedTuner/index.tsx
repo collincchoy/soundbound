@@ -1,6 +1,6 @@
 import React from "react";
 import TextWithHelp from "components/TextWithHelp";
-import { Slider, Rail, Handles, Tracks, Ticks } from "react-compound-slider";
+import { Slider, Rail, Handles, Tracks } from "react-compound-slider";
 import classes from "./index.module.css";
 import Handle from "./Handle";
 import Track from "./Track";

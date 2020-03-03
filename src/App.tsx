@@ -6,8 +6,8 @@ import { LoginContextProvider } from "./hooks";
 import {
   BrowserRouter as Router,
   Switch,
-  Route,
-  Redirect
+  Route
+  // Redirect
 } from "react-router-dom";
 import MusicPlayer from "./components/MusicPlayer";
 import TopArtistsPage from "./pages/Top/Artists";
