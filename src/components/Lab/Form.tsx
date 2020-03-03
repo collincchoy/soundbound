@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import classes from "./Form.module.css";
 import { Formik, Form } from "formik";
 import SeedInput from "./SeedInput";
@@ -23,10 +23,6 @@ type LabFormProps = {
 };
 
 const LabForm = (props: LabFormProps) => {
-  const [showTuners, setShowTuners] = useState(false);
-  const handleClick = () => {
-    setShowTuners(!showTuners);
-  };
   return (
     <div className={`container has-background-light ${classes.content}`}>
       <div className="content">
@@ -75,10 +71,7 @@ const LabForm = (props: LabFormProps) => {
 
             <NumberOfTracksInput />
 
-            <div
-              className={`${classes.advancedTuning} ${!showTuners &&
-                "is-hidden"}`}
-            >
+            <div className={`field ${classes.advancedTuning}`}>
               {trackAttributes.map(attribute => (
                 <AdvancedTuner
                   className={classes.advancedTuner}
@@ -99,9 +92,11 @@ const LabForm = (props: LabFormProps) => {
                   Submit
                 </button>
               </div>
-              <button className="button" type="button" onClick={handleClick}>
-                Advanced Tuning
-              </button>
+              <div className="control">
+                <button className="button is-danger" type="reset">
+                  Reset
+                </button>
+              </div>
             </div>
           </Form>
         )}
