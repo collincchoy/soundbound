@@ -1,8 +1,8 @@
 import React from "react";
 import classes from "./Form.module.css";
 import { Formik, Form } from "formik";
-import SeedInput from "./SeedInput";
-import NumberOfTracksInput from "./NumberOfTracksInput";
+import SearchableInput from "./SearchableInput";
+import NumberInput from "components/NumberInput";
 import { SearchArtistResults, SearchTrackResults } from "spotify/types";
 import { spotify } from "spotify/api";
 import AdvancedTuner from "./AdvancedTuner";
@@ -23,6 +23,7 @@ type LabFormProps = {
 };
 
 const LabForm = (props: LabFormProps) => {
+  const DEFAULT_NUM_TRACKS = 20;
   return (
     <div className={`container has-background-light ${classes.content}`}>
       <div className="content">
@@ -33,7 +34,7 @@ const LabForm = (props: LabFormProps) => {
           artists: "",
           tracks: "",
           genres: "",
-          numberOfTracks: 20,
+          numberOfTracks: DEFAULT_NUM_TRACKS,
           /* Advanced Tuning Values */
           danceability: undefined,
           loudness: undefined
@@ -45,9 +46,10 @@ const LabForm = (props: LabFormProps) => {
             setSubmitting(false);
           }, 400);
         }}
-        render={formProps => (
+      >
+        {formProps => (
           <Form>
-            <SeedInput
+            <SearchableInput
               name="artists"
               getSuggestions={searchForArtist}
               suggestionKey={(item: any) => ({
@@ -55,7 +57,7 @@ const LabForm = (props: LabFormProps) => {
                 value: item.name
               })}
             />
-            <SeedInput
+            <SearchableInput
               name="tracks"
               getSuggestions={searchForTrack}
               suggestionKey={(item: any) => ({
@@ -63,17 +65,24 @@ const LabForm = (props: LabFormProps) => {
                 value: item.name
               })}
             />
-            <SeedInput
+            <SearchableInput
               name="genres"
               getSuggestions={searchForGenre}
               suggestionKey={item => ({ key: item, value: item })}
             />
 
-            <NumberOfTracksInput />
+            <NumberInput
+              name="numberOfTracks"
+              label="# of tracks"
+              defaultValue={DEFAULT_NUM_TRACKS}
+              minValue={1}
+              maxValue={100}
+            />
 
             <div className={`field ${classes.advancedTuning}`}>
               {trackAttributes.map(attribute => (
                 <AdvancedTuner
+                  key={attribute.name}
                   className={classes.advancedTuner}
                   {...attribute}
                 />
@@ -85,9 +94,8 @@ const LabForm = (props: LabFormProps) => {
                 <button
                   type="submit"
                   disabled={formProps.isSubmitting}
-                  className={`button is-primary ${
-                    formProps.isSubmitting ? "is-loading" : ""
-                  }`}
+                  className={`button is-primary ${formProps.isSubmitting &&
+                    "is-loading"}`}
                 >
                   Submit
                 </button>
@@ -100,7 +108,7 @@ const LabForm = (props: LabFormProps) => {
             </div>
           </Form>
         )}
-      />
+      </Formik>
     </div>
   );
 };

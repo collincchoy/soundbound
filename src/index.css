@@ -16,8 +16,8 @@ code {
   border-radius: 5px;
 }
 
-/* Card header overflow styles */
-.card-header-title {
+/* scrolling text overflow styles */
+.overflow-container {
   overflow: hidden;
 }
 

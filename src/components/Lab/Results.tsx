@@ -11,16 +11,16 @@ const LabResults = (props: { query: RecommendationsQuery }) => {
     <div style={{ marginTop: "10px" }}>
       {results ? (
         <TrackGallery tracks={results.tracks} />
-      ) : error ? (
-        <article className="message is-danger">
-          <div className="message-header">
-            <p>Error</p>
-            <button className="delete" aria-label="delete"></button>
-          </div>
-          <div className="message-body">{JSON.stringify(error)}</div>
-        </article>
       ) : (
-        ""
+        error && (
+          <article className="message is-danger">
+            <div className="message-header">
+              <p>Error</p>
+              <button className="delete" aria-label="delete"></button>
+            </div>
+            <div className="message-body">{JSON.stringify(error)}</div>
+          </article>
+        )
       )}
     </div>
   );

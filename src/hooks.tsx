@@ -32,11 +32,28 @@ export function useLoginContext() {
 export function useOverflowTextHandler<T extends HTMLElement>() {
   const [hasOverflowingText, setHasOverflowingText] = useState(false);
   const elRef = React.useRef<T>(null);
+  // const elementWidth = elRef?.current?.clientWidth;
+  const [elementWidth, setElementWidth] = useState(0);
   React.useEffect(() => {
-    if (elRef.current !== null && isOverflowing(elRef.current)) {
-      setHasOverflowingText(true);
+    setHasOverflowingText(
+      elRef.current !== null && isOverflowing(elRef.current)
+    );
+    if (elRef.current !== null) {
+      setElementWidth(elRef.current.clientWidth);
+      const handleResize = () => {
+        console.log("hi");
+        if (elRef.current?.clientWidth !== elementWidth) {
+          elRef.current && setElementWidth(elRef.current.clientWidth);
+        }
+      };
+      window.addEventListener("resize", handleResize);
+      return () =>
+        setTimeout(
+          () => window.removeEventListener("resize", handleResize),
+          1000
+        ) && undefined;
     }
-  }, [elRef]);
+  }, [elRef, elementWidth]);
   return {
     hasOverflowingText,
     elRef

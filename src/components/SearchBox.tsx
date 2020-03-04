@@ -75,9 +75,7 @@ export default function SearchBox<T>({
 
   return (
     <div
-      className={`control ${classes.searchbox} ${
-        isSearching ? "is-loading" : ""
-      }`}
+      className={`control ${classes.searchbox} ${isSearching && "is-loading"}`}
     >
       <input
         {...field}
@@ -96,9 +94,8 @@ export default function SearchBox<T>({
             const { key, value } = suggestionKey(item);
             return (
               <li
-                className={`${classes.suggestion} ${
-                  index === selectedSuggestionIndex ? classes.hover : ""
-                }`}
+                className={`${classes.suggestion} ${index ===
+                  selectedSuggestionIndex && classes.hover}`}
                 key={key}
                 onClick={() => selectItem(value)}
                 onMouseDown={
