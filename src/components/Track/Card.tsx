@@ -39,20 +39,32 @@ export default function TrackCard(props: TrackCardProps) {
     }
   }
 
-  const { hasOverflowingText, elRef } = useOverflowTextHandler<
-    HTMLAnchorElement
-  >();
+  const {
+    hasOverflowingText: headerIsOverflowing,
+    elRef: headerElRef
+  } = useOverflowTextHandler<HTMLAnchorElement>();
+
+  const {
+    hasOverflowingText: artistsTextIsOverflowing,
+    elRef: artistTextElRef
+  } = useOverflowTextHandler<HTMLParagraphElement>();
+  const {
+    hasOverflowingText: albumTextIsOverflowing,
+    elRef: albumTextElRef
+  } = useOverflowTextHandler<HTMLParagraphElement>();
 
   return (
     <div className="card">
       <header className="card-header">
-        <p className="card-header-title" style={{ paddingRight: "0.25em" }}>
+        <p
+          className="card-header-title overflow-container"
+          style={{ paddingRight: "0.25em" }}
+        >
           <a
             href={href}
-            ref={elRef}
-            className={`scroll-on-overflow ${
-              hasOverflowingText ? "overflowing" : ""
-            }`}
+            ref={headerElRef}
+            className={`scroll-on-overflow ${headerIsOverflowing &&
+              "overflowing"}`}
           >
             {name}
           </a>
@@ -64,14 +76,32 @@ export default function TrackCard(props: TrackCardProps) {
       <div className="card-image">
         <Image
           className="is-square"
-          src={album.images[1].url}
+          src={album.images[1]?.url}
           alt={album.name}
         />
       </div>
-      <div className="card-content">
-        <span>Artist(s): {artists.map(artist => artist.name).join(", ")}</span>
-        <br />
-        <span>Album: {album.name}</span>
+      <div className="card-content has-text-centered">
+        <div className="overflow-container">
+          Artist(s):
+          <p
+            ref={artistTextElRef}
+            className={`scroll-on-overflow ${artistsTextIsOverflowing &&
+              "overflowing"}`}
+          >
+            {artists.map(artist => artist.name).join(", ")}
+          </p>
+        </div>
+        <div className="overflow-container">
+          Album:
+          <p
+            ref={albumTextElRef}
+            className={`scroll-on-overflow ${
+              albumTextIsOverflowing ? "overflowing" : ""
+            }`}
+          >
+            {album.name}
+          </p>
+        </div>
       </div>
       <footer className="card-footer">
         <div className="card-footer-item">
@@ -80,7 +110,7 @@ export default function TrackCard(props: TrackCardProps) {
             onClick={() => togglePlayTrack()}
             disabled={!props.track.preview_url}
           >
-            {currentTrack && currentTrack.id === id && isPlaying ? (
+            {currentTrack?.id === id && isPlaying ? (
               <FontAwesomeIcon icon={faPause} />
             ) : (
               <FontAwesomeIcon icon={faPlay} />
