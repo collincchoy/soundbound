@@ -2,7 +2,7 @@ import React, { useContext, useState } from "react";
 import { Profile } from "./spotify/types";
 import { useSpotifyApi } from "./spotify/hooks";
 import { spotify } from "./spotify/api";
-import { isOverflowing } from "utilities";
+import { isOverflowing, debounce } from "utilities";
 
 interface ILoginContext {
   currentUser?: Profile;
@@ -46,11 +46,11 @@ export function useOverflowTextHandler<T extends HTMLElement>() {
           elRef.current && setElementWidth(elRef.current.clientWidth);
         }
       };
-      window.addEventListener("resize", handleResize);
+      window.addEventListener("resize", debounce(handleResize, 1500));
       return () =>
         setTimeout(
           () => window.removeEventListener("resize", handleResize),
-          1000
+          50
         ) && undefined;
     }
   }, [elRef, elementWidth]);
