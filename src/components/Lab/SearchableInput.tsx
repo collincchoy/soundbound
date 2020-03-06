@@ -2,17 +2,17 @@ import React from "react";
 import SearchBox from "../SearchBox";
 import { ErrorMessage } from "formik";
 
-type SeedInputProps<T> = {
+type SearchableInputProps<T> = {
   name: string;
   getSuggestions: (inputValue: string) => Promise<T[]>;
   suggestionKey: (item: T) => { key: string; value: string };
 };
 
-export default function SeedInput<T>({
+export default function SearchableInput<T>({
   name,
   getSuggestions,
   ...props
-}: SeedInputProps<T>) {
+}: SearchableInputProps<T>) {
   const displayName = name[0].toUpperCase() + name.slice(1);
   return (
     <div className="field is-horizontal">

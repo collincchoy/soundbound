@@ -85,7 +85,7 @@ export default function LabPage() {
   return (
     <PageContent>
       <LabForm onSubmit={handleSubmit} />
-      {query ? <LabResults query={query} /> : ""}
+      {query && <LabResults query={query} />}
     </PageContent>
   );
 }

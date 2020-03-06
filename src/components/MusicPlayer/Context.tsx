@@ -94,7 +94,7 @@ function MusicPlayerProvider(props: React.PropsWithChildren<any>) {
     player.addEventListener("play", handleOnPlay);
 
     return () => {
-      console.log("CLEANUP!");
+      console.debug("MUSIC PLAYER CLEANUP!");
       player.removeEventListener("ended", handleOnEnd);
       player.removeEventListener("pause", handleOnPause);
       player.removeEventListener("play", handleOnPlay);

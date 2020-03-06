@@ -16,7 +16,7 @@ export default function ArtistCard({ name, image, onClick }: ArtistCardProps) {
   return (
     <div className="card">
       <header className="card-header">
-        <div className="card-header-title">
+        <div className="card-header-title overflow-container">
           <p
             ref={elRef}
             className={`has-text-centered scroll-on-overflow ${

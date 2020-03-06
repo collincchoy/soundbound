@@ -1,5 +1,6 @@
 import React from "react";
 import InfiniteScroll from "react-infinite-scroller";
+import Loader from "./Loader";
 
 type CardGalleryProps<T> = {
   items: T[];
@@ -26,11 +27,7 @@ export function CardGallery<ItemType>(props: CardGalleryProps<ItemType>) {
       pageStart={0}
       loadMore={loadFunc}
       hasMore={hasMore}
-      loader={
-        <div className="loader" key={0}>
-          Loading ...
-        </div>
-      }
+      loader={<Loader key={0} />}
     >
       {content}
     </InfiniteScroll>
