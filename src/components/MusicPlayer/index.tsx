@@ -16,19 +16,20 @@ export default function MusicPlayer() {
     const albumArt =
       currentTrack.album.images[currentTrack.album.images.length - 1];
     contents = (
-      <div className="container level">
-        <div className="level-item level-left">
-          <div className="level-item" style={{ justifyContent: "flex-start" }}>
-            <img
-              src={albumArt.url}
-              alt="Current track album art"
-              width={albumArt.width}
-              height={albumArt.height}
-            />
+      <div className={`container ${classes.flexContainer}`}>
+        <div className={classes.left}>
+          <img
+            src={albumArt.url}
+            alt="Current track album art"
+            width={albumArt.width}
+            height={albumArt.height}
+          />
+          <div className={classes.trackInfo}>
             <p>{currentTrack.name}</p>
+            <p>{currentTrack.artists.map(artist => artist.name).join(", ")}</p>
           </div>
         </div>
-        <div className="level-item">
+        <div className={classes.middle}>
           {isPlaying ? (
             <button className="button" onClick={pause}>
               <FontAwesomeIcon className="icon" icon={faPause} />
@@ -39,7 +40,7 @@ export default function MusicPlayer() {
             </button>
           )}
         </div>
-        <div className="level-item level-right">
+        <div className={classes.right}>
           <PlayQueue queue={playQueue} currentIndex={2} />
         </div>
       </div>
