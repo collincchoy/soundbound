@@ -1,33 +1,26 @@
-import React, { useContext, useState } from "react";
-import { Profile } from "./spotify/types";
-import { useSpotifyApi } from "./spotify/hooks";
-import { spotify } from "./spotify/api";
+import React, { useState } from "react";
+
 import { isOverflowing, debounce } from "utilities";
 
-interface ILoginContext {
-  currentUser?: Profile;
-}
-
-const LoginContext = React.createContext<ILoginContext>({});
-
-export function LoginContextProvider(props: { children: any }) {
-  const { data: profile } = useSpotifyApi<Profile>("/me");
-  return (
-    <LoginContext.Provider value={{ currentUser: profile }}>
-      {props.children}
-    </LoginContext.Provider>
-  );
-}
-
-export function useLoginContext() {
-  const { currentUser } = useContext(LoginContext);
-  return {
-    isLoggedIn: !!currentUser,
-    currentUser,
-    login: spotify.login,
-    logout: spotify.logout
-  };
-}
+const styles: { [key: string]: React.CSSProperties } = {
+  container: {
+    overflow: "hidden"
+  },
+  scrollOnOverflowText: {
+    width: "100%",
+    transition: "transform 1s",
+    whiteSpace: "nowrap",
+    overflow: "hidden",
+    textOverflow: "ellipsis"
+  },
+  scrollOnOverflowText_hover: {
+    overflow: "unset",
+    textOverflow: "unset",
+    width: "unset",
+    transition: "transform 3s linear",
+    transform: "translateX(-100%)"
+  }
+};
 
 export function useOverflowTextHandler<T extends HTMLElement>() {
   const [hasOverflowingText, setHasOverflowingText] = useState(false);
@@ -35,10 +28,8 @@ export function useOverflowTextHandler<T extends HTMLElement>() {
   // const elementWidth = elRef?.current?.clientWidth;
   const [elementWidth, setElementWidth] = useState(0);
   React.useEffect(() => {
-    setHasOverflowingText(
-      elRef.current !== null && isOverflowing(elRef.current)
-    );
     if (elRef.current !== null) {
+      setHasOverflowingText(isOverflowing(elRef.current));
       setElementWidth(elRef.current.clientWidth);
       const handleResize = () => {
         console.log("hi");

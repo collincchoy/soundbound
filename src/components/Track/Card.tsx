@@ -9,7 +9,7 @@ import {
 import { Track } from "../../spotify/types";
 import { useMusicPlayer } from "../MusicPlayer/Context";
 import Image from "components/Image";
-import { useOverflowTextHandler } from "hooks";
+import { useOverflowTextHandler } from "hooks/OverflowTextHandler";
 
 export type TrackCardProps = {
   track: Track;

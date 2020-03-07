@@ -2,7 +2,7 @@ import React from "react";
 import "_variables.scss";
 import { MusicPlayerProvider } from "./components/MusicPlayer/Context";
 import NavBar from "./components/Nav/Bar";
-import { LoginContextProvider } from "./hooks";
+import { LoginContextProvider } from "./hooks/Login";
 import {
   BrowserRouter as Router,
   Switch,

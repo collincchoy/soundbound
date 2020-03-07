@@ -1,7 +1,7 @@
 import React from "react";
 
 import { ArtistImage } from "../../spotify/types";
-import { useOverflowTextHandler } from "hooks";
+import { useOverflowTextHandler } from "hooks/OverflowTextHandler";
 
 type ArtistCardProps = {
   name: string;
