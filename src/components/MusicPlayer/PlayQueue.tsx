@@ -16,7 +16,7 @@ export default function PlayQueue({
 }: PlayQueueProps) {
   const renderQueueButton = () => (
     <button className="button">
-      <FontAwesomeIcon className="icon" icon={faList} />
+      <FontAwesomeIcon icon={faList} />
     </button>
   );
   return (

@@ -2,10 +2,10 @@ import React from "react";
 
 import classes from "./index.module.css";
 import { useMusicPlayer } from "./Context";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPause, faPlay } from "@fortawesome/free-solid-svg-icons";
 import PlayQueue from "./PlayQueue";
 import TrackInfo from "./TrackInfo";
+import PlayButton from "./PlayButton";
+import PauseButton from "./PauseButton";
 
 export default function MusicPlayer() {
   const { currentTrack, isPlaying, pause, play, playQueue } = useMusicPlayer();
@@ -21,13 +21,9 @@ export default function MusicPlayer() {
         </div>
         <div className={classes.middle}>
           {isPlaying ? (
-            <button className="button" onClick={pause}>
-              <FontAwesomeIcon className="icon" icon={faPause} />
-            </button>
+            <PauseButton onClick={pause} />
           ) : (
-            <button className="button" onClick={play}>
-              <FontAwesomeIcon className="icon" icon={faPlay} />
-            </button>
+            <PlayButton onClick={play} />
           )}
         </div>
         <div className={classes.right}>

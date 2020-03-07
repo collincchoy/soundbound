@@ -1,15 +1,13 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faPlay,
-  faPause,
-  faPlusCircle
-} from "@fortawesome/free-solid-svg-icons";
+import { faPlusCircle } from "@fortawesome/free-solid-svg-icons";
 
 import { Track } from "../../spotify/types";
 import { useMusicPlayer } from "../MusicPlayer/Context";
 import Image from "components/Image";
 import { useOverflowTextHandler } from "hooks/OverflowTextHandler";
+import PauseButton from "components/MusicPlayer/PauseButton";
+import PlayButton from "components/MusicPlayer/PlayButton";
 
 export type TrackCardProps = {
   track: Track;
@@ -26,16 +24,24 @@ export default function TrackCard(props: TrackCardProps) {
     addToPlayQueue
   } = useMusicPlayer();
 
-  function togglePlayTrack() {
-    if (currentTrack && currentTrack.id === id) {
+  function renderPlayPauseButton() {
+    const sharedProps = { disabled: !props.track.preview_url };
+    if (currentTrack?.id === id) {
       if (isPlaying) {
-        pause();
+        return <PauseButton onClick={() => pause()} {...sharedProps} />;
       } else {
-        play();
+        return <PlayButton onClick={() => play()} {...sharedProps} />;
       }
     } else {
-      changeTrack(props.track);
-      play();
+      return (
+        <PlayButton
+          onClick={() => {
+            changeTrack(props.track);
+            play();
+          }}
+          {...sharedProps}
+        />
+      );
     }
   }
 
@@ -105,19 +111,10 @@ export default function TrackCard(props: TrackCardProps) {
       </div>
       <footer className="card-footer">
         <div className="card-footer-item">
+          {renderPlayPauseButton()}
           <button
             className="button"
-            onClick={() => togglePlayTrack()}
-            disabled={!props.track.preview_url}
-          >
-            {currentTrack?.id === id && isPlaying ? (
-              <FontAwesomeIcon icon={faPause} />
-            ) : (
-              <FontAwesomeIcon icon={faPlay} />
-            )}
-          </button>
-          <button
-            className="button"
+            title="Add to queue"
             onClick={() => addToPlayQueue(props.track)}
             disabled={!props.track.preview_url}
           >
