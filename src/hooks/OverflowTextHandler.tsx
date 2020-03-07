@@ -25,26 +25,17 @@ const styles: { [key: string]: React.CSSProperties } = {
 export function useOverflowTextHandler<T extends HTMLElement>() {
   const [hasOverflowingText, setHasOverflowingText] = useState(false);
   const elRef = React.useRef<T>(null);
-  // const elementWidth = elRef?.current?.clientWidth;
-  const [elementWidth, setElementWidth] = useState(0);
+  const text = elRef.current?.textContent;
   React.useEffect(() => {
     if (elRef.current !== null) {
-      setHasOverflowingText(isOverflowing(elRef.current));
-      setElementWidth(elRef.current.clientWidth);
-      const handleResize = () => {
-        console.log("hi");
-        if (elRef.current?.clientWidth !== elementWidth) {
-          elRef.current && setElementWidth(elRef.current.clientWidth);
-        }
-      };
-      window.addEventListener("resize", debounce(handleResize, 1500));
-      return () =>
-        setTimeout(
-          () => window.removeEventListener("resize", handleResize),
-          50
-        ) && undefined;
+      const handleResize = debounce(() => {
+        setHasOverflowingText(!!elRef.current && isOverflowing(elRef.current));
+      }, 1000);
+      handleResize();
+      window.addEventListener("resize", handleResize);
+      return () => window.removeEventListener("resize", handleResize);
     }
-  }, [elRef, elementWidth]);
+  }, [elRef, text]);
   return {
     hasOverflowingText,
     elRef

@@ -5,6 +5,7 @@ import { useMusicPlayer } from "./Context";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPause, faPlay } from "@fortawesome/free-solid-svg-icons";
 import PlayQueue from "./PlayQueue";
+import TrackInfo from "./TrackInfo";
 
 export default function MusicPlayer() {
   const { currentTrack, isPlaying, pause, play, playQueue } = useMusicPlayer();
@@ -13,21 +14,10 @@ export default function MusicPlayer() {
   if (!currentTrack) {
     contents = <span>No track to play.</span>;
   } else {
-    const albumArt =
-      currentTrack.album.images[currentTrack.album.images.length - 1];
     contents = (
       <div className={`container ${classes.flexContainer}`}>
         <div className={classes.left}>
-          <img
-            src={albumArt.url}
-            alt="Current track album art"
-            width={albumArt.width}
-            height={albumArt.height}
-          />
-          <div className={classes.trackInfo}>
-            <p>{currentTrack.name}</p>
-            <p>{currentTrack.artists.map(artist => artist.name).join(", ")}</p>
-          </div>
+          <TrackInfo track={currentTrack} />
         </div>
         <div className={classes.middle}>
           {isPlaying ? (
