@@ -259,6 +259,14 @@ export default function WelcomePage() {
           </button>
         </div>
       </div>
+      <a
+        className={`${classes["github-fork-ribbon"]} ${classes["left-bottom"]} ${classes.fixed}`}
+        href="https://github.com/collincchoy/soundbound"
+        data-ribbon="Fork me on GitHub"
+        title="Fork me on GitHub"
+      >
+        Fork me on GitHub
+      </a>
     </section>
   );
 }
