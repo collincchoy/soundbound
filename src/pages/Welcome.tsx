@@ -1,5 +1,7 @@
 import React from "react";
 import classes from "./Welcome.module.css";
+import { useLoginContext } from "hooks/Login";
+import { Redirect } from "react-router-dom";
 
 const LogoSvg = () => (
   <svg
@@ -222,15 +224,21 @@ const LogoSvg = () => (
   </svg>
 );
 
+const DecoratedText = ({
+  color,
+  children
+}: {
+  color: string;
+  children: React.ReactNode;
+}) => <span style={{ textDecoration: "underline", color }}>{children}</span>;
+
 export default function WelcomePage() {
-  const login = () => null;
-  const DecoratedText = ({
-    color,
-    children
-  }: {
-    color: string;
-    children: React.ReactNode;
-  }) => <span style={{ textDecoration: "underline", color }}>{children}</span>;
+  const { isLoggedIn, login } = useLoginContext();
+
+  if (isLoggedIn) {
+    return <Redirect to="/top/artists" />;
+  }
+
   return (
     <section className="hero is-dark is-fullheight">
       <div className="hero-body">
