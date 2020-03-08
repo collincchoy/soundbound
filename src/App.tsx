@@ -1,7 +1,6 @@
 import React from "react";
 import "_variables.scss";
 import { MusicPlayerProvider } from "./components/MusicPlayer/Context";
-import NavBar from "./components/Nav/Bar";
 import { LoginContextProvider } from "./hooks/Login";
 import {
   BrowserRouter as Router,
@@ -9,16 +8,15 @@ import {
   Route
   // Redirect
 } from "react-router-dom";
-import MusicPlayer from "./components/MusicPlayer";
 import TopArtistsPage from "./pages/Top/Artists";
 import TopTracksPage from "./pages/Top/Tracks";
 import LabPage from "./pages/Lab";
+import WelcomePage from "./pages/Welcome";
 
 function App() {
   return (
     <LoginContextProvider>
       <Router>
-        <NavBar />
         <MusicPlayerProvider>
           <Switch>
             <Route path="/lab">
@@ -31,11 +29,11 @@ function App() {
               <TopTracksPage />
             </Route>
             <Route path="/">
-              <TopArtistsPage />
+              <WelcomePage />
+              {/* <TopArtistsPage /> */}
               {/* <Redirect to="/top/artists" /> Note: this breaks auth flow - race condition in token parsing and this redirect*/}
             </Route>
           </Switch>
-          <MusicPlayer />
         </MusicPlayerProvider>
       </Router>
     </LoginContextProvider>

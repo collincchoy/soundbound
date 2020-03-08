@@ -1,4 +1,6 @@
 import React from "react";
+import MusicPlayer from "./MusicPlayer";
+import NavBar from "./Nav/Bar";
 
 const styles = {
   minHeight: "100vh",
@@ -10,8 +12,13 @@ const styles = {
 
 export default function PageContent(props: { children?: any }) {
   return (
-    <div className="section" style={styles}>
-      <div className="container">{props.children}</div>
-    </div>
+    <>
+      <NavBar />
+
+      <div className="section" style={styles}>
+        <div className="container">{props.children}</div>
+      </div>
+      <MusicPlayer />
+    </>
   );
 }

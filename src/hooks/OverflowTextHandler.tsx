@@ -2,6 +2,8 @@ import React, { useState } from "react";
 
 import { isOverflowing, debounce } from "utilities";
 
+// May convert this to use styles in JS
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const styles: { [key: string]: React.CSSProperties } = {
   container: {
     overflow: "hidden"
