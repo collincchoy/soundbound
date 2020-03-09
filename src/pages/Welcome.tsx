@@ -225,17 +225,28 @@ const LogoSvg = () => (
   </svg>
 );
 
-const DecoratedText: React.FC<{ color: string; linkTo?: string }> = ({
-  color,
-  children,
-  linkTo
-}) => {
-  const styles = {
+const DecoratedText: React.FC<{
+  color: string;
+  hoverColor?: string;
+  linkTo?: string;
+}> = ({ color, hoverColor, children, linkTo }) => {
+  const [isHover, setIsHover] = React.useState(false);
+  const styles: React.CSSProperties = {
     textDecoration: "underline",
-    color
+    color,
+    background: `linear-gradient(to right, ${hoverColor ??
+      color} 50%, transparent 50%`,
+    backgroundSize: "200% 100%",
+    backgroundPosition: isHover ? "left bottom" : "right bottom",
+    transition: "background-position 1s ease"
   };
   return linkTo ? (
-    <a href={linkTo} style={styles}>
+    <a
+      href={linkTo}
+      style={styles}
+      onMouseEnter={() => setIsHover(true)}
+      onMouseLeave={() => setIsHover(false)}
+    >
       {children}
     </a>
   ) : (
@@ -272,12 +283,28 @@ export default function WelcomePage() {
         <h1 className="title is-size-1">Welcome</h1>
         <h2 className="subtitle">
           <p>
-            Soundbound is an experimental music{" "}
-            <DecoratedText color="#2cc8ab" linkTo="#discovery">
+            Soundbound is an{" "}
+            <DecoratedText
+              color="rgba(255, 255, 255, 0.9)"
+              linkTo="#about"
+              hoverColor="rgba(15, 15, 15, 0.7)"
+            >
+              experimental
+            </DecoratedText>{" "}
+            music{" "}
+            <DecoratedText
+              color="rgb(44, 200, 171)"
+              linkTo="#discovery"
+              hoverColor="rgba(185, 127, 166, 0.7)"
+            >
               discovery
             </DecoratedText>{" "}
             and{" "}
-            <DecoratedText color="#b97fa6" linkTo="#reflection">
+            <DecoratedText
+              color="rgb(185, 127, 166)"
+              linkTo="#reflection"
+              hoverColor="rgba(44, 200, 171, 0.7)"
+            >
               reflection
             </DecoratedText>{" "}
             app powered by Spotify.
@@ -332,7 +359,7 @@ export default function WelcomePage() {
           </p> */}
         </h3>
       </Section>
-      <Section className="is-info">
+      <Section id="about" className="is-info">
         <div className="content">
           <h1 className="title is-spaced">About</h1>
           <h3 className="subtitle">We're so glad you're here.</h3>
