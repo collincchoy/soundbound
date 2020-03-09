@@ -4,7 +4,6 @@ class SpotifyClient {
   clientId = "56b3e61755c4412da05579ef18851833";
   private _access_token: string; // DO NOT EDIT THIS DIRECTLY - use setter/getter
   constructor(access_token?: string) {
-    console.log(access_token);
     this._access_token = access_token ?? "";
   }
 

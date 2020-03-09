@@ -2,7 +2,7 @@ import React from "react";
 import classes from "./Welcome.module.css";
 import { useLoginContext } from "hooks/Login";
 import { Redirect } from "react-router-dom";
-import AboutSection from "components/Welcome/sections/About";
+import ScrollableView from "components/ScrollableView";
 
 const LogoSvg = () => (
   <svg
@@ -225,8 +225,37 @@ const LogoSvg = () => (
   </svg>
 );
 
-const DecoratedText: React.FC<{ color: string }> = ({ color, children }) => (
-  <span style={{ textDecoration: "underline", color }}>{children}</span>
+const DecoratedText: React.FC<{ color: string; linkTo?: string }> = ({
+  color,
+  children,
+  linkTo
+}) => {
+  const styles = {
+    textDecoration: "underline",
+    color
+  };
+  return linkTo ? (
+    <a href={linkTo} style={styles}>
+      {children}
+    </a>
+  ) : (
+    <span style={styles}>{children}</span>
+  );
+};
+
+const Section: React.FC<React.HTMLAttributes<HTMLDivElement>> = ({
+  children,
+  className,
+  ...props
+}) => (
+  <section
+    {...props}
+    className={`hero is-fullheight has-text-centered is-bold ${className}`}
+  >
+    <div className="hero-body">
+      <div className="container">{children}</div>
+    </div>
+  </section>
 );
 
 export default function WelcomePage() {
@@ -237,26 +266,27 @@ export default function WelcomePage() {
   }
 
   return (
-    <>
-      <section className="hero is-dark is-fullheight">
-        <div className="hero-body">
-          <div className="container has-text-centered">
-            <LogoSvg />
-            <h1 className="title is-size-1">Welcome</h1>
-            <h2 className="subtitle">
-              <p>
-                Soundbound is an experimental music{" "}
-                <DecoratedText color="#2cc8ab">discovery</DecoratedText> and{" "}
-                <DecoratedText color="#b97fa6">reflection</DecoratedText> app
-                powered by Spotify.
-              </p>{" "}
-            </h2>
-            <h2 className="subtitle">To get started:</h2>
-            <button className="button is-primary" onClick={login}>
-              Login with Spotify
-            </button>
-          </div>
-        </div>
+    <ScrollableView>
+      <Section className="is-dark">
+        <LogoSvg />
+        <h1 className="title is-size-1">Welcome</h1>
+        <h2 className="subtitle">
+          <p>
+            Soundbound is an experimental music{" "}
+            <DecoratedText color="#2cc8ab" linkTo="#discovery">
+              discovery
+            </DecoratedText>{" "}
+            and{" "}
+            <DecoratedText color="#b97fa6" linkTo="#reflection">
+              reflection
+            </DecoratedText>{" "}
+            app powered by Spotify.
+          </p>{" "}
+        </h2>
+        <h2 className="subtitle">To get started:</h2>
+        <button className="button is-primary" onClick={login}>
+          Login with Spotify
+        </button>
         <a
           className={`${classes["github-fork-ribbon"]} ${classes["left-bottom"]} ${classes.fixed}`}
           href="https://github.com/collincchoy/soundbound"
@@ -265,53 +295,76 @@ export default function WelcomePage() {
         >
           Fork me on GitHub
         </a>
-      </section>
-      <section className="hero is-primary is-fullheight">
-        <div className="hero-body">
-          <div className="container">
-            <h1 className="title">Reflection</h1>
-            <h3 className="subtitle">
-              <p>
-                Review your personal Top Artists and Top Tracks across 3
-                different time periods based on your listening history.
-              </p>
-              <p>
-                Listen to quick 30-second snippets of tracks to rediscover those
-                tracks you know by ear but struggle to remember the name.
-              </p>
-            </h3>
-          </div>
+      </Section>
+      <Section id="reflection" className="is-primary">
+        <h1 className="title is-spaced">Reflection</h1>
+        <div className="subtitle">
+          <p>
+            Review your personal Top Artists and Top Tracks across 3 different
+            time periods based on your listening history.
+          </p>
+          <p>
+            Listen to quick 30-second snippets of tracks to rediscover those
+            tracks you know by ear but struggle to remember the name.
+          </p>
         </div>
-      </section>
-      <section className="hero is-secondary is-fullheight">
-        <div className="hero-body">
-          <div className="container">
-            <h1 className="title">Discovery</h1>
-            <h3 className="subtitle">
-              <p>
-                Find new music by exploring relationships between artists,
-                tracks, and genres.
-              </p>
-              <p>
-                Hit up the Soundbound Lab to access a Playlist Generator.
-                Mix-and-match artists, tracks, and genres and then tune the
-                algorithm yourself by adjusting various track attributes like
-                loudness, acousticness, valence, and more. Soundbound will take
-                your pool of inputs and generate a list of recommended tracks to
-                check out!
-              </p>
-              <p>
-                Soundbound Discovery provides an infinite suggestion graph of
-                artists or genres. Here you can interactively navigate between
-                related artists and genres to discover new music. [Note: This
-                area is currently under construction and not available at this
-                time.]
-              </p>
-            </h3>
-          </div>
+      </Section>
+      <Section id="discovery" className="is-second">
+        <h1 className="title is-spaced">Discovery</h1>
+        <h3 className="subtitle">
+          <p>
+            Find new music by exploring relationships between artists, tracks,
+            and genres.
+          </p>
+          <p>
+            Hit up the Soundbound Lab to access a Playlist Generator.
+            Mix-and-match artists, tracks, and genres and then tune the
+            algorithm yourself by adjusting various track attributes like
+            loudness, acousticness, valence, and more. Soundbound will take your
+            pool of inputs and generate a list of recommended tracks to check
+            out!
+          </p>
+          {/* <p>
+            Soundbound Discovery provides an infinite suggestion graph of
+            artists or genres. Here you can interactively navigate between
+            related artists and genres to discover new music. [Note: This area
+            is currently under construction and not available at this time.]
+          </p> */}
+        </h3>
+      </Section>
+      <Section className="is-info">
+        <div className="content">
+          <h1 className="title is-spaced">About</h1>
+          <h3 className="subtitle">We're so glad you're here.</h3>
+          <p>
+            Soundbound was born as a small, personal project to play with some
+            new technologies, but also to explore the capabilities provided by
+            the Spotify API.
+          </p>
+          <p>
+            The project is still being worked on and if you'd like to reach out,
+            find me <a href="https://collincchoy.github.io">here</a>. All
+            feedback, questions, etc. are welcome!
+          </p>
+          <h3 className="subtitle">How does it work?</h3>
+          <p>
+            Soundbound is powered by <strong>Spotify</strong>. Anybody that has
+            a Spotify account can access all of the information that Soundbound
+            provides by querying Spotify's public Web API (
+            <a href="https://developer.spotify.com/documentation/web-api/reference/">
+              Docs
+            </a>
+            ). In fact that's how Soundbound "knows" about you. By logging in
+            with Spotify, Soundbound is just taking care of the hard things and
+            putting the power directly in your hands.
+          </p>
+          <p>
+            If you'd like to see how it ticks under the hood, the code is freely
+            available online (open to contributions!). Just click the ribbon in
+            the bottom-left corner to read or fork the code on github.
+          </p>
         </div>
-      </section>
-      <AboutSection />
-    </>
+      </Section>
+    </ScrollableView>
   );
 }
