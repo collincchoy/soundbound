@@ -1,6 +1,6 @@
 class SpotifyClient {
   baseUrl = "https://api.spotify.com/v1";
-  redirectUri = "http://localhost:3000/";
+  redirectUri = `${process.env.REACT_APP_REDIRECT_HOST}/`;
   clientId = "56b3e61755c4412da05579ef18851833";
   private _access_token: string; // DO NOT EDIT THIS DIRECTLY - use setter/getter
   constructor(access_token?: string) {
