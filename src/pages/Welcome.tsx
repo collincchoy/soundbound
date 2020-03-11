@@ -183,7 +183,12 @@ export default function WelcomePage() {
       <Section id="about" className="is-info">
         <div className="content">
           <h1 className="title is-spaced">About</h1>
-          <h3 className="subtitle">👋 We're so glad you're here.</h3>
+          <h3 className="subtitle">
+            <span role="img" aria-label="Hello there">
+              👋
+            </span>{" "}
+            We're so glad you're here.
+          </h3>
           <p>
             Soundbound was born as a small, personal project to play with some
             new technologies, but also to explore the capabilities provided by
@@ -191,8 +196,11 @@ export default function WelcomePage() {
           </p>
           <p>
             The project is still being worked on and if you'd like to reach out,
-            find me <a href="https://collincchoy.github.io">here</a>. All
-            feedback, questions, etc. are welcome! Note I am in no way
+            find me{" "}
+            <a href="https://collincchoy.github.io">
+              <span style={{ textDecoration: "line-through" }}>here</span> soon
+            </a>
+            . All feedback, questions, etc. are welcome! Note I am in no way
             affiliated with Spotify - just a happy and curious user.
           </p>
           <h3 className="subtitle">How does it work?</h3>

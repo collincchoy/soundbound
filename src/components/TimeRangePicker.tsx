@@ -1,11 +1,17 @@
 import React from "react";
 import { PersonalizationTimeRange } from "../spotify/types";
+import TextWithHelp from "./TextWithHelp";
 
 export default function TimeRangePicker(props: {
   selected: PersonalizationTimeRange;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }) {
   const options = Object.entries(PersonalizationTimeRange);
+  const helpText = new Map([
+    ["SHORT", "1 month"],
+    ["MEDIUM", "6 months"],
+    ["LONG", "1+ years"]
+  ]);
   return (
     <div
       className="control has-text-white has-text-centered"
@@ -23,7 +29,7 @@ export default function TimeRangePicker(props: {
               onChange={props.onChange}
             />
             &nbsp;
-            {key}
+            <TextWithHelp text={key} tip={helpText.get(key) ?? ""} />
           </label>
         );
       })}
