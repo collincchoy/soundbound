@@ -115,12 +115,11 @@ export default function WelcomePage() {
       <Section id="reflection" className="is-primary">
         <h1 className="title is-spaced">Reflection</h1>
         <h3 className="subtitle">
-          <p>
-            Review your personal <strong>Top Artists</strong> and{" "}
-            <strong>Top Tracks</strong> by listening history across 3 different
-            time periods.
-          </p>
-          <p>
+          Review your personal <strong>Top Artists</strong> and{" "}
+          <strong>Top Tracks</strong> by listening history across 3 different
+          time periods.
+          <p style={{ fontSize: "1rem", marginTop: "0.5rem" }}>
+            {" "}
             Preview 30-second snippets of tracks to quickly rediscover those
             tracks you know by ear but struggle to remember by name.
           </p>
@@ -162,11 +161,9 @@ export default function WelcomePage() {
       <Section id="discovery" className="is-light">
         <h1 className="title is-spaced">Discovery</h1>
         <h3 className="subtitle">
-          <p>
-            Find new music by exploring relationships between artists, tracks,
-            and genres.
-          </p>
-          <p>
+          Find new music by exploring relationships between artists, tracks, and
+          genres.
+          <p style={{ fontSize: "1rem", marginTop: "0.5rem" }}>
             Lab allows you to mix-&-match artists, tracks, and genres and then
             tune by track attributes like loudness, acousticness, valence, and
             more to find you new music!
