@@ -9,6 +9,7 @@ import SpinningLogo from "components/Welcome/SpinningLogo";
 import ForkMeRibbon from "components/Welcome/ForkMeRibbon";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faExchangeAlt } from "@fortawesome/free-solid-svg-icons";
+import MixingPot from "components/Welcome/MixingPot";
 
 const DecoratedText: React.FC<{
   color: string;
@@ -113,7 +114,7 @@ export default function WelcomePage() {
       </Section>
       <Section id="reflection" className="is-primary">
         <h1 className="title is-spaced">Reflection</h1>
-        <div className="subtitle">
+        <h3 className="subtitle">
           <p>
             Review your personal <strong>Top Artists</strong> and{" "}
             <strong>Top Tracks</strong> by listening history across 3 different
@@ -123,7 +124,7 @@ export default function WelcomePage() {
             Preview 30-second snippets of tracks to quickly rediscover those
             tracks you know by ear but struggle to remember by name.
           </p>
-        </div>
+        </h3>
         <div className="columns">
           <div className="column is-one-fifth">
             <div style={artistCardColumnStyles}>
@@ -166,11 +167,9 @@ export default function WelcomePage() {
             and genres.
           </p>
           <p>
-            Hit up the Soundbound Lab to access a tunable Playlist Generator.
-            Mix-&-match artists, tracks, and genres and then tune the algorithm
-            yourself by adjusting various track attributes like loudness,
-            acousticness, valence, and more. Soundbound will take your pool of
-            inputs and generate a list of recommended tracks to check out!
+            Lab allows you to mix-&-match artists, tracks, and genres and then
+            tune by track attributes like loudness, acousticness, valence, and
+            more to find you new music!
           </p>
           {/* <p>
             Soundbound Discovery provides an infinite suggestion graph of
@@ -179,6 +178,7 @@ export default function WelcomePage() {
             is currently under construction and not available at this time.]
           </p> */}
         </h3>
+        <MixingPot />
       </Section>
       <Section id="about" className="is-info">
         <div className="content">
@@ -186,8 +186,8 @@ export default function WelcomePage() {
           <h3 className="subtitle">
             <span role="img" aria-label="Hello there">
               👋
-            </span>{" "}
-            We're so glad you're here.
+            </span>
+            &nbsp;We're so glad you're here.
           </h3>
           <p>
             Soundbound was born as a small, personal project to play with some
