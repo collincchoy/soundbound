@@ -8,61 +8,24 @@ import { artists, tracks } from "spotify/exampleData";
 import SpinningLogo from "components/Welcome/SpinningLogo";
 import ForkMeRibbon from "components/Welcome/ForkMeRibbon";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faExchangeAlt } from "@fortawesome/free-solid-svg-icons";
+import { faExchangeAlt, faCaretDown } from "@fortawesome/free-solid-svg-icons";
 import MixingPot from "components/Welcome/MixingPot";
-
-const DecoratedText: React.FC<{
-  color: string;
-  hoverColor?: string;
-  linkTo?: string;
-}> = ({ color, hoverColor, children, linkTo }) => {
-  const [isHover, setIsHover] = React.useState(false);
-  const styles: React.CSSProperties = {
-    fontWeight: "bold", // The lower-case Nunito "r" is weird in "reflection". bold normalizes it so the hover background doesn't show
-    textDecoration: "underline",
-    color,
-    background: `linear-gradient(to right, ${hoverColor ??
-      color} 50%, transparent 50%`,
-    backgroundSize: "200% 100%",
-    backgroundPosition: isHover ? "left bottom" : "right bottom",
-    transition: "background-position 1s ease"
-  };
-  return linkTo ? (
-    <a
-      href={linkTo}
-      style={styles}
-      onMouseEnter={() => setIsHover(true)}
-      onMouseLeave={() => setIsHover(false)}
-    >
-      {children}
-    </a>
-  ) : (
-    <span style={styles}>{children}</span>
-  );
-};
-
-const Section: React.FC<React.HTMLAttributes<HTMLDivElement>> = ({
-  children,
-  className,
-  ...props
-}) => (
-  <section
-    className={`hero is-fullheight has-text-centered is-bold ${className}`}
-    {...props}
-  >
-    <div className="hero-body">
-      <div className="container" style={{ maxWidth: "800px" }}>
-        {children}
-      </div>
-    </div>
-  </section>
-);
+import Section from "components/Welcome/Section";
+import DecoratedText from "components/Welcome/DecoratedText";
 
 const artistCardColumnStyles: React.CSSProperties = {
   display: "flex",
   flexDirection: "column",
   justifyContent: "space-between",
   height: "100%"
+};
+
+const mainSectionStyles: React.CSSProperties = {
+  position: "absolute",
+  width: "100%",
+  bottom: "0.6rem",
+  left: "0px",
+  opacity: "0.6"
 };
 
 export default function WelcomePage() {
@@ -74,7 +37,15 @@ export default function WelcomePage() {
 
   return (
     <ScrollableView>
-      <Section className="is-dark">
+      <Section
+        className="is-dark"
+        renderAfter={() => (
+          <div style={mainSectionStyles}>
+            <p>More Info</p>
+            <FontAwesomeIcon icon={faCaretDown} style={{ fontSize: "1.5em" }} />
+          </div>
+        )}
+      >
         <SpinningLogo />
         <h1 className="title is-size-1">Welcome</h1>
         <h2 className="subtitle">
@@ -195,20 +166,20 @@ export default function WelcomePage() {
             The project is still being worked on and if you'd like to reach out,
             find me{" "}
             <a href="https://collincchoy.github.io">
-              <span style={{ textDecoration: "line-through" }}>here</span> soon
+              <span style={{ textDecoration: "line-through" }}>here</span>&nbsp;
             </a>
-            . All feedback, questions, etc. are welcome! Note I am in no way
-            affiliated with Spotify - just a happy and curious user.
+            soon . All feedback, questions, etc. are welcome! Note I am in no
+            way affiliated with Spotify - just a happy and curious user.
           </p>
           <h3 className="subtitle">How does it work?</h3>
           <p>
             Soundbound is powered by <strong>Spotify</strong>. Anyone with a
             Spotify account can access any of the information that Soundbound
-            provides by querying Spotify's public Web API (
+            provides by querying Spotify's public{" "}
             <a href="https://developer.spotify.com/documentation/web-api/reference/">
-              Docs
+              Web API
             </a>
-            ). In fact that's how Soundbound "knows" about you. By logging in
+            . In fact that's how Soundbound "knows" about you. By logging in
             with Spotify, Soundbound is just taking care of the hard things and
             putting the power directly in your hands.
           </p>
