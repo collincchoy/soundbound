@@ -13,8 +13,8 @@ export type TrackCardProps = {
   track: Track;
 };
 
-export default function TrackCard(props: TrackCardProps) {
-  const { name, artists, href, id, album, popularity } = props.track;
+export default function TrackCard({ track }: TrackCardProps) {
+  const { name, artists, external_urls, id, album, popularity } = track;
   const {
     currentTrack,
     changeTrack,
@@ -25,18 +25,18 @@ export default function TrackCard(props: TrackCardProps) {
   } = useMusicPlayer();
 
   function renderPlayPauseButton() {
-    const sharedProps = { disabled: !props.track.preview_url };
+    const sharedProps = { disabled: !track.preview_url };
     if (currentTrack?.id === id) {
       if (isPlaying) {
-        return <PauseButton onClick={() => pause()} {...sharedProps} />;
+        return <PauseButton onClick={_ => pause()} {...sharedProps} />;
       } else {
-        return <PlayButton onClick={() => play()} {...sharedProps} />;
+        return <PlayButton onClick={_ => play()} {...sharedProps} />;
       }
     } else {
       return (
         <PlayButton
           onClick={() => {
-            changeTrack(props.track);
+            changeTrack(track);
             play();
           }}
           {...sharedProps}
@@ -67,7 +67,9 @@ export default function TrackCard(props: TrackCardProps) {
           style={{ paddingRight: "0.25em" }}
         >
           <a
-            href={href}
+            href={external_urls?.spotify}
+            target="_blank"
+            rel="noopener noreferrer"
             ref={headerElRef}
             className={`scroll-on-overflow ${headerIsOverflowing &&
               "overflowing"}`}
@@ -115,8 +117,8 @@ export default function TrackCard(props: TrackCardProps) {
           <button
             className="button"
             title="Add to queue"
-            onClick={() => addToPlayQueue(props.track)}
-            disabled={!props.track.preview_url}
+            onClick={() => addToPlayQueue(track)}
+            disabled={!track.preview_url}
           >
             <FontAwesomeIcon icon={faPlusCircle} />
           </button>
