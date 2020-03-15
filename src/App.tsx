@@ -9,7 +9,11 @@ import { PrivateRoute } from "routes/PrivateRoute";
 export default function App() {
   return (
     <LoginContextProvider>
-      <Router>
+      <Router
+        {...(process.env.NODE_ENV === "production" && {
+          basename: "/soundbound"
+        })}
+      >
         <MusicPlayerProvider>
           <Switch>
             {privateRoutes.map(route => (

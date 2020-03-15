@@ -89,7 +89,7 @@ class SpotifyClient {
   logout = () => {
     this.access_token = null;
     // refresh page
-    window.history.go(0);
+    // window.history.go(0);
   };
 }
 

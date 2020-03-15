@@ -34,7 +34,8 @@ function CurrentUser(props: {
         </div>
       </div>
       <div className={`navbar-dropdown is-right`}>
-        <a className="navbar-item" href="." onClick={logout}>
+        {/* eslint-disable-next-line jsx-a11y/anchor-is-valid*/}
+        <a className="navbar-item" href="" onClick={logout}>
           Logout
         </a>
       </div>
