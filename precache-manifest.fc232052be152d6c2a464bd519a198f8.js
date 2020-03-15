@@ -1,10 +1,10 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "e25786aae92b70af643f3050678dd142",
+    "revision": "f5a3db602e51f814c09cc99140df0f7d",
     "url": "/soundbound/index.html"
   },
   {
-    "revision": "43aff19858669e8f15c6",
+    "revision": "73839ac8d7a615b72f9d",
     "url": "/soundbound/static/css/main.45ef332c.chunk.css"
   },
   {
@@ -12,8 +12,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/soundbound/static/js/2.470dc448.chunk.js"
   },
   {
-    "revision": "43aff19858669e8f15c6",
-    "url": "/soundbound/static/js/main.db440005.chunk.js"
+    "revision": "73839ac8d7a615b72f9d",
+    "url": "/soundbound/static/js/main.ca2b613b.chunk.js"
   },
   {
     "revision": "57b59ecc2e34796a2d00",
