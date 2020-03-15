@@ -23,6 +23,6 @@ yarn-debug.log*
 yarn-error.log*
 
 # temporary
-public/
 .vscode
 exploration/
+auth_examples/
