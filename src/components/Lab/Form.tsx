@@ -30,7 +30,7 @@ const TunersDiv = styled.div.attrs(props => ({ className: "field" }))`
 
 const StyledTuner = styled(AdvancedTuner)`
   flex: 1;
-  min-width: 120px;
+  min-width: 150px;
 `;
 
 export type LabFormValues = {
