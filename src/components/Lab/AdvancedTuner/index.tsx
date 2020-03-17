@@ -40,10 +40,13 @@ export default function AdvancedTuner({
           field.value?.maxValue ?? maxValue
         ]}
         onChange={values => {
-          helpers.setValue({
-            minValue: round(values[0], 2),
-            maxValue: round(values[1], 2)
-          });
+          /** setTimeout is a workaround to fix new warning from react 16.3 from the slider library - see https://github.com/facebook/react/issues/18147#issuecomment-595701023 */
+          setTimeout(() =>
+            helpers.setValue({
+              minValue: round(values[0], 2),
+              maxValue: round(values[1], 2)
+            })
+          );
         }}
         mode={2}
         step={stepSize}
