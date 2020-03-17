@@ -1,6 +1,34 @@
 import React, { useState } from "react";
-import classes from "./SearchBox.module.css";
+import styled from "styled-components";
 import { useField } from "formik";
+
+const StyledSearchBoxContainer = styled.div.attrs<{ isSearching: boolean }>(
+  props => ({ className: `control ${props.isSearching && "is-loading"}` })
+)<{ isSearching: boolean }>`
+  position: relative;
+`;
+
+const SuggestionList = styled.ol`
+  position: absolute;
+  z-index: 400;
+  background-color: hsl(0, 0%, 90%);
+  list-style-type: none;
+  border-radius: 5px;
+`;
+
+const Suggestion = styled.li<{ isSelected: boolean }>`
+  padding: 5px 10px;
+  transition: 0.2s;
+
+  /* hover & mouse over */
+  ${props =>
+    props.isSelected &&
+    `
+  background-color: hsl(0, 0%, 21%);
+  color: hsl(0, 0%, 96%);
+  cursor: pointer;
+  `}
+`;
 
 type SearchBoxProps<T> = {
   name: string;
@@ -74,9 +102,7 @@ export default function SearchBox<T>({
   };
 
   return (
-    <div
-      className={`control ${classes.searchbox} ${isSearching && "is-loading"}`}
-    >
+    <StyledSearchBoxContainer isSearching={isSearching}>
       <input
         {...field}
         {...props}
@@ -85,17 +111,13 @@ export default function SearchBox<T>({
         onKeyDown={handleKeyDown}
         autoComplete="off"
       />
-      {suggestions.length > 0 ? (
-        <ol
-          className={classes.suggestions}
-          onMouseOut={() => setSelectedSuggestionIndex(-1)}
-        >
+      {suggestions.length > 0 && (
+        <SuggestionList onMouseOut={() => setSelectedSuggestionIndex(-1)}>
           {suggestions.map((item: any, index: number) => {
             const { key, value } = suggestionKey(item);
             return (
-              <li
-                className={`${classes.suggestion} ${index ===
-                  selectedSuggestionIndex && classes.hover}`}
+              <Suggestion
+                isSelected={index === selectedSuggestionIndex}
                 key={key}
                 onClick={() => selectItem(value)}
                 onMouseDown={
@@ -105,13 +127,11 @@ export default function SearchBox<T>({
                 onMouseOver={() => setSelectedSuggestionIndex(index)}
               >
                 {value}
-              </li>
+              </Suggestion>
             );
           })}
-        </ol>
-      ) : (
-        ""
+        </SuggestionList>
       )}
-    </div>
+    </StyledSearchBoxContainer>
   );
 }
