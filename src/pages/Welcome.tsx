@@ -1,4 +1,5 @@
 import React from "react";
+import styled from "styled-components";
 import { useLoginContext } from "hooks/Login";
 import { Redirect } from "react-router-dom";
 import ScrollableView from "components/ScrollableView";
@@ -13,20 +14,34 @@ import MixingPot from "components/Welcome/MixingPot";
 import Section from "components/Welcome/Section";
 import DecoratedText from "components/Welcome/DecoratedText";
 
-const artistCardColumnStyles: React.CSSProperties = {
-  display: "flex",
-  flexDirection: "column",
-  justifyContent: "space-between",
-  height: "100%"
-};
+const ArtistCardColumn = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+`;
 
-const mainSectionStyles: React.CSSProperties = {
-  position: "absolute",
-  width: "100%",
-  bottom: "0.6rem",
-  left: "0px",
-  opacity: "0.6"
-};
+const MoreInfoDiv = styled.div`
+  position: absolute;
+  width: 100%;
+  bottom: 0.6rem;
+  left: 0px;
+  opacity: 0.6;
+`;
+
+const SectionText = styled.p`
+  font-size: 1rem;
+  margin-top: 0.5rem;
+  margin-bottom: 1rem;
+`;
+
+const CenteredContent = styled.div`
+  display: flex;
+  height: 100%;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+`;
 
 export default function WelcomePage() {
   const { isLoggedIn, login } = useLoginContext();
@@ -40,10 +55,10 @@ export default function WelcomePage() {
       <Section
         className="is-dark"
         renderAfter={() => (
-          <div style={mainSectionStyles}>
+          <MoreInfoDiv>
             <p>More Info</p>
             <FontAwesomeIcon icon={faCaretDown} style={{ fontSize: "1.5em" }} />
-          </div>
+          </MoreInfoDiv>
         )}
       >
         <SpinningLogo />
@@ -89,37 +104,28 @@ export default function WelcomePage() {
           Review your personal <strong>Top Artists</strong> and{" "}
           <strong>Top Tracks</strong> by listening history across 3 different
           time periods.
-          <p style={{ fontSize: "1rem", marginTop: "0.5rem" }}>
-            {" "}
+          <SectionText>
             Preview 30-second snippets of tracks to quickly rediscover those
             tracks you know by ear but struggle to remember by name.
-          </p>
+          </SectionText>
         </h3>
         <div className="columns">
           <div className="column is-one-fifth">
-            <div style={artistCardColumnStyles}>
+            <ArtistCardColumn>
               <ArtistCard {...artists[0]} />
               <ArtistCard {...artists[1]} />
-            </div>
+            </ArtistCardColumn>
           </div>
           <div className="column is-one-fifth">
-            <div style={artistCardColumnStyles}>
+            <ArtistCardColumn>
               <ArtistCard {...artists[2]} />
               <ArtistCard {...artists[3]} />
-            </div>
+            </ArtistCardColumn>
           </div>
           <div className="column is-one-fifth">
-            <div
-              style={{
-                display: "flex",
-                height: "100%",
-                width: "100%",
-                justifyContent: "center",
-                alignItems: "center"
-              }}
-            >
+            <CenteredContent>
               <FontAwesomeIcon icon={faExchangeAlt} size="3x" />
-            </div>
+            </CenteredContent>
           </div>
           <div className="column is-one-fifth">
             <TrackCard track={tracks[0] as any} />
@@ -134,11 +140,11 @@ export default function WelcomePage() {
         <h3 className="subtitle">
           Find new music by exploring relationships between artists, tracks, and
           genres.
-          <p style={{ fontSize: "1rem", marginTop: "0.5rem" }}>
+          <SectionText>
             Lab allows you to mix-&-match artists, tracks, and genres and then
             tune by track attributes like loudness, acousticness, valence, and
             more to find you new music!
-          </p>
+          </SectionText>
           {/* <p>
             Soundbound Discovery provides an infinite suggestion graph of
             artists or genres. Here you can interactively navigate between

@@ -1,4 +1,9 @@
 import React from "react";
+import styled from "styled-components";
+
+const Container = styled.div.attrs(props => ({ className: "container" }))`
+  max-width: 800px;
+`;
 
 const Section: React.FC<{
   renderAfter?: () => JSX.Element;
@@ -13,9 +18,7 @@ const Section: React.FC<{
     {...props}
   >
     <div className="hero-body">
-      <div className="container" style={{ maxWidth: "800px" }}>
-        {children}
-      </div>
+      <Container>{children}</Container>
       {renderAfter && renderAfter()}
     </div>
   </section>
