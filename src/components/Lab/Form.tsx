@@ -30,7 +30,7 @@ const TunersDiv = styled.div.attrs(props => ({ className: "field" }))`
 
 const StyledTuner = styled(AdvancedTuner)`
   flex: 1;
-  min-width: 15%;
+  min-width: 120px;
 `;
 
 export type LabFormValues = {
@@ -55,8 +55,8 @@ const LabForm = (props: LabFormProps) => {
         <h3>Tune your own playlist generator! </h3>
         <p>
           Mix & match artists, tracks, or genres and generate a playlist of
-          recommended tracks. Use the sliders to adjust the algorithm by various
-          track attributes.
+          recommended tracks. Additionally, use the sliders to adjust the
+          algorithm based on various track attributes.
         </p>
       </LabFormDescription>
       <Formik
