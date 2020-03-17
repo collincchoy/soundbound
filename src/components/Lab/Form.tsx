@@ -1,5 +1,5 @@
 import React from "react";
-import classes from "./Form.module.css";
+import styled from "styled-components";
 import { Formik, Form } from "formik";
 import SearchableInput from "./SearchableInput";
 import NumberInput from "components/NumberInput";
@@ -7,6 +7,31 @@ import { SearchArtistResults, SearchTrackResults } from "spotify/types";
 import { spotify } from "spotify/api";
 import AdvancedTuner from "./AdvancedTuner";
 import { trackAttributes, TrackAttribute } from "../../spotify/constants";
+
+const StyledLabFormWrapper = styled.div.attrs(props => ({
+  className: "container has-background-light"
+}))`
+  border-radius: 6px;
+  padding: 10px;
+`;
+
+const LabFormDescription = styled.div.attrs(props => ({
+  className: "content"
+}))`
+  margin: 1rem;
+`;
+
+const TunersDiv = styled.div.attrs(props => ({ className: "field" }))`
+  border: solid 1px black;
+  padding: 10px;
+  display: flex;
+  flex-wrap: wrap;
+`;
+
+const StyledTuner = styled(AdvancedTuner)`
+  flex: 1;
+  min-width: 15%;
+`;
 
 export type LabFormValues = {
   artists: string;
@@ -25,10 +50,15 @@ type LabFormProps = {
 const LabForm = (props: LabFormProps) => {
   const DEFAULT_NUM_TRACKS = 20;
   return (
-    <div className={`container has-background-light ${classes.content}`}>
-      <div className="content">
-        <p>Tune your own playlist generator here!</p>
-      </div>
+    <StyledLabFormWrapper>
+      <LabFormDescription>
+        <h3>Tune your own playlist generator! </h3>
+        <p>
+          Mix & match artists, tracks, or genres and generate a playlist of
+          recommended tracks. Use the sliders to adjust the algorithm by various
+          track attributes.
+        </p>
+      </LabFormDescription>
       <Formik
         initialValues={{
           artists: "",
@@ -79,15 +109,11 @@ const LabForm = (props: LabFormProps) => {
               maxValue={100}
             />
 
-            <div className={`field ${classes.advancedTuning}`}>
+            <TunersDiv>
               {trackAttributes.map(attribute => (
-                <AdvancedTuner
-                  key={attribute.name}
-                  className={classes.advancedTuner}
-                  {...attribute}
-                />
+                <StyledTuner key={attribute.name} {...attribute} />
               ))}
-            </div>
+            </TunersDiv>
 
             <div className="field is-grouped">
               <div className="control">
@@ -109,7 +135,7 @@ const LabForm = (props: LabFormProps) => {
           </Form>
         )}
       </Formik>
-    </div>
+    </StyledLabFormWrapper>
   );
 };
 
