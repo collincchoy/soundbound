@@ -7,7 +7,6 @@ const Container = styled.div.attrs(_ => ({
   className: "control has-text-white has-text-centered"
 }))`
   padding: 0.75rem;
-  cursor: pointer;
   .radio:hover {
     color: hsl(0, 0%, 40%);
   }
