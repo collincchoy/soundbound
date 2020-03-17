@@ -1,11 +1,14 @@
 import React from "react";
 import { useSpotifyApi } from "spotify/hooks";
 import TrackGallery from "components/Track/Gallery";
-import { RecommendationsQuery } from "spotify/types";
+import { RecommendationsQuery, Recommendations } from "spotify/types";
 
 const LabResults = (props: { query: RecommendationsQuery }) => {
   const { query } = props;
-  const { data: results, error } = useSpotifyApi("/recommendations", query);
+  const { data: results, error } = useSpotifyApi<Recommendations>(
+    "/recommendations",
+    query
+  );
 
   return (
     <div style={{ marginTop: "10px" }}>
