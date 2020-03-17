@@ -1,6 +1,17 @@
 import React from "react";
+import styled from "styled-components";
 import { PersonalizationTimeRange } from "../spotify/types";
 import TextWithHelp from "./TextWithHelp";
+
+const Container = styled.div.attrs(_ => ({
+  className: "control has-text-white has-text-centered"
+}))`
+  padding: 0.75rem;
+  cursor: pointer;
+  .radio:hover {
+    color: hsl(0, 0%, 40%);
+  }
+`;
 
 export default function TimeRangePicker(props: {
   selected: PersonalizationTimeRange;
@@ -13,10 +24,7 @@ export default function TimeRangePicker(props: {
     ["LONG", "1+ years"]
   ]);
   return (
-    <div
-      className="control has-text-white has-text-centered"
-      style={{ padding: "0.75rem" }}
-    >
+    <Container>
       <label>Time Range: </label>
       {options.map(([key, value]) => {
         return (
@@ -29,10 +37,14 @@ export default function TimeRangePicker(props: {
               onChange={props.onChange}
             />
             &nbsp;
-            <TextWithHelp text={key} tip={helpText.get(key) ?? ""} />
+            <TextWithHelp
+              text={key}
+              tip={helpText.get(key) ?? ""}
+              cursorIsHelp={false}
+            />
           </label>
         );
       })}
-    </div>
+    </Container>
   );
 }

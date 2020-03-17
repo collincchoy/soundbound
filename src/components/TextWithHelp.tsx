@@ -1,10 +1,10 @@
 import React from "react";
 import styled from "styled-components";
 
-const StyledTextWithHelp = styled.div`
+const StyledTextWithHelp = styled.div<{ cursorIsHelp: boolean }>`
   position: relative;
   display: inline-block;
-  cursor: help;
+  cursor: ${({ cursorIsHelp }) => cursorIsHelp && "help"};
 `;
 
 const Tooltip = styled.span`
@@ -48,11 +48,16 @@ const Tooltip = styled.span`
 type TextWithHelpProps = {
   text: string;
   tip: string;
+  cursorIsHelp?: boolean;
 };
 
-export default function TextWithHelp({ text, tip }: TextWithHelpProps) {
+export default function TextWithHelp({
+  text,
+  tip,
+  cursorIsHelp = true
+}: TextWithHelpProps) {
   return (
-    <StyledTextWithHelp>
+    <StyledTextWithHelp cursorIsHelp={cursorIsHelp}>
       {text}
       <Tooltip>{tip}</Tooltip>
     </StyledTextWithHelp>
