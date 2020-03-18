@@ -22,6 +22,9 @@ const ArtistCardColumn = styled.div`
 `;
 
 const MoreInfoDiv = styled.div`
+  @media screen and (max-width: 768px) {
+    display: none;
+  }
   position: absolute;
   width: 100%;
   bottom: 0.6rem;
