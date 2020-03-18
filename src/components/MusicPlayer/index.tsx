@@ -4,8 +4,7 @@ import classes from "./index.module.css";
 import { useMusicPlayer } from "./Context";
 import PlayQueue from "./PlayQueue";
 import TrackInfo from "./TrackInfo";
-import PlayButton from "./PlayButton";
-import PauseButton from "./PauseButton";
+import PlayPauseButton from "./PlayPauseButton";
 
 export default function MusicPlayer() {
   const { currentTrack, isPlaying, pause, play, playQueue } = useMusicPlayer();
@@ -20,11 +19,7 @@ export default function MusicPlayer() {
           <TrackInfo track={currentTrack} />
         </div>
         <div className={classes.middle}>
-          {isPlaying ? (
-            <PauseButton onClick={pause} />
-          ) : (
-            <PlayButton onClick={play} />
-          )}
+          <PlayPauseButton {...{ play, pause, isPlaying }} />
         </div>
         <div className={classes.right}>
           <PlayQueue queue={playQueue} currentIndex={2} />

@@ -1,4 +1,5 @@
 import React from "react";
+import styled from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlusCircle } from "@fortawesome/free-solid-svg-icons";
 
@@ -6,8 +7,19 @@ import { Track } from "../../spotify/types";
 import { useMusicPlayer } from "../MusicPlayer/Context";
 import Image from "components/Image";
 import { useOverflowTextHandler } from "hooks/OverflowTextHandler";
-import PauseButton from "components/MusicPlayer/PauseButton";
-import PlayButton from "components/MusicPlayer/PlayButton";
+import PlayPauseButton from "components/MusicPlayer/PlayPauseButton";
+import TextWithHelp from "components/TextWithHelp";
+import { trackAttributes } from "spotify/constants";
+
+const TrackPopularityContainer = styled.div.attrs(props => ({
+  className: "card-header-icon"
+}))`
+  padding-left: 0;
+`;
+
+const popularityHelpText = trackAttributes.filter(
+  attr => attr.name === "popularity"
+)[0].description;
 
 export type TrackCardProps = {
   track: Track;
@@ -23,26 +35,14 @@ export default function TrackCard({ track }: TrackCardProps) {
     isPlaying,
     addToPlayQueue
   } = useMusicPlayer();
-
   function renderPlayPauseButton() {
-    const sharedProps = { disabled: !track.preview_url };
-    if (currentTrack?.id === id) {
-      if (isPlaying) {
-        return <PauseButton onClick={_ => pause()} {...sharedProps} />;
-      } else {
-        return <PlayButton onClick={_ => play()} {...sharedProps} />;
-      }
-    } else {
-      return (
-        <PlayButton
-          onClick={() => {
-            changeTrack(track);
-            play();
-          }}
-          {...sharedProps}
-        />
-      );
-    }
+    return (
+      <PlayPauseButton
+        onClick={() => currentTrack?.id !== id && changeTrack(track)}
+        {...{ isPlaying: currentTrack?.id === id && isPlaying, play, pause }}
+        disabled={!track.preview_url}
+      />
+    );
   }
 
   const {
@@ -77,9 +77,9 @@ export default function TrackCard({ track }: TrackCardProps) {
             {name}
           </a>
         </p>
-        <span className="card-header-icon" style={{ paddingLeft: 0 }}>
-          {popularity}
-        </span>
+        <TrackPopularityContainer>
+          <TextWithHelp text={"" + popularity} tip={popularityHelpText} />
+        </TrackPopularityContainer>
       </header>
       <div className="card-image">
         <Image
