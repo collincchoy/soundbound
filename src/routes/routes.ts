@@ -6,7 +6,10 @@ import LabPage from "../pages/Lab";
 export const publicRoutes = [
   {
     path: "/",
-    component: WelcomePage
+    component: WelcomePage,
+    extraProps: {
+      exact: true
+    }
   }
 ];
 

@@ -22,7 +22,7 @@ export default function App() {
               </PrivateRoute>
             ))}
             {publicRoutes.map(route => (
-              <Route path={route.path} key={route.path}>
+              <Route path={route.path} key={route.path} {...route.extraProps}>
                 <route.component />
               </Route>
             ))}
