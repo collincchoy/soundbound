@@ -6,16 +6,14 @@ const styles = {
   minHeight: "100vh",
   paddingTop: "20px",
   /*Account for music player(80px) + 20px*/
-  paddingBottom: "100px",
-  backgroundColor: "#292c34"
+  paddingBottom: "100px"
 };
 
 export default function PageContent(props: { children?: any }) {
   return (
     <>
-      <NavBar />
-
       <div className="section" style={styles}>
+        <NavBar />
         <div className="container">{props.children}</div>
       </div>
       <MusicPlayer />

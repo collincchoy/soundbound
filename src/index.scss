@@ -6,6 +6,10 @@
   border-radius: 5px;
 }
 
+.navbar-item .is-active {
+  font-weight: bold;
+}
+
 /* scrolling text overflow styles */
 .overflow-container {
   overflow: hidden;

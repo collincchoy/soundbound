@@ -1,13 +1,22 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
+import styled from "styled-components";
+
+const StyledNavLink = styled(NavLink)`
+  font-size: 1.2rem;
+`;
 
 export default function NavMenu() {
   return (
     <>
       <div className="navbar-item has-dropdown is-hoverable">
-        <NavLink className="navbar-link" to="/top" activeClassName="is-active">
+        <StyledNavLink
+          className="navbar-link is-arrowless"
+          to="/top"
+          activeClassName="is-active"
+        >
           Top
-        </NavLink>
+        </StyledNavLink>
 
         <div className="navbar-dropdown">
           <NavLink
@@ -27,9 +36,13 @@ export default function NavMenu() {
         </div>
       </div>
 
-      <NavLink className="navbar-item" to="/lab" activeClassName="is-active">
+      <StyledNavLink
+        className="navbar-item"
+        to="/lab"
+        activeClassName="is-active"
+      >
         Lab
-      </NavLink>
+      </StyledNavLink>
 
       {/* <div className="navbar-item has-dropdown is-hoverable">
         <NavLink className="navbar-link" to="/">

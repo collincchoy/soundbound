@@ -3,6 +3,13 @@ import soundboundLogo from "./soundbound.png";
 import { Link } from "react-router-dom";
 import NavMenu from "./Menu";
 import LoggedInUser from "./LoggedInUser";
+import styled from "styled-components";
+
+const StyledLogo = styled.img`
+  && {
+    max-height: 2rem;
+  }
+`;
 
 export default function NavBar() {
   const [isBurgerActive, setIsBurgerActive] = useState(false);
@@ -26,14 +33,14 @@ export default function NavBar() {
   };
   return (
     <nav
-      className="navbar is-dark"
+      className="navbar is-transparent"
       role="navigation"
       aria-label="main navigation"
     >
       <div className="container">
         <div className="navbar-brand">
           <Link className="navbar-item" to="/">
-            <img src={soundboundLogo} alt="logo" />
+            <StyledLogo src={soundboundLogo} alt="logo" />
           </Link>
           <NavBurger />
         </div>

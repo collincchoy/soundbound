@@ -9,7 +9,9 @@ $pink: #fa7c91;
 $brown: #757763;
 $beige-light: #d0d1cd;
 $beige-lighter: #eff0eb;
-// $dark: hsl(204, 71%, 53%);
+$background: hsl(224, 12%, 18%);
+
+$aqua: hsla(204, 62%, 18%, 1);
 
 // Update Bulma's global variables
 $family-sans-serif: "Nunito", sans-serif;
@@ -21,7 +23,10 @@ $widescreen-enabled: false;
 $fullhd-enabled: false;
 
 // Update some of Bulma's component variables
-$body-background-color: $beige-lighter;
+$body-background-color: $background;
+$navbar-background-color: transparent;
+$navbar-item-active-color: $link; //$scheme-invert !default
+
 $control-border-width: 2px;
 $input-border-color: transparent;
 $input-shadow: none;
