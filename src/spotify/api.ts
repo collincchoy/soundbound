@@ -1,6 +1,6 @@
 class SpotifyClient {
   baseUrl = "https://api.spotify.com/v1";
-  redirectUri = `${process.env.REACT_APP_REDIRECT_HOST}/`;
+  redirectUri = `${process.env.REACT_APP_REDIRECT_HOST}/oauth_callback`;
   clientId = "56b3e61755c4412da05579ef18851833";
   private _access_token: string; // DO NOT EDIT THIS DIRECTLY - use setter/getter
   constructor(access_token?: string) {
@@ -8,9 +8,6 @@ class SpotifyClient {
   }
 
   get access_token() {
-    if (this._access_token === "") {
-      this.handleOAuthCallback();
-    }
     return this._access_token || localStorage.getItem("token");
   }
 
@@ -38,12 +35,18 @@ class SpotifyClient {
 
     if (params["access_token"]) {
       this.access_token = params["access_token"];
-      // clear the url bar
-      window.history.pushState("", "", "/");
+      // ~clear the url bar~
+      // Note: this redirect is now done in the OauthCallback component.
+      // This handler func should _only_ deal with the client api and not
+      // handle page redirects.
     }
   }
 
-  async get(endpoint: string, abortSignal?: AbortSignal, params?: {}) {
+  async get<T>(
+    endpoint: string,
+    abortSignal?: AbortSignal,
+    params?: {}
+  ): Promise<T> {
     if (params) {
       params = new URLSearchParams(params);
       endpoint = `${endpoint}?${params.toString()}`;

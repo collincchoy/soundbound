@@ -49,9 +49,9 @@ const CenteredContent = styled.div`
 export default function WelcomePage() {
   const { isLoggedIn, login } = useLoginContext();
 
-  if (isLoggedIn) {
-    return <Redirect to="/top/artists" />;
-  }
+  // if (isLoggedIn) {
+  //   return <Redirect to="/top/artists" />;
+  // }
 
   return (
     <ScrollableView>

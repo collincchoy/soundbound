@@ -2,6 +2,7 @@ import WelcomePage from "../pages/Welcome";
 import TopArtistsPage from "../pages/Top/Artists";
 import TopTracksPage from "../pages/Top/Tracks";
 import LabPage from "../pages/Lab";
+import OauthCallbackPage from "pages/OauthCallback";
 
 export const publicRoutes = [
   {
@@ -10,6 +11,10 @@ export const publicRoutes = [
     extraProps: {
       exact: true
     }
+  },
+  {
+    path: "/oauth_callback",
+    component: OauthCallbackPage
   }
 ];
 

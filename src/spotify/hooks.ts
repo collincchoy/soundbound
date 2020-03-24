@@ -10,8 +10,8 @@ export function useSpotifyApi<T>(endpoint: string, params?: {}) {
     const abortController = new AbortController();
     const { signal } = abortController;
     spotify
-      .get(endpoint, signal, params)
-      .then((data: any) => {
+      .get<T>(endpoint, signal, params)
+      .then(data => {
         console.log(`bah data is: ${JSON.stringify(data)}`);
         setData(data);
       })
@@ -41,8 +41,8 @@ export function usePaginatedSpotifyApi<T>(endpoint: string) {
 
   function loadItems(endpoint: string, abortSignal?: AbortSignal) {
     spotify
-      .get(endpoint, abortSignal)
-      .then((resp: PaginatedResponse<T>) => {
+      .get<PaginatedResponse<T>>(endpoint, abortSignal)
+      .then(resp => {
         resp.items && setItems(prev => [...prev, ...resp.items]);
         setNextPage(resp.next && resp.next.split("v1")[1]);
       })
