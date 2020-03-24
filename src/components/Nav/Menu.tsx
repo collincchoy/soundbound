@@ -2,7 +2,9 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 
-const StyledNavLink = styled(NavLink)`
+const StyledNavLink = styled(NavLink).attrs(p => ({
+  className: "navbar-link is-arrowless"
+}))`
   font-size: 1.2rem;
 `;
 
@@ -10,11 +12,7 @@ export default function NavMenu() {
   return (
     <>
       <div className="navbar-item has-dropdown is-hoverable">
-        <StyledNavLink
-          className="navbar-link is-arrowless"
-          to="/top"
-          activeClassName="is-active"
-        >
+        <StyledNavLink to="/top" activeClassName="is-active">
           Top
         </StyledNavLink>
 
@@ -35,14 +33,11 @@ export default function NavMenu() {
           </NavLink>
         </div>
       </div>
-
-      <StyledNavLink
-        className="navbar-item"
-        to="/lab"
-        activeClassName="is-active"
-      >
-        Lab
-      </StyledNavLink>
+      <div className="navbar-item">
+        <StyledNavLink to="/lab" activeClassName="is-active">
+          Lab
+        </StyledNavLink>
+      </div>
 
       {/* <div className="navbar-item has-dropdown is-hoverable">
         <NavLink className="navbar-link" to="/">
