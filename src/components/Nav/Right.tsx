@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { useLoginContext } from "../../hooks/Login";
+import { HashLink as Link } from "react-router-hash-link";
 
 const StyledCurrentUser = styled.div.attrs(props => ({
   className: "button is-dark",
@@ -8,10 +9,6 @@ const StyledCurrentUser = styled.div.attrs(props => ({
 }))`
   && {
     background-color: transparent;
-  }
-
-  &.button:hover {
-    /* background-color: cyan; */
   }
 `;
 
@@ -45,6 +42,9 @@ function CurrentUser(props: {
         </StyledCurrentUser>
       </div>
       <div className={`navbar-dropdown is-right`}>
+        <Link to="/#about" className="navbar-item">
+          About
+        </Link>
         {/* eslint-disable-next-line jsx-a11y/anchor-is-valid*/}
         <a className="navbar-item" href="" onClick={logout}>
           Logout
@@ -54,7 +54,7 @@ function CurrentUser(props: {
   );
 }
 
-export default function LoggedInUser() {
+export default function NavRight() {
   const { isLoggedIn, currentUser, login, logout } = useLoginContext();
 
   const logInButton = (

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import soundboundLogo from "./soundbound.png";
 import { Link } from "react-router-dom";
 import NavMenu from "./Menu";
-import LoggedInUser from "./LoggedInUser";
+import NavRight from "./Right";
 import styled from "styled-components";
 
 const StyledLogo = styled.img`
@@ -52,7 +52,7 @@ export default function NavBar() {
             <NavMenu />
           </div>
           <div className="navbar-end">
-            <LoggedInUser />
+            <NavRight />
           </div>
         </div>
       </div>
