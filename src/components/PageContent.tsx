@@ -1,21 +1,21 @@
 import React from "react";
 import MusicPlayer from "./MusicPlayer";
 import NavBar from "./Nav/Bar";
+import styled from "styled-components";
 
-const styles = {
-  minHeight: "100vh",
-  paddingTop: "20px",
-  /*Account for music player(80px) + 20px*/
-  paddingBottom: "100px"
-};
+const StyledArticle = styled.article`
+  min-height: 100vh;
+  /* 100px @ bottom is to account for music player */
+  padding: 0.75rem 1.5rem 100px 1.5rem;
+`;
 
 export default function PageContent(props: { children?: any }) {
   return (
     <>
-      <div className="section" style={styles}>
+      <StyledArticle>
         <NavBar />
         <div className="container">{props.children}</div>
-      </div>
+      </StyledArticle>
       <MusicPlayer />
     </>
   );

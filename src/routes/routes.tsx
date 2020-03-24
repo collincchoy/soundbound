@@ -1,3 +1,6 @@
+import React from "react";
+import { Redirect } from "react-router-dom";
+
 import WelcomePage from "../pages/Welcome";
 import TopArtistsPage from "../pages/Top/Artists";
 import TopTracksPage from "../pages/Top/Tracks";
@@ -7,28 +10,35 @@ import OauthCallbackPage from "pages/OauthCallback";
 export const publicRoutes = [
   {
     path: "/",
-    component: WelcomePage,
-    extraProps: {
-      exact: true
-    }
+    exact: true,
+    render: WelcomePage
   },
   {
     path: "/oauth_callback",
-    component: OauthCallbackPage
+    exact: false,
+    render: OauthCallbackPage
   }
 ];
 
 export const privateRoutes = [
   {
+    path: "/top",
+    exact: true,
+    render: () => <Redirect to="/top/artists" />
+  },
+  {
     path: "/top/artists",
-    component: TopArtistsPage
+    exact: false,
+    render: TopArtistsPage
   },
   {
     path: "/top/tracks",
-    component: TopTracksPage
+    exact: false,
+    render: TopTracksPage
   },
   {
     path: "/lab",
-    component: LabPage
+    exact: false,
+    render: LabPage
   }
 ];

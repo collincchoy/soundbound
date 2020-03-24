@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { useLoginContext } from "hooks/Login";
-import { Redirect } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import ScrollableView from "components/ScrollableView";
 import ArtistCard from "components/Artist/Card";
 import TrackCard from "components/Track/Card";
@@ -48,11 +48,6 @@ const CenteredContent = styled.div`
 
 export default function WelcomePage() {
   const { isLoggedIn, login } = useLoginContext();
-
-  // if (isLoggedIn) {
-  //   return <Redirect to="/top/artists" />;
-  // }
-
   return (
     <ScrollableView>
       <Section
@@ -81,6 +76,11 @@ export default function WelcomePage() {
               color="rgb(44, 200, 171)"
               linkTo="#discovery"
               hoverColor="rgba(185, 127, 166, 0.7)"
+              style={
+                /*Note: this is a patch fix. The hover background sometimes bleeds in @ different widths. Unbolding all of the DecoratedText causes the same behavior but on "reflection". */ {
+                  fontWeight: 500
+                }
+              }
             >
               discovery
             </DecoratedText>{" "}
@@ -96,9 +96,15 @@ export default function WelcomePage() {
           </p>{" "}
         </h2>
         <h2 className="subtitle">To get started:</h2>
-        <button className="button is-primary" onClick={login}>
-          Login with Spotify
-        </button>
+        {isLoggedIn ? (
+          <NavLink className="button is-primary" to="/top/artists">
+            See your Top Artists
+          </NavLink>
+        ) : (
+          <button className="button is-primary" onClick={login}>
+            Login with Spotify
+          </button>
+        )}
         <ForkMeRibbon />
       </Section>
       <Section id="reflection" className="is-primary">

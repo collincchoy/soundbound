@@ -13,6 +13,7 @@ const StyledLabFormWrapper = styled.div.attrs(props => ({
 }))`
   border-radius: 6px;
   padding: 10px;
+  margin: 0.75rem 0;
 `;
 
 const LabFormDescription = styled.div.attrs(props => ({

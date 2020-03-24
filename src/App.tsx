@@ -16,14 +16,14 @@ export default function App() {
       >
         <MusicPlayerProvider>
           <Switch>
-            {privateRoutes.map(route => (
-              <PrivateRoute path={route.path} key={route.path}>
-                <route.component />
+            {privateRoutes.map(({ render: Component, ...route }) => (
+              <PrivateRoute key={route.path} {...route}>
+                <Component />
               </PrivateRoute>
             ))}
-            {publicRoutes.map(route => (
-              <Route path={route.path} key={route.path} {...route.extraProps}>
-                <route.component />
+            {publicRoutes.map(({ render: Component, ...route }) => (
+              <Route key={route.path} {...route}>
+                <Component />
               </Route>
             ))}
           </Switch>
