@@ -12,7 +12,7 @@ const StyledCurrentUser = styled.div.attrs(props => ({
   }
 `;
 
-function CurrentUser(props: {
+function ProfileWithDropdown(props: {
   pictureUrl: string;
   name: string;
   logout: () => void;
@@ -69,7 +69,7 @@ export default function NavRight() {
     logout
   };
   return isLoggedIn ? (
-    <CurrentUser {...currentUserProps} />
+    <ProfileWithDropdown {...currentUserProps} />
   ) : (
     <div className="navbar-item">{logInButton}</div>
   );
