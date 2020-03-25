@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/soundbound/precache-manifest.0725cb318935095a004bc3db47accc73.js"
+  "/soundbound/precache-manifest.542184cb47b0a10ef915c32bbeb558b7.js"
 );
 
 self.addEventListener('message', (event) => {
