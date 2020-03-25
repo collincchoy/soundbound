@@ -1,7 +1,7 @@
 class SpotifyClient {
   baseUrl = "https://api.spotify.com/v1";
   redirectUri = `${process.env.REACT_APP_REDIRECT_HOST}/oauth_callback`;
-  clientId = "56b3e61755c4412da05579ef18851833";
+  clientId = `${process.env.REACT_APP_SPOTIFY_CLIENT_ID}`;
   private _access_token: string; // DO NOT EDIT THIS DIRECTLY - use setter/getter
   constructor(access_token?: string) {
     this._access_token = access_token ?? "";
