@@ -47,8 +47,9 @@
   }
 }
 
+@import "_variables.scss";
 .github-fork-ribbon.left-bottom:before {
-  background-color: #2cc8ab;
+  background-color: $green-light;
 }
 /*!
  * "Fork me on GitHub" CSS ribbon v0.2.3 | MIT License

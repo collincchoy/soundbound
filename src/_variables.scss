@@ -6,12 +6,12 @@
 // Set your brand colors
 $purple: #8a4d76;
 $pink: #fa7c91;
+$green-light: #2cc8ab;
 $brown: #757763;
 $beige-light: #d0d1cd;
 $beige-lighter: #eff0eb;
-$background: hsl(224, 12%, 18%);
-
 $aqua: hsla(204, 62%, 18%, 1);
+$background: hsl(224, 12%, 18%);
 
 // Update Bulma's global variables
 $family-sans-serif: "Nunito", sans-serif;
@@ -24,8 +24,9 @@ $fullhd-enabled: false;
 
 // Update some of Bulma's component variables
 $body-background-color: $background;
+$modal-card-head-background-color: white;
 $navbar-background-color: transparent;
-$navbar-item-active-color: $link; //$scheme-invert !default
+$navbar-item-active-color: $pink; //$scheme-invert !default
 
 $control-border-width: 2px;
 $input-border-color: transparent;
@@ -35,13 +36,22 @@ $input-shadow: none;
 $navbar-breakpoint: $tablet;
 
 // Import only what you need from Bulma
-// @import "../node_modules/bulma/sass/utilities/_all.sass";
-// @import "../node_modules/bulma/sass/base/_all.sass";
-// @import "../node_modules/bulma/sass/elements/button.sass";
-// @import "../node_modules/bulma/sass/elements/container.sass";
-// @import "../node_modules/bulma/sass/elements/title.sass";
-// @import "../node_modules/bulma/sass/form/_all.sass";
-// @import "../node_modules/bulma/sass/components/navbar.sass";
-// @import "../node_modules/bulma/sass/layout/hero.sass";
-// @import "../node_modules/bulma/sass/layout/section.sass";
-@import "../node_modules/bulma/bulma.sass"; // FIME
+@import "../node_modules/bulma/sass/utilities/_all.sass";
+@import "../node_modules/bulma/sass/base/_all.sass";
+@import "../node_modules/bulma/sass/components/card.sass";
+@import "../node_modules/bulma/sass/components/dropdown.sass";
+@import "../node_modules/bulma/sass/components/media.sass";
+@import "../node_modules/bulma/sass/components/modal.sass";
+@import "../node_modules/bulma/sass/components/navbar.sass";
+@import "../node_modules/bulma/sass/elements/button.sass";
+@import "../node_modules/bulma/sass/elements/container.sass";
+@import "../node_modules/bulma/sass/elements/content.sass";
+@import "../node_modules/bulma/sass/elements/image.sass";
+@import "../node_modules/bulma/sass/elements/notification.sass";
+@import "../node_modules/bulma/sass/elements/other.sass";
+@import "../node_modules/bulma/sass/elements/tag.sass";
+@import "../node_modules/bulma/sass/elements/title.sass";
+@import "../node_modules/bulma/sass/form/_all.sass";
+@import "../node_modules/bulma/sass/grid/columns.sass";
+@import "../node_modules/bulma/sass/layout/hero.sass";
+@import "../node_modules/bulma/sass/layout/section.sass";
