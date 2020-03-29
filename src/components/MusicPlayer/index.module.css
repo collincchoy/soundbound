@@ -16,6 +16,14 @@
   z-index: 300;
 }
 
+@media screen and (max-width: 768px) {
+  .MusicPlayer {
+    border-radius: 0px;
+    border-left: none;
+    border-right: none;
+  }
+}
+
 .flexContainer {
   display: flex;
   align-items: center;
