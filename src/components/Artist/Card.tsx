@@ -33,7 +33,7 @@ export default function ArtistCard({ name, image, onClick }: ArtistCardProps) {
         style={{ cursor: "pointer" }}
       >
         <figure className="image is-square">
-          <img src={image.url} alt={name} style={{ objectFit: "cover" }} />
+          <img src={image?.url} alt={name} style={{ objectFit: "cover" }} />
         </figure>
       </div>
     </div>
