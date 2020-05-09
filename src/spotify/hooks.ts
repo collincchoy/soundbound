@@ -11,7 +11,7 @@ export function useSpotifyApi<T>(endpoint: string, params?: {}) {
     const { signal } = abortController;
     spotify
       .get<T>(endpoint, signal, params)
-      .then(data => {
+      .then((data) => {
         console.log(`bah data is: ${JSON.stringify(data)}`);
         setData(data);
       })
@@ -32,7 +32,6 @@ export function usePaginatedSpotifyApi<T>(endpoint: string) {
   useEffect(() => {
     const abortController = new AbortController();
     const { signal } = abortController;
-    console.log(`Requesting ${endpoint}!`);
     loadItems(endpoint, signal);
     return () => {
       abortController.abort();
@@ -42,8 +41,8 @@ export function usePaginatedSpotifyApi<T>(endpoint: string) {
   function loadItems(endpoint: string, abortSignal?: AbortSignal) {
     spotify
       .get<PaginatedResponse<T>>(endpoint, abortSignal)
-      .then(resp => {
-        resp.items && setItems(prev => [...prev, ...resp.items]);
+      .then((resp) => {
+        resp.items && setItems((prev) => [...prev, ...resp.items]);
         setNextPage(resp.next && resp.next.split("v1")[1]);
       })
       .catch((error: SpotifyError) => setError(error.error));
