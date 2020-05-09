@@ -1,14 +1,14 @@
 {
   "files": {
     "main.css": "/soundbound/static/css/main.be00fe96.chunk.css",
-    "main.js": "/soundbound/static/js/main.bc171f7d.chunk.js",
-    "main.js.map": "/soundbound/static/js/main.bc171f7d.chunk.js.map",
+    "main.js": "/soundbound/static/js/main.5833097b.chunk.js",
+    "main.js.map": "/soundbound/static/js/main.5833097b.chunk.js.map",
     "runtime-main.js": "/soundbound/static/js/runtime-main.51d18810.js",
     "runtime-main.js.map": "/soundbound/static/js/runtime-main.51d18810.js.map",
     "static/js/2.71092dcf.chunk.js": "/soundbound/static/js/2.71092dcf.chunk.js",
     "static/js/2.71092dcf.chunk.js.map": "/soundbound/static/js/2.71092dcf.chunk.js.map",
     "index.html": "/soundbound/index.html",
-    "precache-manifest.14cba3c29268a61cadc4f7de50538d6b.js": "/soundbound/precache-manifest.14cba3c29268a61cadc4f7de50538d6b.js",
+    "precache-manifest.7b97f929a58780a8fc8547ddfd5f2e31.js": "/soundbound/precache-manifest.7b97f929a58780a8fc8547ddfd5f2e31.js",
     "service-worker.js": "/soundbound/service-worker.js",
     "static/css/main.be00fe96.chunk.css.map": "/soundbound/static/css/main.be00fe96.chunk.css.map",
     "static/media/Bubbles.47325efb.svg": "/soundbound/static/media/Bubbles.47325efb.svg",
@@ -19,6 +19,6 @@
     "static/js/runtime-main.51d18810.js",
     "static/js/2.71092dcf.chunk.js",
     "static/css/main.be00fe96.chunk.css",
-    "static/js/main.bc171f7d.chunk.js"
+    "static/js/main.5833097b.chunk.js"
   ]
 }
