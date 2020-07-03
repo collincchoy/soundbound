@@ -9,7 +9,7 @@ const OauthCallbackPage = () => {
     console.log(`Callback is complete. Result: ${isLoggedIn}`);
     handleCallback();
   });
-  return isLoggedIn ? <Redirect to="/top/artists" /> : <FullsizeLoader />;
+  return isLoggedIn ? <Redirect to="/top/tracks" /> : <FullsizeLoader />;
 };
 
 export default OauthCallbackPage;

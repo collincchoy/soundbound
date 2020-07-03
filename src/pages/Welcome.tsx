@@ -92,8 +92,8 @@ export default function WelcomePage() {
         </h2>
         <h2 className="subtitle">To get started:</h2>
         {isLoggedIn ? (
-          <NavLink className="button is-primary" to="/top/artists">
-            See your Top Artists
+          <NavLink className="button is-primary" to="/top/tracks">
+            See your Top Tracks & Artists
           </NavLink>
         ) : (
           <button className="button is-primary" onClick={login}>
