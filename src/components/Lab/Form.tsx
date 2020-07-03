@@ -8,21 +8,21 @@ import { spotify } from "spotify/api";
 import AdvancedTuner from "./AdvancedTuner";
 import { trackAttributes, TrackAttribute } from "../../spotify/constants";
 
-const StyledLabFormWrapper = styled.div.attrs(props => ({
-  className: "container has-background-light"
+const StyledLabFormWrapper = styled.div.attrs((props) => ({
+  className: "container has-background-light",
 }))`
   border-radius: 6px;
   padding: 10px;
   margin: 0.75rem 0;
 `;
 
-const LabFormDescription = styled.div.attrs(props => ({
-  className: "content"
+const LabFormDescription = styled.div.attrs((props) => ({
+  className: "content",
 }))`
   margin: 1rem;
 `;
 
-const TunersDiv = styled.div.attrs(props => ({ className: "field" }))`
+const TunersDiv = styled.div.attrs((props) => ({ className: "field" }))`
   border: solid 1px black;
   padding: 10px;
   display: flex;
@@ -68,7 +68,7 @@ const LabForm = (props: LabFormProps) => {
           numberOfTracks: DEFAULT_NUM_TRACKS,
           /* Advanced Tuning Values */
           danceability: undefined,
-          loudness: undefined
+          loudness: undefined,
         }}
         // validate={validate}
         onSubmit={(values, { setSubmitting }) => {
@@ -78,28 +78,31 @@ const LabForm = (props: LabFormProps) => {
           }, 400);
         }}
       >
-        {formProps => (
+        {(formProps) => (
           <Form>
             <SearchableInput
               name="artists"
               getSuggestions={searchForArtist}
               suggestionKey={(item: any) => ({
                 key: item.id,
-                value: item.name
+                value: item.name,
               })}
+              placeholder="Daft Punk"
             />
             <SearchableInput
               name="tracks"
               getSuggestions={searchForTrack}
               suggestionKey={(item: any) => ({
                 key: item.id,
-                value: item.name
+                value: item.name,
               })}
+              placeholder="Take on Me"
             />
             <SearchableInput
               name="genres"
               getSuggestions={searchForGenre}
-              suggestionKey={item => ({ key: item, value: item })}
+              suggestionKey={(item) => ({ key: item, value: item })}
+              placeholder="indie-pop"
             />
 
             <NumberInput
@@ -111,7 +114,7 @@ const LabForm = (props: LabFormProps) => {
             />
 
             <TunersDiv>
-              {trackAttributes.map(attribute => (
+              {trackAttributes.map((attribute) => (
                 <StyledTuner key={attribute.name} {...attribute} />
               ))}
             </TunersDiv>
@@ -143,7 +146,7 @@ const LabForm = (props: LabFormProps) => {
 async function searchForArtist(artistName: string) {
   const params = {
     q: artistName,
-    type: "artist"
+    type: "artist",
   };
   const resp: SearchArtistResults = await spotify.get(
     "/search",
@@ -156,7 +159,7 @@ async function searchForArtist(artistName: string) {
 async function searchForTrack(trackName: string) {
   const params = {
     q: trackName,
-    type: "track"
+    type: "track",
   };
   const resp: SearchTrackResults = await spotify.get(
     "/search",
@@ -175,7 +178,7 @@ async function searchForGenre(genre: string) {
 function sortGenresByMatch(genres: string[], query: string) {
   const suggestions: string[] = [];
   const rest: string[] = [];
-  genres.forEach(genre => {
+  genres.forEach((genre) => {
     if (genre.toLowerCase().startsWith(query.toLowerCase())) {
       suggestions.push(genre);
     } else {

@@ -6,7 +6,7 @@ type SearchableInputProps<T> = {
   name: string;
   getSuggestions: (inputValue: string) => Promise<T[]>;
   suggestionKey: (item: T) => { key: string; value: string };
-};
+} & React.PropsWithoutRef<JSX.IntrinsicElements["input"]>;
 
 export default function SearchableInput<T>({
   name,
