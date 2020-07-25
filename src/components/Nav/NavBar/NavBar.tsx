@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import soundboundLogo from "./soundbound.png";
 import { Link } from "react-router-dom";
-import NavMenu from "./Menu";
-import NavRight from "./Right";
+import NavMenu from "../NavMenu/NavMenu";
+import NavRight from "../Right";
 import styled from "styled-components";
 
 const StyledLogo = styled.img`

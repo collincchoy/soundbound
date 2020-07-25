@@ -1,6 +1,6 @@
 import React from "react";
 import MusicPlayer from "./MusicPlayer";
-import NavBar from "./Nav/Bar";
+import NavBar from "./Nav/NavBar/NavBar";
 import styled from "styled-components";
 
 const StyledArticle = styled.article`
