@@ -9,23 +9,31 @@ const HoverLink = styled.a<HoverLinkProps>`
   font-weight: 500px;
   text-decoration: underline;
   color: ${(p) => p.color} !important; /*Override css <a> selectors*/
-  background-image: linear-gradient(
-    to left,
-    transparent 50%,
-    ${(p) => p.hoverColor ?? p.color} 50%
-  );
-  background-size: 200% 100%;
-  background-position: bottom right;
-  transition: background 0.8s ease;
+
+  position: relative;
+  z-index: 100;
+
+  /* Clip the pseudo-element on-hover */
+  overflow: hidden;
+  display: inline-block;
+  vertical-align: middle;
+
+  &::before {
+    content: "";
+    color: ${(p) => p.color} !important; /*Override css <a> selectors*/
+    background-color: ${(p) => p.hoverColor};
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    position: absolute;
+    left: -101%;
+    transition: left 0.8s;
+  }
 
   &:hover {
-    color: ${(p) => p.color} !important; /*Override css <a> selectors*/
-    background-image: linear-gradient(
-      to right,
-      ${(p) => p.hoverColor ?? p.color} 50%,
-      transparent 50%
-    );
-    background-position: bottom left;
+    &::before {
+      left: 0;
+    }
   }
 `;
 

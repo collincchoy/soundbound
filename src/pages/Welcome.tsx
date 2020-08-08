@@ -67,7 +67,7 @@ export default function WelcomePage() {
             <HoverLink
               color="rgba(255, 255, 255, 0.9)"
               href="#about"
-              hoverColor="rgba(15, 15, 15, 0.7)"
+              hoverColor="rgba(15, 15, 15, 1)"
             >
               experimental
             </HoverLink>{" "}
