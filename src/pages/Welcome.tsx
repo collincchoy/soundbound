@@ -12,7 +12,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faExchangeAlt, faCaretDown } from "@fortawesome/free-solid-svg-icons";
 import MixingPot from "components/Welcome/MixingPot";
 import Section from "components/Welcome/Section";
-import DecoratedText from "components/Welcome/DecoratedText";
+import HoverLink from "components/Welcome/HoverLink";
 
 const ArtistCardColumn = styled.div`
   display: flex;
@@ -64,34 +64,29 @@ export default function WelcomePage() {
         <h2 className="subtitle">
           <p>
             Soundbound is an{" "}
-            <DecoratedText
+            <HoverLink
               color="rgba(255, 255, 255, 0.9)"
-              linkTo="#about"
-              hoverColor="rgba(15, 15, 15, 0.7)"
+              href="#about"
+              hoverColor="rgba(15, 15, 15, 1)"
             >
               experimental
-            </DecoratedText>{" "}
+            </HoverLink>{" "}
             music{" "}
-            <DecoratedText
+            <HoverLink
               color="rgb(44, 200, 171)"
-              linkTo="#discovery"
+              href="#discovery"
               hoverColor="rgba(185, 127, 166, 0.7)"
-              style={
-                /*Note: this is a patch fix. The hover background sometimes bleeds in @ different widths. Unbolding all of the DecoratedText causes the same behavior but on "reflection". */ {
-                  fontWeight: 500
-                }
-              }
             >
               discovery
-            </DecoratedText>{" "}
+            </HoverLink>{" "}
             and{" "}
-            <DecoratedText
+            <HoverLink
               color="rgb(185, 127, 166)"
-              linkTo="#reflection"
+              href="#reflection"
               hoverColor="rgba(44, 200, 171, 0.45)"
             >
               reflection
-            </DecoratedText>{" "}
+            </HoverLink>{" "}
             app powered by Spotify.
           </p>{" "}
         </h2>
