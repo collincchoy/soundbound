@@ -1,5 +1,7 @@
 # **Soundbound**
 
+![Deploy](https://github.com/collincchoy/soundbound/workflows/Deploy/badge.svg)
+
 Playing with the Spotify API, es6/TypeScript, and React.
 
 - All functional components (mostly home-rolled)
