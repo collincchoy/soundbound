@@ -17,7 +17,7 @@ const PlayPauseButton: React.FC<PlayPauseButtonProps> = ({
 }) => {
   return isPlaying ? (
     <PauseButton
-      onClick={e => {
+      onClick={(e) => {
         onClick && onClick(e);
         pause();
       }}
@@ -25,7 +25,7 @@ const PlayPauseButton: React.FC<PlayPauseButtonProps> = ({
     />
   ) : (
     <PlayButton
-      onClick={e => {
+      onClick={(e) => {
         onClick && onClick(e);
         play();
       }}

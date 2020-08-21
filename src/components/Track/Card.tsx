@@ -11,14 +11,14 @@ import PlayPauseButton from "components/MusicPlayer/PlayPauseButton";
 import TextWithHelp from "components/TextWithHelp";
 import { trackAttributes } from "spotify/constants";
 
-const TrackPopularityContainer = styled.div.attrs(props => ({
-  className: "card-header-icon"
+const TrackPopularityContainer = styled.div.attrs((props) => ({
+  className: "card-header-icon",
 }))`
   padding-left: 0;
 `;
 
 const popularityHelpText = trackAttributes.filter(
-  attr => attr.name === "popularity"
+  (attr) => attr.name === "popularity"
 )[0].description;
 
 export type TrackCardProps = {
@@ -33,30 +33,21 @@ export default function TrackCard({ track }: TrackCardProps) {
     play,
     pause,
     isPlaying,
-    addToPlayQueue
+    addToPlayQueue,
   } = useMusicPlayer();
-  function renderPlayPauseButton() {
-    return (
-      <PlayPauseButton
-        onClick={() => currentTrack?.id !== id && changeTrack(track)}
-        {...{ isPlaying: currentTrack?.id === id && isPlaying, play, pause }}
-        disabled={!track.preview_url}
-      />
-    );
-  }
 
   const {
     hasOverflowingText: headerIsOverflowing,
-    elRef: headerElRef
+    elRef: headerElRef,
   } = useOverflowTextHandler<HTMLAnchorElement>();
 
   const {
     hasOverflowingText: artistsTextIsOverflowing,
-    elRef: artistTextElRef
+    elRef: artistTextElRef,
   } = useOverflowTextHandler<HTMLParagraphElement>();
   const {
     hasOverflowingText: albumTextIsOverflowing,
-    elRef: albumTextElRef
+    elRef: albumTextElRef,
   } = useOverflowTextHandler<HTMLParagraphElement>();
 
   return (
@@ -87,6 +78,11 @@ export default function TrackCard({ track }: TrackCardProps) {
           src={album.images[1]?.url}
           alt={album.name}
         />
+        <PlayPauseButton
+          onClick={() => currentTrack?.id !== id && changeTrack(track)}
+          {...{ isPlaying: currentTrack?.id === id && isPlaying, play, pause }}
+          disabled={!track.preview_url}
+        />
       </div>
       <div className="card-content has-text-centered">
         <div className="overflow-container">
@@ -96,7 +92,7 @@ export default function TrackCard({ track }: TrackCardProps) {
             className={`scroll-on-overflow ${artistsTextIsOverflowing &&
               "overflowing"}`}
           >
-            {artists.map(artist => artist.name).join(", ")}
+            {artists.map((artist) => artist.name).join(", ")}
           </p>
         </div>
         <div className="overflow-container">
@@ -113,7 +109,6 @@ export default function TrackCard({ track }: TrackCardProps) {
       </div>
       <footer className="card-footer">
         <div className="card-footer-item">
-          {renderPlayPauseButton()}
           <button
             className="button"
             title="Add to queue"
