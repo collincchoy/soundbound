@@ -49,7 +49,7 @@ export interface ArtistImage {
 }
 
 enum AlbumType {
-  ALBUM = "ALBUM"
+  ALBUM = "ALBUM",
 }
 
 export type SearchArtistResults = {
@@ -121,9 +121,9 @@ export type Track = {
 };
 
 export enum PersonalizationTimeRange {
-  "SHORT" = "short_term",
-  "MEDIUM" = "medium_term",
-  "LONG" = "long_term"
+  "1 month" = "short_term",
+  "6 months" = "medium_term",
+  "1+ years" = "long_term",
 }
 
 export type Recommendations = {

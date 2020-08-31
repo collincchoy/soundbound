@@ -7,18 +7,17 @@ import TimeRangePicker from "../../components/TimeRangePicker";
 import PageContent from "components/PageContent";
 
 export default function TopTracksPage() {
-  const [timeRange, setTimeRange] = useState<string>(
-    PersonalizationTimeRange.MEDIUM
-  );
+  const defaultTimeRange = PersonalizationTimeRange["1 month"];
+  const [timeRange, setTimeRange] = useState<string>(defaultTimeRange);
   const {
     items,
     error,
     loadMoreItems,
     nextPage,
-    reset
+    reset,
   } = usePaginatedSpotifyApi<Track>(`/me/top/tracks?time_range=${timeRange}`);
 
-  const changeTimeRange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const changeTimeRange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setTimeRange(e.currentTarget.value);
     reset();
   };
