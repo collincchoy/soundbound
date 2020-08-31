@@ -17,6 +17,14 @@ const TrackPopularityContainer = styled.div.attrs((props) => ({
   padding-left: 0;
 `;
 
+const FooterButton = styled.button`
+  width: 100%;
+  height: 100%;
+  border: none;
+  padding: 0.75rem;
+  margin: 5px;
+`;
+
 const popularityHelpText = trackAttributes.filter(
   (attr) => attr.name === "popularity"
 )[0].description;
@@ -108,16 +116,14 @@ export default function TrackCard({ track }: TrackCardProps) {
         </div>
       </div>
       <footer className="card-footer">
-        <div className="card-footer-item">
-          <button
-            className="button"
-            title="Add to queue"
-            onClick={() => addToPlayQueue(track)}
-            disabled={!track.preview_url}
-          >
-            <FontAwesomeIcon icon={faPlusCircle} />
-          </button>
-        </div>
+        <FooterButton
+          className="button"
+          title="Add to queue"
+          onClick={() => addToPlayQueue(track)}
+          disabled={!track.preview_url}
+        >
+          <FontAwesomeIcon icon={faPlusCircle} size="lg" />
+        </FooterButton>
       </footer>
     </div>
   );

@@ -1,6 +1,8 @@
 import styled from "styled-components";
 
-const CardButtonOverlay = styled.button`
+const CardButtonOverlay = styled.button.attrs((p) => ({
+  className: "button",
+}))`
   position: absolute;
   top: 50%;
   left: 50%;
