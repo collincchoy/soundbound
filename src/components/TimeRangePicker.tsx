@@ -26,7 +26,7 @@ export default function TimeRangePicker(props: {
   const options = Object.entries(PersonalizationTimeRange);
   return (
     <Container>
-      <label className="is-size-5 has-text-weight-bold">Time Range: </label>
+      <label className="has-text-weight-bold">Time Range: </label>
       <OptionSelector onChange={props.onChange}>
         {options.map(([key, displayName]) => {
           return (
