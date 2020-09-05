@@ -3,12 +3,21 @@ import styled from "styled-components";
 import { useLoginContext } from "../../hooks/Login";
 import { HashLink as Link } from "react-router-hash-link";
 
-const StyledCurrentUser = styled.div.attrs(props => ({
+const StyledCurrentUser = styled.div.attrs((props) => ({
   className: "button is-dark",
-  ...props
+  ...props,
 }))`
   && {
     background-color: transparent;
+  }
+`;
+
+const StyledDropdown = styled.div.attrs((props) => ({
+  className: "navbar-dropdown is-right",
+  ...props,
+}))`
+  a {
+    color: hsl(0, 0%, 21%); /*dark from bulma*/
   }
 `;
 
@@ -41,7 +50,7 @@ function ProfileWithDropdown(props: {
           </div>
         </StyledCurrentUser>
       </div>
-      <div className={`navbar-dropdown is-right`}>
+      <StyledDropdown>
         <Link to="/#about" className="navbar-item">
           About
         </Link>
@@ -49,7 +58,7 @@ function ProfileWithDropdown(props: {
         <a className="navbar-item" href="" onClick={logout}>
           Logout
         </a>
-      </div>
+      </StyledDropdown>
     </div>
   );
 }
@@ -66,7 +75,7 @@ export default function NavRight() {
   const currentUserProps = {
     name: currentUser?.display_name ?? "John Smith",
     pictureUrl: currentUser?.images[0]?.url ?? "#",
-    logout
+    logout,
   };
   return isLoggedIn ? (
     <ProfileWithDropdown {...currentUserProps} />

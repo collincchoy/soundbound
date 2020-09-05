@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { NavLink } from "react-router-dom";
+import { NavLink, useRouteMatch } from "react-router-dom";
 
 const StyledNavLink = styled(NavLink).attrs((p) => ({
   className: "navbar-link is-arrowless",
@@ -8,17 +8,23 @@ const StyledNavLink = styled(NavLink).attrs((p) => ({
   font-size: 1.2rem;
 `;
 
+const SubMenuNavLink = styled(NavLink)`
+  &:hover {
+    font-weight: bold;
+  }
+`;
+
 const DropdownMenu = styled.div<{ isActive: boolean }>`
   position: absolute;
-  /* top: 100%; */
+  top: calc(50% + 15px);
+  left: 0.75rem; /*padding from navbar-item*/
   display: none;
-  background-color: black;
-  font-size: 0.75em;
+  font-size: 0.7em;
+  min-width: max-content;
+  z-index: 100;
 
-  .navbar-item,
-  .navbar-link {
-    display: inline-block;
-    position: static;
+  a {
+    color: white;
   }
 
   ${(props) =>
@@ -37,36 +43,46 @@ export type NavItemProps = {
   }[];
 };
 
+const ItemWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  min-width: 75px;
+`;
+
 const NavItem: React.FC<NavItemProps> = ({ name, linkTo, subMenuItems }) => {
-  const [submenuIsOpen, setSubmenuIsOpen] = useState(false);
+  const [isHoveredOver, setIsHoveredOver] = useState(false);
+  const currentRouteMatchesLinkTo = useRouteMatch(linkTo);
   return (
     <div
       className={`navbar-item ${subMenuItems && "has-dropdown is-hoverable"}`}
-      onMouseOver={() => subMenuItems && setSubmenuIsOpen(true)}
-      onMouseLeave={() => subMenuItems && setSubmenuIsOpen(false)}
+      onMouseOver={() => subMenuItems && setIsHoveredOver(true)}
+      onMouseLeave={() => subMenuItems && setIsHoveredOver(false)}
     >
-      <StyledNavLink to={linkTo} activeClassName="is-active">
-        {name}
-      </StyledNavLink>
+      <ItemWrapper>
+        <StyledNavLink to={linkTo} activeClassName="is-active">
+          {name}
+        </StyledNavLink>
 
-      {subMenuItems && (
-        // <div className="navbar-dropdown">
-        <DropdownMenu isActive={true}>
-          {subMenuItems?.map((item) => {
-            return (
-              <NavLink
-                className="navbar-item"
-                activeClassName="is-active"
-                to={item.linkTo}
-                key={item.name}
-              >
-                {item.name}
-              </NavLink>
-            );
-          })}
-        </DropdownMenu>
-        // </div>
-      )}
+        {subMenuItems && (
+          <DropdownMenu isActive={isHoveredOver || !!currentRouteMatchesLinkTo}>
+            {subMenuItems
+              ?.map<React.ReactNode>((item) => {
+                return (
+                  <SubMenuNavLink
+                    activeClassName="is-active"
+                    to={item.linkTo}
+                    key={item.name}
+                  >
+                    {item.name}
+                  </SubMenuNavLink>
+                );
+              })
+              .reduce((prev, next) => {
+                return [prev, <span key="span"> | </span>, next];
+              })}
+          </DropdownMenu>
+        )}
+      </ItemWrapper>
     </div>
   );
 };
