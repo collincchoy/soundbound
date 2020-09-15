@@ -6,6 +6,26 @@ const StyledNavLink = styled(NavLink).attrs((p) => ({
   className: "navbar-link is-arrowless",
 }))`
   font-size: 1.2rem;
+
+  &:hover {
+    &::after {
+      visibility: visible;
+      transform: scaleX(1);
+    }
+  }
+
+  &::after {
+    content: "";
+    position: absolute;
+    height: 3px;
+    background-color: #2cc8ab;
+    width: 100%;
+    bottom: 0.3em;
+    /* left: 0; */
+    visibility: hidden;
+    transform: scaleX(0);
+    transition: all 0.3s ease-in-out 0s;
+  }
 `;
 
 const SubMenuNavLink = styled(NavLink)`
