@@ -11,6 +11,7 @@ const StyledNavLink = styled(NavLink).attrs((p) => ({
     &::after {
       visibility: visible;
       transform: scaleX(1);
+      width: 100%;
     }
   }
 
@@ -19,11 +20,9 @@ const StyledNavLink = styled(NavLink).attrs((p) => ({
     position: absolute;
     height: 3px;
     background-color: #2cc8ab;
-    width: 100%;
+    width: 0%;
     bottom: 0.3em;
-    /* left: 0; */
     visibility: hidden;
-    transform: scaleX(0);
     transition: all 0.3s ease-in-out 0s;
   }
 `;
