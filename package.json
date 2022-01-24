@@ -12,7 +12,7 @@
     "react-compound-slider": "^2.5.0",
     "react-dom": "^16.10.2",
     "react-infinite-scroller": "^1.2.4",
-    "react-router-dom": "^5.1.2",
+    "react-router-dom": "6",
     "react-router-hash-link": "1.2.2",
     "styled-components": "^5.0.1"
   },
@@ -42,11 +42,13 @@
     ]
   },
   "devDependencies": {
-    "@storybook/addon-actions": "^5.3.19",
-    "@storybook/addon-links": "^5.3.19",
-    "@storybook/addons": "^5.3.19",
-    "@storybook/preset-create-react-app": "^3.1.2",
-    "@storybook/react": "^5.3.19",
+    "@storybook/addon-actions": "^6.4.14",
+    "@storybook/addon-links": "^6.4.14",
+    "@storybook/addons": "^6.4.14",
+    "@storybook/builder-webpack5": "^6.4.14",
+    "@storybook/manager-webpack5": "^6.4.14",
+    "@storybook/preset-create-react-app": "^4.0.0",
+    "@storybook/react": "^6.4.14",
     "@types/jest": "^24.0.23",
     "@types/node": "^12.12.12",
     "@types/react": "^16.9.13",
@@ -56,10 +58,11 @@
     "@types/react-router-hash-link": "^1.2.1",
     "@types/styled-components": "^5.0.1",
     "gh-pages": "^2.2.0",
-    "node-sass": "^4.13.1",
     "prettier": "^1.19.1",
-    "react-scripts": "3.2.0",
-    "typescript": "^3.7.2"
+    "react-scripts": "5.0.0",
+    "sass": "^1.48.0",
+    "typescript": "^3.7.2",
+    "webpack": "5"
   },
   "homepage": "https://collincchoy.github.io/soundbound"
 }

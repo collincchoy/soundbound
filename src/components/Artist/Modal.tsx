@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from "react";
 
-type ArtistModal = {
+type ArtistModalProps = {
   title?: string;
   footer?: string;
   children: React.ReactNode;
@@ -19,7 +19,7 @@ export function ArtistModal({
   closeOnEsc,
   closeOnBlur,
   ...props
-}: ArtistModal) {
+}: ArtistModalProps) {
   const modalCardRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
