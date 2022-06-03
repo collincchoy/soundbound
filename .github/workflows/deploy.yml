@@ -1,32 +1,32 @@
 name: Deploy
 on:
   push:
-    branches: [ master ]
-    
+    branches: [master]
+
 jobs:
   deploy-to-gh-pages:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
-    - name: Setup node
-      uses: actions/setup-node@v1.4.2
-    - name: install node deps
-      run: yarn --frozen-lockfile
-    - name: run tests
-      run: yarn test
+      - name: Setup node
+        uses: actions/setup-node@v3
+      - name: install node deps
+        run: yarn --frozen-lockfile
+      - name: run tests
+        run: yarn test
 
-    - name: Setup git client
-      run: |
-        git config --global user.email "gh-actions@collin.choy"
-        git config --global user.name "GH-Action bot"
-        git remote set-url origin git@github.com:collincchoy/soundbound.git
-    - name: Setup ssh (for git push)
-      uses: webfactory/ssh-agent@v0.4.0
-      with:
-        ssh-private-key: ${{ secrets.DEPLOY_PRIVATE_KEY }}
-    - name: deploy
-      env:
-        REACT_APP_SPOTIFY_CLIENT_ID: ${{ secrets.SPOTIFY_CLIENT_ID }}
-      run: yarn deploy
+      - name: Setup git client
+        run: |
+          git config --global user.email "gh-actions@collin.choy"
+          git config --global user.name "GH-Action bot"
+          git remote set-url origin git@github.com:collincchoy/soundbound.git
+      - name: Setup ssh (for git push)
+        uses: webfactory/ssh-agent@v0.4.0
+        with:
+          ssh-private-key: ${{ secrets.DEPLOY_PRIVATE_KEY }}
+      - name: deploy
+        env:
+          REACT_APP_SPOTIFY_CLIENT_ID: ${{ secrets.SPOTIFY_CLIENT_ID }}
+        run: yarn deploy

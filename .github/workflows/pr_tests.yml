@@ -9,11 +9,13 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       - name: Setup node
-        uses: actions/setup-node@v1.4.2
+        uses: actions/setup-node@v3
+
       - name: install node deps
         run: yarn --frozen-lockfile
+
       - name: run tests
         run: yarn test
