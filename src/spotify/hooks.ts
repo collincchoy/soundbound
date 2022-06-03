@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { SpotifyError, PaginatedResponse } from "./types";
 import { spotify } from "./api";
 
@@ -29,6 +29,20 @@ export function usePaginatedSpotifyApi<T>(endpoint: string) {
   const [items, setItems] = useState<T[]>([]);
   const [nextPage, setNextPage] = useState<string | null>(null);
   const [error, setError] = useState<{ status: number; message: string }>();
+
+  const loadItems = useCallback(
+    (endpoint: string, abortSignal?: AbortSignal) => {
+      spotify
+        .get<PaginatedResponse<T>>(endpoint, abortSignal)
+        .then((resp) => {
+          resp.items && setItems((prev) => [...prev, ...resp.items]);
+          setNextPage(resp.next && resp.next.split("v1")[1]);
+        })
+        .catch((error: SpotifyError) => setError(error.error));
+    },
+    []
+  );
+
   useEffect(() => {
     const abortController = new AbortController();
     const { signal } = abortController;
@@ -36,17 +50,7 @@ export function usePaginatedSpotifyApi<T>(endpoint: string) {
     return () => {
       abortController.abort();
     };
-  }, [endpoint]);
-
-  function loadItems(endpoint: string, abortSignal?: AbortSignal) {
-    spotify
-      .get<PaginatedResponse<T>>(endpoint, abortSignal)
-      .then((resp) => {
-        resp.items && setItems((prev) => [...prev, ...resp.items]);
-        setNextPage(resp.next && resp.next.split("v1")[1]);
-      })
-      .catch((error: SpotifyError) => setError(error.error));
-  }
+  }, [endpoint, loadItems]);
 
   const loadMoreItems = (page: number) => {
     nextPage && loadItems(nextPage);
