@@ -22,10 +22,12 @@ jobs:
           git config --global user.email "gh-actions@collin.choy"
           git config --global user.name "GH-Action bot"
           git remote set-url origin git@github.com:collincchoy/soundbound.git
+
       - name: Setup ssh (for git push)
-        uses: webfactory/ssh-agent@v0.4.0
+        uses: webfactory/ssh-agent@v0.5.4
         with:
           ssh-private-key: ${{ secrets.DEPLOY_PRIVATE_KEY }}
+
       - name: deploy
         env:
           REACT_APP_SPOTIFY_CLIENT_ID: ${{ secrets.SPOTIFY_CLIENT_ID }}
