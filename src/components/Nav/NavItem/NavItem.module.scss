@@ -1,0 +1,22 @@
+.underline_onhover {
+  font-size: 1.2rem;
+
+  &:hover {
+    &::after {
+      visibility: visible;
+      transform: scaleX(1);
+      width: 100%;
+    }
+  }
+
+  &::after {
+    content: "";
+    position: absolute;
+    height: 3px;
+    background-color: #2cc8ab;
+    width: 0%;
+    bottom: 0.3em;
+    visibility: hidden;
+    transition: all 0.3s ease-in-out 0s;
+  }
+}

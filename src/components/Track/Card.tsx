@@ -76,22 +76,26 @@ export default function TrackCard({ track }: TrackCardProps) {
             {name}
           </a>
         </p>
+
         <TrackPopularityContainer>
           <TextWithHelp text={"" + popularity} tip={popularityHelpText} />
         </TrackPopularityContainer>
       </header>
+
       <div className="card-image">
         <Image
           className="is-square"
           src={album.images[1]?.url}
           alt={album.name}
         />
+
         <PlayPauseButton
           onClick={() => currentTrack?.id !== id && changeTrack(track)}
           {...{ isPlaying: currentTrack?.id === id && isPlaying, play, pause }}
           disabled={!track.preview_url}
         />
       </div>
+
       <div className="card-content has-text-centered">
         <div className="overflow-container">
           Artist(s):
@@ -103,6 +107,7 @@ export default function TrackCard({ track }: TrackCardProps) {
             {artists.map((artist) => artist.name).join(", ")}
           </p>
         </div>
+
         <div className="overflow-container">
           Album:
           <p
@@ -115,6 +120,7 @@ export default function TrackCard({ track }: TrackCardProps) {
           </p>
         </div>
       </div>
+
       <footer className="card-footer">
         <FooterButton
           className="button"

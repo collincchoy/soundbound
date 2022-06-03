@@ -1,12 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { NavLink, useRouteMatch } from "react-router-dom";
-
-const StyledNavLink = styled(NavLink).attrs((p) => ({
-  className: "navbar-link is-arrowless",
-}))`
-  font-size: 1.2rem;
-`;
+import { NavLink, useMatch } from "react-router-dom";
+import styles from "./NavItem.module.scss";
 
 const SubMenuNavLink = styled(NavLink)`
   &:hover {
@@ -51,7 +46,7 @@ const ItemWrapper = styled.div`
 
 const NavItem: React.FC<NavItemProps> = ({ name, linkTo, subMenuItems }) => {
   const [isHoveredOver, setIsHoveredOver] = useState(false);
-  const currentRouteMatchesLinkTo = useRouteMatch(linkTo);
+  const currentRouteMatchesLinkTo = useMatch(linkTo);
   return (
     <div
       className={`navbar-item ${subMenuItems && "has-dropdown is-hoverable"}`}
@@ -59,9 +54,16 @@ const NavItem: React.FC<NavItemProps> = ({ name, linkTo, subMenuItems }) => {
       onMouseLeave={() => subMenuItems && setIsHoveredOver(false)}
     >
       <ItemWrapper>
-        <StyledNavLink to={linkTo} activeClassName="is-active">
+        <NavLink
+          className={({ isActive }) =>
+            `${styles.underline_onhover} navbar-link is-arrowless ${
+              isActive ? "is-active" : ""
+            }`
+          }
+          to={linkTo}
+        >
           {name}
-        </StyledNavLink>
+        </NavLink>
 
         {subMenuItems && (
           <DropdownMenu isActive={isHoveredOver || !!currentRouteMatchesLinkTo}>
@@ -69,7 +71,8 @@ const NavItem: React.FC<NavItemProps> = ({ name, linkTo, subMenuItems }) => {
               ?.map<React.ReactNode>((item) => {
                 return (
                   <SubMenuNavLink
-                    activeClassName="is-active"
+                    // activeClassName="is-active"
+                    className={({ isActive }) => (isActive ? "is-active" : "")}
                     to={item.linkTo}
                     key={item.name}
                   >

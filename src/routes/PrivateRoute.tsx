@@ -1,10 +1,9 @@
 import React from "react";
-import { Redirect, RouteProps, Route } from "react-router";
+import { Navigate } from "react-router";
 import { useLoginContext } from "../hooks/Login";
 
-export const PrivateRoute: React.FC<RouteProps> = ({ children, ...props }) => {
+export const PrivateRoute = ({ children }: { children: JSX.Element }) => {
   const { isLoggedIn } = useLoginContext();
-  return (
-    <Route {...props}>{!isLoggedIn ? <Redirect to="/" /> : children}</Route>
-  );
+  if (!isLoggedIn) return <Navigate to="/" />;
+  return children;
 };
