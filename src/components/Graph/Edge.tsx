@@ -35,6 +35,8 @@ const StyledSvg = styled.svg<Props>`
     ${({ direction }) => directionTranslation.get(direction)}
   );
   z-index: 100;
+
+  height: 125px;
 `;
 
 export const Edge = ({ length, strokeWidth, direction }: Props) => {
@@ -43,7 +45,7 @@ export const Edge = ({ length, strokeWidth, direction }: Props) => {
       <line
         {...directionPoints.get(direction)}
         strokeWidth={strokeWidth}
-        stroke="#08D4B0"
+        stroke="#2cc8ab"
       />
     </StyledSvg>
   );

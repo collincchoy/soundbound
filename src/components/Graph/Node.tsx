@@ -5,18 +5,26 @@ interface Props {
   size?: number;
   color?: string;
   imageUrl?: string;
+  active?: boolean;
 }
 
 const StyledSvg = styled.svg<Props>`
   z-index: 200;
+
+  transform: ${({ active }) => (active ? "scale(2)" : "")};
 `;
 
-const Node = ({ size = 150, color = "#C4C4C4", imageUrl }: Props) => {
+const Node = ({
+  size = 125,
+  color = "#C4C4C4",
+  imageUrl,
+  active = false,
+}: Props) => {
   // @ts-ignore  fixme on upgrade of TS>4.6
   const patternId = window.crypto.randomUUID();
   const fill = imageUrl ? `url(#${patternId})` : color;
   return (
-    <StyledSvg width={size} height={size}>
+    <StyledSvg width={size} height={size} active={active}>
       {imageUrl && (
         <defs>
           <pattern
