@@ -14,6 +14,7 @@ export default function NavMenu() {
       />
       <NavItem name="Lab" linkTo="/lab" />
 
+      <NavItem name="Discover" linkTo="/discover" />
       {/* <div className="navbar-item has-dropdown is-hoverable">
         <NavLink className="navbar-link" to="/">
           Discover

@@ -7,6 +7,7 @@ import TopTracksPage from "../pages/Top/Tracks";
 import LabPage from "../pages/Lab";
 import OauthCallbackPage from "pages/OauthCallback";
 import { PrivateRoute } from "./PrivateRoute";
+import { DiscoverPage } from "pages/Discover";
 
 export const publicRoutes = (
   <>
@@ -49,6 +50,15 @@ export const privateRoutes = (
       element={
         <PrivateRoute>
           <LabPage />
+        </PrivateRoute>
+      }
+    />
+
+    <Route
+      path="/discover"
+      element={
+        <PrivateRoute>
+          <DiscoverPage />
         </PrivateRoute>
       }
     />
