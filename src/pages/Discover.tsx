@@ -11,6 +11,8 @@ const Grid = styled.article`
     "left title rightTop"
     "left center rightMiddle"
     "left empty rightBottom";
+  grid-gap: 1em 2em;
+
   align-items: center;
   justify-items: center;
   justify-content: center;
@@ -38,27 +40,30 @@ export const DiscoverPage = () => {
         </GridArea>
 
         <GridArea area="title">
-          <h1 className="title is-size-3 is-light">Tank & the Bangas</h1>
+          <h1 className="title is-size-3">Tank & the Bangas</h1>
         </GridArea>
 
         <GridArea area="center">
           <Edge length="33.33%" strokeWidth="6" direction="left" />
-          <Node />
+          <Node
+            active
+            imageUrl="https://i.scdn.co/image/ab67616100005174e553e411f88e7d3935f5b48c"
+          />
         </GridArea>
 
         <GridArea area="rightTop">
           <Edge length="33.33%" strokeWidth="4" direction="down-left" />
-          <Node />
+          <Node imageUrl="https://i.scdn.co/image/ab67616100005174b6edcc3e5c79c2bb67a17d00" />
         </GridArea>
 
         <GridArea area="rightMiddle">
           <Edge length="33.33%" strokeWidth="6" direction="left" />
-          <Node />
+          <Node imageUrl="https://i.scdn.co/image/ab676161000051746e13ca942e06bc70baf6f1a4" />
         </GridArea>
 
         <GridArea area="rightBottom">
           <Edge length="33.33%" strokeWidth="4" direction="up-left" />
-          <Node />
+          <Node imageUrl="https://i.scdn.co/image/ab67616100005174ff7c66df88410e55c67df046" />
         </GridArea>
       </Grid>
     </PageContent>
