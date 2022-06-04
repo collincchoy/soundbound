@@ -12,23 +12,26 @@ const StyledSvg = styled.svg<Props>`
 `;
 
 const Node = ({ size = 150, color = "#C4C4C4", imageUrl }: Props) => {
-  const fill = imageUrl ? "url(#image)" : color;
+  // @ts-ignore  fixme on upgrade of TS>4.6
+  const patternId = window.crypto.randomUUID();
+  const fill = imageUrl ? `url(#${patternId})` : color;
   return (
     <StyledSvg width={size} height={size}>
       {imageUrl && (
         <defs>
           <pattern
-            id="image"
+            id={patternId}
             patternUnits="userSpaceOnUse"
             height={size}
             width={size}
           >
             <image
-              x="-25%"
-              y="-25%"
-              height={size * 1.5}
-              width={size * 1.5}
+              x="0"
+              y="0"
+              height={size}
+              width={size}
               xlinkHref={imageUrl}
+              preserveAspectRatio="xMidYMid slice"
             />
           </pattern>
         </defs>
