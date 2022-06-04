@@ -36,6 +36,9 @@ $input-shadow: none;
 
 @import "~bulma/sass/utilities/initial-variables.sass";
 $navbar-breakpoint: $tablet;
+$navbar-z: 300;
+$navbar-fixed-z: 300;
+$navbar-dropdown-z: 310;
 
 // Import only what you need from Bulma
 @import "../node_modules/bulma/sass/utilities/_all.sass";
