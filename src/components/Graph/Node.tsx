@@ -20,7 +20,6 @@ const Node = ({ size = 150, fill = "#C4C4C4" }: Props) => {
         ry={size / 2}
         fill={fill}
       />
-      <line stroke="white" />
     </StyledSvg>
   );
 };
