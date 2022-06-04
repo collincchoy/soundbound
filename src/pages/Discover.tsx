@@ -40,20 +40,22 @@ export const DiscoverPage = () => {
         </GridArea>
 
         <GridArea area="center">
-          <Edge length="33%" strokeWidth="6" />
+          <Edge length="33.33%" strokeWidth="6" direction="left" />
           <Node />
         </GridArea>
 
         <GridArea area="rightTop">
+          <Edge length="33.33%" strokeWidth="4" direction="down-left" />
           <Node />
         </GridArea>
 
         <GridArea area="rightMiddle">
-          <Edge length="33%" strokeWidth="6" />
+          <Edge length="33.33%" strokeWidth="6" direction="left" />
           <Node />
         </GridArea>
 
         <GridArea area="rightBottom">
+          <Edge length="33.33%" strokeWidth="4" direction="up-left" />
           <Node />
         </GridArea>
       </Grid>
