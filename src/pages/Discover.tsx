@@ -1,3 +1,4 @@
+import { Edge } from "components/Graph/Edge";
 import Node from "components/Graph/Node";
 import PageContent from "components/PageContent";
 import React from "react";
@@ -39,6 +40,7 @@ export const DiscoverPage = () => {
         </GridArea>
 
         <GridArea area="center">
+          <Edge length="33%" strokeWidth="4" />
           <Node />
         </GridArea>
 

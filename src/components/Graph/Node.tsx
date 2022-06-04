@@ -1,13 +1,18 @@
 import React from "react";
+import styled from "styled-components";
 
 interface Props {
   size?: number;
   fill?: string;
 }
 
+const StyledSvg = styled.svg<Props>`
+  z-index: 200;
+`;
+
 const Node = ({ size = 150, fill = "#C4C4C4" }: Props) => {
   return (
-    <svg width={size} height={size}>
+    <StyledSvg width={size} height={size}>
       <ellipse
         cx={size / 2}
         cy={size / 2}
@@ -16,7 +21,7 @@ const Node = ({ size = 150, fill = "#C4C4C4" }: Props) => {
         fill={fill}
       />
       <line stroke="white" />
-    </svg>
+    </StyledSvg>
   );
 };
 
