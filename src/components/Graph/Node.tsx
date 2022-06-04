@@ -12,6 +12,16 @@ const StyledSvg = styled.svg<Props>`
   z-index: 200;
 
   transform: ${({ active }) => (active ? "scale(2)" : "")};
+
+  box-shadow: 0px 0px 20px 0px #fa7c90;
+  border-radius: 50%;
+
+  &:hover {
+    box-shadow: 0px 0px 20px 5px #fa7c90;
+    cursor: pointer;
+  }
+
+  transition: box-shadow 0.3s ease-in;
 `;
 
 const Node = ({
