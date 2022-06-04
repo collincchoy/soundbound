@@ -8,17 +8,15 @@ interface Props {
 
 const StyledSvg = styled.svg<Props>`
   position: absolute;
-  top: 50%;
-  left: 50%;
   width: ${(props) => props.length};
-  transform: translateX(-100%);
+  transform: translate(-100%, 50%);
   z-index: 100;
 `;
 
 export const Edge = (props: Props) => {
   return (
     <StyledSvg {...props}>
-      <line x1="100%" stroke="white" strokeWidth={props.strokeWidth} />
+      <line x1="100%" strokeWidth={props.strokeWidth} stroke="#08D4B0" />
     </StyledSvg>
   );
 };
