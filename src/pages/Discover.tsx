@@ -1,7 +1,7 @@
 import { Edge } from "components/Graph/Edge";
 import Node from "components/Graph/Node";
 import PageContent from "components/PageContent";
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 
 const Grid = styled.article`
@@ -32,6 +32,7 @@ const GridArea = styled.div<{ area: string }>`
 `;
 
 export const DiscoverPage = () => {
+  const [collapseEdges, setCollapseEdges] = useState(false);
   return (
     <PageContent>
       <Grid>
@@ -52,17 +53,35 @@ export const DiscoverPage = () => {
         </GridArea>
 
         <GridArea area="rightTop">
-          <Edge length="33.33%" strokeWidth="4" direction="down-left" />
+          <Edge
+            length="33.33%"
+            strokeWidth="4"
+            direction="down-left"
+            collapsed={collapseEdges}
+          />
           <Node imageUrl="https://i.scdn.co/image/ab67616100005174b6edcc3e5c79c2bb67a17d00" />
         </GridArea>
 
-        <GridArea area="rightMiddle">
-          <Edge length="33.33%" strokeWidth="6" direction="left" />
+        <GridArea
+          area="rightMiddle"
+          onClick={() => setCollapseEdges((current) => !current)}
+        >
+          <Edge
+            length="33.33%"
+            strokeWidth="6"
+            direction="left"
+            collapsed={collapseEdges}
+          />
           <Node imageUrl="https://i.scdn.co/image/ab676161000051746e13ca942e06bc70baf6f1a4" />
         </GridArea>
 
         <GridArea area="rightBottom">
-          <Edge length="33.33%" strokeWidth="4" direction="up-left" />
+          <Edge
+            length="33.33%"
+            strokeWidth="4"
+            direction="up-left"
+            collapsed={collapseEdges}
+          />
           <Node imageUrl="https://i.scdn.co/image/ab67616100005174ff7c66df88410e55c67df046" />
         </GridArea>
       </Grid>
