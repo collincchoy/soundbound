@@ -31,8 +31,83 @@ const GridArea = styled.div<{ area: string }>`
   margin-bottom: 0.5em;
 `;
 
+enum AnimationStep {
+  DEFAULT = 0,
+  LINE = 1,
+  NEXT = 2,
+
+  LAST = 2,
+}
+
+const AnimationStepMap = {
+  [AnimationStep.DEFAULT]: {
+    center: {
+      node: { active: true },
+    },
+    rightTop: {
+      edge: { collapsed: false },
+      node: { collapsed: false },
+    },
+    rightMiddle: {
+      edge: { collapsed: false },
+      node: { collapsed: false },
+    },
+    rightBottom: {
+      edge: { collapsed: false },
+      node: { collapsed: false },
+    },
+  },
+
+  [AnimationStep.LINE]: {
+    center: {
+      node: { active: false },
+    },
+    rightTop: {
+      edge: { collapsed: true },
+      node: { collapsed: true },
+    },
+    rightMiddle: {
+      edge: { collapsed: false },
+      node: { collapsed: false },
+    },
+    rightBottom: {
+      edge: { collapsed: true },
+      node: { collapsed: true },
+    },
+  },
+
+  [AnimationStep.NEXT]: {
+    center: {
+      node: { active: false },
+    },
+    rightTop: {
+      edge: { collapsed: true },
+      node: { collapsed: true },
+    },
+    rightMiddle: {
+      edge: { collapsed: true },
+      node: { collapsed: false },
+    },
+    rightBottom: {
+      edge: { collapsed: true },
+      node: { collapsed: true },
+    },
+  },
+};
+
 export const DiscoverPage = () => {
-  const [collapseEdges, setCollapseEdges] = useState(false);
+  const [animationStep, setAnimationStep] = useState<AnimationStep>(
+    AnimationStep.DEFAULT
+  );
+  const updateAnimationStep = () => {
+    setAnimationStep((currentStep: AnimationStep) => {
+      return currentStep === AnimationStep.LAST
+        ? AnimationStep.DEFAULT
+        : currentStep + 1;
+    });
+  };
+  const animationState = AnimationStepMap[animationStep];
+
   return (
     <PageContent>
       <Grid>
@@ -47,7 +122,7 @@ export const DiscoverPage = () => {
         <GridArea area="center">
           <Edge length="33.33%" strokeWidth="6" direction="left" />
           <Node
-            active
+            active={animationState.center.node.active}
             imageUrl="https://i.scdn.co/image/ab67616100005174e553e411f88e7d3935f5b48c"
           />
         </GridArea>
@@ -57,22 +132,25 @@ export const DiscoverPage = () => {
             length="33.33%"
             strokeWidth="4"
             direction="down-left"
-            collapsed={collapseEdges}
+            collapsed={animationState.rightTop.edge.collapsed}
           />
-          <Node imageUrl="https://i.scdn.co/image/ab67616100005174b6edcc3e5c79c2bb67a17d00" />
+          <Node
+            collapsed={animationState.rightTop.node.collapsed}
+            imageUrl="https://i.scdn.co/image/ab67616100005174b6edcc3e5c79c2bb67a17d00"
+          />
         </GridArea>
 
-        <GridArea
-          area="rightMiddle"
-          onClick={() => setCollapseEdges((current) => !current)}
-        >
+        <GridArea area="rightMiddle">
           <Edge
             length="33.33%"
             strokeWidth="6"
             direction="left"
-            collapsed={collapseEdges}
+            collapsed={animationState.rightMiddle.edge.collapsed}
           />
-          <Node imageUrl="https://i.scdn.co/image/ab676161000051746e13ca942e06bc70baf6f1a4" />
+          <Node
+            imageUrl="https://i.scdn.co/image/ab676161000051746e13ca942e06bc70baf6f1a4"
+            onClick={updateAnimationStep}
+          />
         </GridArea>
 
         <GridArea area="rightBottom">
@@ -80,9 +158,12 @@ export const DiscoverPage = () => {
             length="33.33%"
             strokeWidth="4"
             direction="up-left"
-            collapsed={collapseEdges}
+            collapsed={animationState.rightBottom.edge.collapsed}
           />
-          <Node imageUrl="https://i.scdn.co/image/ab67616100005174ff7c66df88410e55c67df046" />
+          <Node
+            collapsed={animationState.rightBottom.node.collapsed}
+            imageUrl="https://i.scdn.co/image/ab67616100005174ff7c66df88410e55c67df046"
+          />
         </GridArea>
       </Grid>
     </PageContent>
