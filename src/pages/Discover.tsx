@@ -11,7 +11,6 @@ const Grid = styled.article`
     "left title rightTop"
     "left center rightMiddle"
     "left empty rightBottom";
-  grid-gap: 1em 2em;
 
   align-items: center;
   justify-items: center;
@@ -27,8 +26,10 @@ const Grid = styled.article`
 const GridArea = styled.div<{ area: string }>`
   grid-area: ${(props) => props.area};
   display: flex;
+  justify-content: center;
   margin-top: 0.5em;
   margin-bottom: 0.5em;
+  width: 100%;
 `;
 
 enum AnimationStep {
@@ -50,7 +51,7 @@ const AnimationStepMap = {
     },
     rightMiddle: {
       edge: { collapsed: false },
-      node: { collapsed: false },
+      node: { collapsed: false, moveLeft: false },
     },
     rightBottom: {
       edge: { collapsed: false },
@@ -68,7 +69,7 @@ const AnimationStepMap = {
     },
     rightMiddle: {
       edge: { collapsed: false },
-      node: { collapsed: false },
+      node: { collapsed: false, moveLeft: false },
     },
     rightBottom: {
       edge: { collapsed: true },
@@ -86,7 +87,7 @@ const AnimationStepMap = {
     },
     rightMiddle: {
       edge: { collapsed: true },
-      node: { collapsed: false },
+      node: { collapsed: false, moveLeft: true },
     },
     rightBottom: {
       edge: { collapsed: true },
@@ -149,6 +150,7 @@ export const DiscoverPage = () => {
           />
           <Node
             imageUrl="https://i.scdn.co/image/ab676161000051746e13ca942e06bc70baf6f1a4"
+            moveLeft={animationState.rightMiddle.node.moveLeft}
             onClick={updateAnimationStep}
           />
         </GridArea>

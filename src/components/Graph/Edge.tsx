@@ -17,9 +17,9 @@ const directionPoints = new Map<Direction, LinePoints>([
 ]);
 
 const directionTranslation = new Map<Direction, string>([
-  ["left", "-75%, 50%"],
-  ["down-left", "-75%, 50%"],
-  ["up-left", "-75%, -50%"],
+  ["left", "-50%, 50%"],
+  ["down-left", "-50%, 50%"],
+  ["up-left", "-50%, -50%"],
 ]);
 
 interface Props {
