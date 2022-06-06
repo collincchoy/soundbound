@@ -61,7 +61,7 @@ export const Edge = ({
         ref={lineRef}
         {...directionPoints.get(direction)}
         collapsed={collapsed}
-        length={`${lineRef?.current?.getTotalLength() || 2}`}
+        length={`${lineRef?.current?.getTotalLength() || undefined}`}
         strokeWidth={strokeWidth}
         stroke="#2cc8ab"
       />
