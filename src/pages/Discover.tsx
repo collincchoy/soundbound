@@ -35,10 +35,30 @@ const GridArea = styled.div<{ area: string }>`
 enum AnimationStep {
   DEFAULT = 0,
   LINE = 1,
-  NEXT = 2,
+  MOVE_LEFT = 2,
+  EMBIGGEN1 = 3,
+  EMBIGGEN2 = 4,
 
-  LAST = 2,
+  LAST = 4,
 }
+
+const centeredAndBig = {
+  center: {
+    node: { active: false },
+  },
+  rightTop: {
+    edge: { collapsed: true },
+    node: { collapsed: true },
+  },
+  rightMiddle: {
+    edge: { collapsed: true },
+    node: { collapsed: false, moveLeft: true, active: true },
+  },
+  rightBottom: {
+    edge: { collapsed: true },
+    node: { collapsed: true },
+  },
+};
 
 const AnimationStepMap = {
   [AnimationStep.DEFAULT]: {
@@ -51,7 +71,7 @@ const AnimationStepMap = {
     },
     rightMiddle: {
       edge: { collapsed: false },
-      node: { collapsed: false, moveLeft: false },
+      node: { collapsed: false, moveLeft: false, active: false },
     },
     rightBottom: {
       edge: { collapsed: false },
@@ -69,7 +89,7 @@ const AnimationStepMap = {
     },
     rightMiddle: {
       edge: { collapsed: false },
-      node: { collapsed: false, moveLeft: false },
+      node: { collapsed: false, moveLeft: false, active: false },
     },
     rightBottom: {
       edge: { collapsed: true },
@@ -77,7 +97,7 @@ const AnimationStepMap = {
     },
   },
 
-  [AnimationStep.NEXT]: {
+  [AnimationStep.MOVE_LEFT]: {
     center: {
       node: { active: false },
     },
@@ -87,13 +107,17 @@ const AnimationStepMap = {
     },
     rightMiddle: {
       edge: { collapsed: true },
-      node: { collapsed: false, moveLeft: true },
+      node: { collapsed: false, moveLeft: true, active: false },
     },
     rightBottom: {
       edge: { collapsed: true },
       node: { collapsed: true },
     },
   },
+
+  [AnimationStep.EMBIGGEN1]: centeredAndBig,
+
+  [AnimationStep.EMBIGGEN2]: centeredAndBig,
 };
 
 export const DiscoverPage = () => {
@@ -141,7 +165,12 @@ export const DiscoverPage = () => {
           />
         </GridArea>
 
-        <GridArea area="rightMiddle">
+        <GridArea
+          area="rightMiddle"
+          onTransitionEnd={() =>
+            animationStep !== AnimationStep.DEFAULT && updateAnimationStep()
+          }
+        >
           <Edge
             length="33.33%"
             strokeWidth="6"
@@ -151,6 +180,7 @@ export const DiscoverPage = () => {
           <Node
             imageUrl="https://i.scdn.co/image/ab676161000051746e13ca942e06bc70baf6f1a4"
             moveLeft={animationState.rightMiddle.node.moveLeft}
+            active={animationState.rightMiddle.node.active}
             onClick={updateAnimationStep}
           />
         </GridArea>
