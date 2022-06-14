@@ -1,7 +1,9 @@
 import { Edge } from "components/Graph/Edge";
 import Node from "components/Graph/Node";
 import PageContent from "components/PageContent";
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
+import { useSpotifyApi } from "spotify/hooks";
+import { Artist, Track } from "spotify/types";
 import styled from "styled-components";
 
 const Grid = styled.article`
@@ -120,7 +122,10 @@ const AnimationStepMap = {
   [AnimationStep.EMBIGGEN2]: centeredAndBig,
 };
 
+const ARTIST_TOP_TRACKS_QUERY_PARAMS = { market: "US" };
+
 export const DiscoverPage = () => {
+  console.log("render");
   const [animationStep, setAnimationStep] = useState<AnimationStep>(
     AnimationStep.DEFAULT
   );
@@ -133,6 +138,30 @@ export const DiscoverPage = () => {
   };
   const animationState = AnimationStepMap[animationStep];
 
+  const artistId = "5cAtakaadWHJLxmGKrKcX7";
+  const { data: artist } = useSpotifyApi<Artist>(`/artists/${artistId}`);
+
+  const { data: relatedArtistsData } = useSpotifyApi<{ artists: Artist[] }>(
+    `/artists/${artistId}/related-artists`
+  );
+  const [relatedArtistsCursor, setRelatedArtistsCursor] = useState(0);
+  const relatedArtists = useMemo(
+    () =>
+      relatedArtistsData?.artists.slice(
+        relatedArtistsCursor,
+        relatedArtistsCursor + 3
+      ),
+    [relatedArtistsCursor, relatedArtistsData]
+  );
+
+  const getLastImage = (artist: Artist) =>
+    artist.images[Math.floor(artist.images.length / 2)].url;
+
+  const { data: artistTopTracksData } = useSpotifyApi<{ tracks: Track[] }>(
+    `/artists/${artistId}/top-tracks`,
+    ARTIST_TOP_TRACKS_QUERY_PARAMS
+  );
+
   return (
     <PageContent>
       <Grid>
@@ -141,14 +170,14 @@ export const DiscoverPage = () => {
         </GridArea>
 
         <GridArea area="title">
-          <h1 className="title is-size-3">Tank & the Bangas</h1>
+          <h1 className="title is-size-3 has-text-centered">{artist?.name}</h1>
         </GridArea>
 
         <GridArea area="center">
           <Edge length="33.33%" strokeWidth="6" direction="left" />
           <Node
             active={animationState.center.node.active}
-            imageUrl="https://i.scdn.co/image/ab67616100005174e553e411f88e7d3935f5b48c"
+            imageUrl={artist && getLastImage(artist)}
           />
         </GridArea>
 
@@ -161,7 +190,7 @@ export const DiscoverPage = () => {
           />
           <Node
             collapsed={animationState.rightTop.node.collapsed}
-            imageUrl="https://i.scdn.co/image/ab67616100005174b6edcc3e5c79c2bb67a17d00"
+            imageUrl={relatedArtists && getLastImage(relatedArtists[0])}
           />
         </GridArea>
 
@@ -178,7 +207,7 @@ export const DiscoverPage = () => {
             collapsed={animationState.rightMiddle.edge.collapsed}
           />
           <Node
-            imageUrl="https://i.scdn.co/image/ab676161000051746e13ca942e06bc70baf6f1a4"
+            imageUrl={relatedArtists && getLastImage(relatedArtists[1])}
             moveLeft={animationState.rightMiddle.node.moveLeft}
             active={animationState.rightMiddle.node.active}
             onClick={updateAnimationStep}
@@ -194,10 +223,38 @@ export const DiscoverPage = () => {
           />
           <Node
             collapsed={animationState.rightBottom.node.collapsed}
-            imageUrl="https://i.scdn.co/image/ab67616100005174ff7c66df88410e55c67df046"
+            imageUrl={relatedArtists && getLastImage(relatedArtists[2])}
           />
         </GridArea>
       </Grid>
+
+      <BottomContainer>
+        <TrackList>
+          {artistTopTracksData?.tracks.map((track) => (
+            <TrackListItem key={track.id}>
+              {track.name} | {track.duration_ms}
+            </TrackListItem>
+          ))}
+        </TrackList>
+
+        <Response>
+          <code>{JSON.stringify(relatedArtists, undefined, 2)}</code>
+        </Response>
+      </BottomContainer>
     </PageContent>
   );
 };
+
+const BottomContainer = styled.section`
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  min-height: 600px;
+`;
+
+const TrackList = styled.ul``;
+
+const TrackListItem = styled.li``;
+
+const Response = styled.pre`
+  white-space: pre-line;
+`;
