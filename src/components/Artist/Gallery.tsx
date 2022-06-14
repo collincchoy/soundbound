@@ -12,12 +12,11 @@ export type ArtistGalleryProps = {
   moreArtistsAvailable?: boolean;
 };
 
-export default function ArtistGallery(props: ArtistGalleryProps) {
-  const {
-    artists,
-    loadMoreArtists,
-    moreArtistsAvailable: canLoadMoreArtists
-  } = props;
+export default function ArtistGallery({
+  artists,
+  loadMoreArtists,
+  moreArtistsAvailable: canLoadMoreArtists,
+}: ArtistGalleryProps) {
   const [artistOnDisplay, setArtistOnDisplay] = useState<Artist | undefined>();
 
   const showDetails = (artist: Artist) => setArtistOnDisplay(artist);
@@ -35,7 +34,7 @@ export default function ArtistGallery(props: ArtistGalleryProps) {
       <CardGallery
         items={artists}
         renderItem={renderArtist}
-        renderKey={artist => artist.id}
+        renderKey={(artist) => artist.id}
         loadFunc={loadMoreArtists}
         hasMore={canLoadMoreArtists}
       />
@@ -48,7 +47,7 @@ export default function ArtistGallery(props: ArtistGalleryProps) {
       >
         <div className="tags">
           {artistOnDisplay &&
-            artistOnDisplay?.genres.map(genre => (
+            artistOnDisplay?.genres.map((genre) => (
               <span className="tag is-dark" key={genre}>
                 {genre}
               </span>
