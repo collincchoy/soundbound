@@ -4,7 +4,7 @@ import { Slider, Rail, Handles, Tracks } from "react-compound-slider";
 import classes from "./index.module.css";
 import Handle from "./Handle";
 import Track from "./Track";
-import { round } from "../../../utilities";
+import { round } from "utils";
 import { useField } from "formik";
 
 type AdvancedTunerProps = {
@@ -37,14 +37,14 @@ export default function AdvancedTuner({
         domain={[minValue, maxValue]}
         values={[
           field.value?.minValue ?? minValue,
-          field.value?.maxValue ?? maxValue
+          field.value?.maxValue ?? maxValue,
         ]}
-        onChange={values => {
+        onChange={(values) => {
           /** setTimeout is a workaround to fix new warning from react 16.3 from the slider library - see https://github.com/facebook/react/issues/18147#issuecomment-595701023 */
           setTimeout(() =>
             helpers.setValue({
               minValue: round(values[0], 2),
-              maxValue: round(values[1], 2)
+              maxValue: round(values[1], 2),
             })
           );
         }}
@@ -59,7 +59,7 @@ export default function AdvancedTuner({
         <Handles>
           {({ handles, getHandleProps }) => (
             <>
-              {handles.map(handle => (
+              {handles.map((handle) => (
                 <Handle
                   key={handle.id}
                   handle={handle}
