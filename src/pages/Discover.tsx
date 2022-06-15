@@ -1,6 +1,8 @@
 import { Edge } from "components/Graph/Edge";
 import Node from "components/Graph/Node";
+import Loader from "components/Loader";
 import PageContent from "components/PageContent";
+import { TrackList } from "components/Track/List";
 import React, { useMemo, useState } from "react";
 import { useSpotifyApi } from "spotify/hooks";
 import { Artist, Track } from "spotify/types";
@@ -229,13 +231,11 @@ export const DiscoverPage = () => {
       </Grid>
 
       <BottomContainer>
-        <TrackList>
-          {artistTopTracksData?.tracks.map((track) => (
-            <TrackListItem key={track.id}>
-              {track.name} | {track.duration_ms}
-            </TrackListItem>
-          ))}
-        </TrackList>
+        {artistTopTracksData?.tracks ? (
+          <TrackList tracks={artistTopTracksData.tracks} />
+        ) : (
+          <Loader />
+        )}
 
         <Response>
           <code>{JSON.stringify(relatedArtists, undefined, 2)}</code>
@@ -250,10 +250,6 @@ const BottomContainer = styled.section`
   grid-template-columns: 1fr 1fr;
   min-height: 600px;
 `;
-
-const TrackList = styled.ul``;
-
-const TrackListItem = styled.li``;
 
 const Response = styled.pre`
   white-space: pre-line;
