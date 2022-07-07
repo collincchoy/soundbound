@@ -2,6 +2,8 @@
 
 ![Deploy](https://github.com/collincchoy/soundbound/workflows/Deploy/badge.svg)
 
+View the app live at [https://collincchoy.github.io/soundbound/](https://collincchoy.github.io/soundbound/).
+
 Playing with the Spotify API, es6/TypeScript, and React.
 
 - All functional components (mostly home-rolled)
