@@ -1,14 +1,31 @@
 import Image from "components/Image";
+import { useMusicPlayer } from "components/MusicPlayer/Context";
 import React from "react";
 import { Track } from "spotify/types";
 import styled from "styled-components";
 import { last } from "utils";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPauseCircle, faPlayCircle } from "@fortawesome/free-solid-svg-icons";
 
 interface Props {
   tracks: Track[];
 }
 
 export const TrackList = ({ tracks }: Props) => {
+  const musicPlayer = useMusicPlayer();
+
+  function playTrack(track: Track) {
+    musicPlayer.changeTrack(track);
+    musicPlayer.play();
+  }
+
+  function toggleTrackPlay(track: Track) {
+    if (musicPlayer.currentTrackIs(track) && musicPlayer.isPlaying) {
+      musicPlayer.pause();
+    } else {
+      playTrack(track);
+    }
+  }
   return (
     <List>
       {tracks.map((track) => (
@@ -29,8 +46,19 @@ export const TrackList = ({ tracks }: Props) => {
           <GridArea area="album">{track.album.name}</GridArea>
 
           <GridArea area="controls">
-            {/* <PlayButton onClick={() => null} /> */}
-            <button className="button">Play</button>
+            <StyledPlayPauseButton
+              onClick={() => toggleTrackPlay(track)}
+              disabled={!track.preview_url}
+            >
+              <FontAwesomeIcon
+                icon={
+                  musicPlayer.currentTrackIs(track) && musicPlayer.isPlaying
+                    ? faPauseCircle
+                    : faPlayCircle
+                }
+                size="3x"
+              />
+            </StyledPlayPauseButton>
           </GridArea>
 
           <GridArea area="duration">{track.duration_ms}</GridArea>
@@ -39,6 +67,12 @@ export const TrackList = ({ tracks }: Props) => {
     </List>
   );
 };
+
+const StyledPlayPauseButton = styled.button`
+  background-color: initial;
+  border: none;
+  cursor: pointer;
+`;
 
 const BoldWhiteSpan = styled.span`
   color: #f5f5f5;
