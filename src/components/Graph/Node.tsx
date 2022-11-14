@@ -10,51 +10,6 @@ interface Props {
   onClick?: (ev: React.MouseEvent<SVGElement>) => void;
 }
 
-const moveLeftAnimation = keyframes`
-  20% {
-    transform: translateX(0%) scale(1);
-  }
-
-  60% {
-    transform: translateX(-100%);
-  }
-
-  80% {
-    transform: translateX(-100%) scale(2);
-  }
-
-  100% {
-    visibility: hidden;
-    transform: translateX(-100%) scale(1);
-  }
-`;
-
-const Mover = styled.div<{ moveLeft?: boolean }>`
-  z-index: 200;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-
-  ${({ moveLeft }) =>
-    moveLeft
-      ? css`
-          animation: ${moveLeftAnimation} 3.5s ease-in-out;
-        `
-      : ""}
-`;
-
-const StyledSvg = styled.svg<Props>`
-  box-shadow: 0px 0px 20px 0px #fa7c90;
-  border-radius: 50%;
-
-  &:hover {
-    box-shadow: 0px 0px 20px 5px #fa7c90;
-    cursor: pointer;
-  }
-
-  transition: box-shadow 0.3s ease-in, transform 1s ease;
-`;
-
 const Node = ({
   size = 125,
   color = "#C4C4C4",
@@ -100,5 +55,50 @@ const Node = ({
     </Mover>
   );
 };
+
+const moveLeftAnimation = keyframes`
+  20% {
+    transform: translateX(0%) scale(1);
+  }
+
+  60% {
+    transform: translateX(-100%);
+  }
+
+  80% {
+    transform: translateX(-100%) scale(2);
+  }
+
+  100% {
+    visibility: hidden;
+    transform: translateX(-100%) scale(1);
+  }
+`;
+
+const Mover = styled.div<{ moveLeft?: boolean }>`
+  z-index: 200;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+
+  ${({ moveLeft }) =>
+    moveLeft
+      ? css`
+          animation: ${moveLeftAnimation} 3.5s ease-in-out;
+        `
+      : ""}
+`;
+
+const StyledSvg = styled.svg<Props>`
+  box-shadow: 0px 0px 20px 0px #fa7c90;
+  border-radius: 50%;
+
+  &:hover {
+    box-shadow: 0px 0px 20px 5px #fa7c90;
+    cursor: pointer;
+  }
+
+  transition: box-shadow 0.3s ease-in, transform 1s ease;
+`;
 
 export default Node;
