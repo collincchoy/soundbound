@@ -10,23 +10,30 @@ import styled from "styled-components";
 
 const ARTIST_TOP_TRACKS_QUERY_PARAMS = { market: "US" };
 
-type NodeSelection = "top" | "middle" | "bottom";
+enum NodeSelection {
+  Top = 0,
+  Middle = 1,
+  Bottom = 2,
+}
 
 export const DiscoverPage = () => {
   const [selectedNode, setSelectedNode] = useState<NodeSelection | null>(null);
   const [collapseEdges, setCollapseEdges] = useState(false);
   const selectNode = (selection: NodeSelection) => {
-    if (selection === "middle") {
-      setCollapseEdges(true);
-    }
+    setCollapseEdges(true);
     setSelectedNode(selection);
   };
   const resetAnimationState = () => {
+    if (relatedArtists && selectedNode) {
+      setPreviousArtist(artist);
+      setArtistId(relatedArtists[selectedNode].id);
+    }
     setCollapseEdges(false);
     setSelectedNode(null);
   };
 
-  const artistId = "5cAtakaadWHJLxmGKrKcX7";
+  const [previousArtist, setPreviousArtist] = useState<Artist>();
+  const [artistId, setArtistId] = useState("5cAtakaadWHJLxmGKrKcX7");
   const { data: artist } = useSpotifyApi<Artist>(`/artists/${artistId}`);
 
   const { data: relatedArtistsData } = useSpotifyApi<{ artists: Artist[] }>(
@@ -54,7 +61,7 @@ export const DiscoverPage = () => {
     <PageContent>
       <Grid>
         <GridArea area="left">
-          <Node />
+          <Node imageUrl={previousArtist && getLastImage(previousArtist)} />
         </GridArea>
 
         <GridArea area="title">
@@ -63,10 +70,7 @@ export const DiscoverPage = () => {
 
         <GridArea area="center">
           <Edge length="33.33%" strokeWidth="6" direction="left" />
-          <Node
-            active={selectedNode === null}
-            imageUrl={artist && getLastImage(artist)}
-          />
+          <Node imageUrl={artist && getLastImage(artist)} />
         </GridArea>
 
         <GridArea area="rightTop">
@@ -77,9 +81,11 @@ export const DiscoverPage = () => {
             collapsed={collapseEdges}
           />
           <Node
-            collapsed={!!selectedNode && selectedNode !== "top"}
-            imageUrl={relatedArtists && getLastImage(relatedArtists[0])}
-            onClick={() => selectNode("top")}
+            collapsed={!!(selectedNode ?? selectedNode !== NodeSelection.Top)}
+            imageUrl={
+              relatedArtists && getLastImage(relatedArtists[NodeSelection.Top])
+            }
+            onClick={() => selectNode(NodeSelection.Top)}
           />
         </GridArea>
 
@@ -91,9 +97,15 @@ export const DiscoverPage = () => {
             collapsed={collapseEdges}
           />
           <Node
-            imageUrl={relatedArtists && getLastImage(relatedArtists[1])}
-            moveLeft={selectedNode === "middle"}
-            onClick={() => selectNode("middle")}
+            collapsed={
+              !!(selectedNode ?? selectedNode !== NodeSelection.Middle)
+            }
+            imageUrl={
+              relatedArtists &&
+              getLastImage(relatedArtists[NodeSelection.Middle])
+            }
+            moveLeft={selectedNode === NodeSelection.Middle}
+            onClick={() => selectNode(NodeSelection.Middle)}
           />
         </GridArea>
 
@@ -105,9 +117,14 @@ export const DiscoverPage = () => {
             collapsed={collapseEdges}
           />
           <Node
-            collapsed={!!selectedNode && selectedNode !== "bottom"}
-            imageUrl={relatedArtists && getLastImage(relatedArtists[2])}
-            onClick={() => selectNode("bottom")}
+            collapsed={
+              !!(selectedNode ?? selectedNode !== NodeSelection.Bottom)
+            }
+            imageUrl={
+              relatedArtists &&
+              getLastImage(relatedArtists[NodeSelection.Bottom])
+            }
+            onClick={() => selectNode(NodeSelection.Bottom)}
           />
         </GridArea>
       </Grid>

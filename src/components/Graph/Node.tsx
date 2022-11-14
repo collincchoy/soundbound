@@ -5,31 +5,27 @@ interface Props {
   size?: number;
   color?: string;
   imageUrl?: string;
-  active?: boolean;
   collapsed?: boolean;
   moveLeft?: boolean;
   onClick?: (ev: React.MouseEvent<SVGElement>) => void;
 }
 
 const moveLeftAnimation = keyframes`
-  0% {
+  20% {
     transform: translateX(0%) scale(1);
-  }
-
-  40% {
-    transform: translateX(-100%);
   }
 
   60% {
-    transform: translateX(-100%) scale(2);
+    transform: translateX(-100%);
   }
 
   80% {
-    transform: translateX(-100%) scale(1);
+    transform: translateX(-100%) scale(2);
   }
 
   100% {
-    transform: translateX(0%) scale(1);
+    visibility: hidden;
+    transform: translateX(-100%) scale(1);
   }
 `;
 
@@ -39,19 +35,15 @@ const Mover = styled.div<{ moveLeft?: boolean }>`
   display: flex;
   justify-content: center;
 
-  transition: transform 1s ease;
   ${({ moveLeft }) =>
     moveLeft
       ? css`
-          animation: ${moveLeftAnimation} 4s ease-in-out;
+          animation: ${moveLeftAnimation} 3.5s ease-in-out;
         `
       : ""}
 `;
 
 const StyledSvg = styled.svg<Props>`
-  transform: ${(props) =>
-    props.active ? "scale(2)" : props.collapsed ? "scale(0)" : ""};
-
   box-shadow: 0px 0px 20px 0px #fa7c90;
   border-radius: 50%;
 
@@ -67,7 +59,6 @@ const Node = ({
   size = 125,
   color = "#C4C4C4",
   imageUrl,
-  active = false,
   collapsed = false,
   moveLeft = false,
   onClick,
@@ -80,7 +71,6 @@ const Node = ({
       <StyledSvg
         width={size}
         height={size}
-        active={active}
         collapsed={collapsed}
         moveLeft={moveLeft}
         onClick={onClick}
