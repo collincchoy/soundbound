@@ -1,12 +1,14 @@
 import React from "react";
-import styled, { css, keyframes } from "styled-components";
+import styled, { css, keyframes, Keyframes } from "styled-components";
+
+type Direction = "left" | "downLeft" | "upLeft"; // | "right";
 
 interface Props {
   size?: number;
   color?: string;
   imageUrl?: string;
   collapsed?: boolean;
-  moveLeft?: boolean;
+  move?: Direction;
   onClick?: (ev: React.MouseEvent<SVGElement>) => void;
 }
 
@@ -15,19 +17,18 @@ const Node = ({
   color = "#C4C4C4",
   imageUrl,
   collapsed = false,
-  moveLeft = false,
+  move = undefined,
   onClick,
 }: Props) => {
   // @ts-ignore  fixme on upgrade of TS>4.6
   const patternId = window.crypto.randomUUID();
   const fill = imageUrl ? `url(#${patternId})` : color;
   return (
-    <Mover moveLeft={moveLeft}>
+    <Mover move={move}>
       <StyledSvg
         width={size}
         height={size}
         collapsed={collapsed}
-        moveLeft={moveLeft}
         onClick={onClick}
       >
         {imageUrl && (
@@ -75,16 +76,62 @@ const moveLeftAnimation = keyframes`
   }
 `;
 
-const Mover = styled.div<{ moveLeft?: boolean }>`
+const moveDownLeftAnimation = keyframes`
+  20% {
+    transform: translateX(0%) scale(1);
+  }
+
+  60% {
+    transform: translate(-100%, 100%);
+  }
+
+  80% {
+    transform: translate(-100%, 100%) scale(2);
+  }
+
+  100% {
+    visibility: hidden;
+    transform: translate(-100%, 100%) scale(1);
+  }
+`;
+
+const moveUpLeftAnimation = keyframes`
+  20% {
+    transform: translateX(0%) scale(1);
+  }
+
+  60% {
+    transform: translate(-100%, -100%);
+  }
+
+  80% {
+    transform: translate(-100%, -100%) scale(2);
+  }
+
+  100% {
+    visibility: hidden;
+    transform: translate(-100%, -100%) scale(1);
+  }
+`;
+
+const animations = new Map<Direction, Keyframes>([
+  ["left", moveLeftAnimation],
+  ["downLeft", moveDownLeftAnimation],
+  ["upLeft", moveUpLeftAnimation],
+]);
+
+const Mover = styled.div<{ move?: Direction }>`
   z-index: 200;
   width: 100%;
   display: flex;
   justify-content: center;
+  align-items: center;
+  height: 100%;
 
-  ${({ moveLeft }) =>
-    moveLeft
+  ${({ move }) =>
+    move
       ? css`
-          animation: ${moveLeftAnimation} 3.5s ease-in-out;
+          animation: ${animations.get(move)} 3.5s ease-in-out;
         `
       : ""}
 `;

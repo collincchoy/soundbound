@@ -24,7 +24,7 @@ export const DiscoverPage = () => {
     setSelectedNode(selection);
   };
   const resetAnimationState = () => {
-    if (relatedArtists && selectedNode) {
+    if (relatedArtists && selectedNode != null) {
       setPreviousArtist(artist);
       setArtistId(relatedArtists[selectedNode].id);
     }
@@ -73,7 +73,7 @@ export const DiscoverPage = () => {
           <Node imageUrl={artist && getLastImage(artist)} />
         </GridArea>
 
-        <GridArea area="rightTop">
+        <GridArea area="rightTop" onAnimationEnd={resetAnimationState}>
           <Edge
             length="33.33%"
             strokeWidth="4"
@@ -85,6 +85,7 @@ export const DiscoverPage = () => {
             imageUrl={
               relatedArtists && getLastImage(relatedArtists[NodeSelection.Top])
             }
+            move={selectedNode === NodeSelection.Top ? "downLeft" : undefined}
             onClick={() => selectNode(NodeSelection.Top)}
           />
         </GridArea>
@@ -104,12 +105,12 @@ export const DiscoverPage = () => {
               relatedArtists &&
               getLastImage(relatedArtists[NodeSelection.Middle])
             }
-            moveLeft={selectedNode === NodeSelection.Middle}
+            move={selectedNode === NodeSelection.Middle ? "left" : undefined}
             onClick={() => selectNode(NodeSelection.Middle)}
           />
         </GridArea>
 
-        <GridArea area="rightBottom">
+        <GridArea area="rightBottom" onAnimationEnd={resetAnimationState}>
           <Edge
             length="33.33%"
             strokeWidth="4"
@@ -124,6 +125,7 @@ export const DiscoverPage = () => {
               relatedArtists &&
               getLastImage(relatedArtists[NodeSelection.Bottom])
             }
+            move={selectedNode === NodeSelection.Bottom ? "upLeft" : undefined}
             onClick={() => selectNode(NodeSelection.Bottom)}
           />
         </GridArea>
@@ -166,9 +168,9 @@ const Grid = styled.article`
 const GridArea = styled.div<{ area: string }>`
   grid-area: ${(props) => props.area};
   display: flex;
+  align-items: center;
   justify-content: center;
-  margin-top: 0.5em;
-  margin-bottom: 0.5em;
+  height: 100%;
   width: 100%;
 `;
 
