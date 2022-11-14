@@ -11,6 +11,7 @@ import styled from "styled-components";
 const ARTIST_TOP_TRACKS_QUERY_PARAMS = { market: "US" };
 
 enum NodeSelection {
+  Previous = -1,
   Top = 0,
   Middle = 1,
   Bottom = 2,
@@ -25,8 +26,13 @@ export const DiscoverPage = () => {
   };
   const resetAnimationState = () => {
     if (relatedArtists && selectedNode != null) {
-      setPreviousArtist(artist);
-      setArtistId(relatedArtists[selectedNode].id);
+      if (previousArtist && selectedNode === NodeSelection.Previous) {
+        setPreviousArtist(undefined);
+        setArtistId(previousArtist.id);
+      } else if (selectedNode !== NodeSelection.Previous) {
+        setPreviousArtist(artist);
+        setArtistId(relatedArtists[selectedNode].id);
+      }
     }
     setCollapseEdges(false);
     setSelectedNode(null);
@@ -39,7 +45,7 @@ export const DiscoverPage = () => {
   const { data: relatedArtistsData } = useSpotifyApi<{ artists: Artist[] }>(
     `/artists/${artistId}/related-artists`
   );
-  const [relatedArtistsCursor, setRelatedArtistsCursor] = useState(0);
+  const [relatedArtistsCursor] = useState(0);
   const relatedArtists = useMemo(
     () =>
       relatedArtistsData?.artists.slice(
@@ -60,17 +66,26 @@ export const DiscoverPage = () => {
   return (
     <PageContent>
       <Grid>
-        <GridArea area="left">
-          <Node imageUrl={previousArtist && getLastImage(previousArtist)} />
-        </GridArea>
-
         <GridArea area="title">
           <h1 className="title is-size-3 has-text-centered">{artist?.name}</h1>
         </GridArea>
 
         <GridArea area="center">
-          <Edge length="33.33%" strokeWidth="6" direction="left" />
           <Node imageUrl={artist && getLastImage(artist)} />
+        </GridArea>
+
+        <GridArea area="left" onAnimationEnd={resetAnimationState}>
+          <Edge
+            length="33.33%"
+            strokeWidth="6"
+            direction="right"
+            collapsed={selectedNode === NodeSelection.Previous}
+          />
+          <Node
+            imageUrl={previousArtist && getLastImage(previousArtist)}
+            move={selectedNode === NodeSelection.Previous ? "right" : undefined}
+            onClick={() => selectNode(NodeSelection.Previous)}
+          />
         </GridArea>
 
         <GridArea area="rightTop" onAnimationEnd={resetAnimationState}>

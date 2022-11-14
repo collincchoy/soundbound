@@ -8,18 +8,20 @@ type LinePoints = {
   y2?: string;
 };
 
-type Direction = "left" | "down-left" | "up-left";
+type Direction = "left" | "down-left" | "up-left" | "right";
 
 const directionPoints = new Map<Direction, LinePoints>([
   ["left", { x2: "100%" }],
   ["down-left", { x2: "100%", y1: "100%" }],
   ["up-left", { x2: "100%", y2: "100%" }],
+  ["right", { x2: "100%" }],
 ]);
 
 const directionTranslation = new Map<Direction, string>([
   ["left", "-50%, 50%"],
   ["down-left", "-50%, 50%"],
   ["up-left", "-50%, -50%"],
+  ["right", "50%, 50%"],
 ]);
 
 interface Props {
@@ -33,8 +35,9 @@ const StyledSvg = styled.svg<Props>`
   position: absolute;
   width: ${({ length }) => length};
   transform: translate(
-    ${({ direction }) => directionTranslation.get(direction)}
-  );
+      ${({ direction }) => directionTranslation.get(direction)}
+    )
+    rotateY(${({ direction }) => (direction === "right" ? "180deg" : "0")});
   z-index: 100;
 
   height: 125px;

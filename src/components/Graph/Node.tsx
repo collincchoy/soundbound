@@ -1,7 +1,7 @@
 import React from "react";
 import styled, { css, keyframes, Keyframes } from "styled-components";
 
-type Direction = "left" | "downLeft" | "upLeft"; // | "right";
+type Direction = "left" | "downLeft" | "upLeft" | "right";
 
 interface Props {
   size?: number;
@@ -114,10 +114,30 @@ const moveUpLeftAnimation = keyframes`
   }
 `;
 
+const moveRightAnimation = keyframes`
+  20% {
+    transform: translateX(0%) scale(1);
+  }
+
+  60% {
+    transform: translateX(100%);
+  }
+
+  80% {
+    transform: translateX(100%) scale(2);
+  }
+
+  100% {
+    visibility: hidden;
+    transform: translateX(100%) scale(1);
+  }
+`;
+
 const animations = new Map<Direction, Keyframes>([
   ["left", moveLeftAnimation],
   ["downLeft", moveDownLeftAnimation],
   ["upLeft", moveUpLeftAnimation],
+  ["right", moveRightAnimation],
 ]);
 
 const Mover = styled.div<{ move?: Direction }>`
