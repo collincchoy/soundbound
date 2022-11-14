@@ -231,15 +231,15 @@ export const DiscoverPage = () => {
       </Grid>
 
       <BottomContainer>
-        {artistTopTracksData?.tracks ? (
-          <TrackList tracks={artistTopTracksData.tracks} />
-        ) : (
-          <Loader />
-        )}
+        <div>
+          {artistTopTracksData?.tracks ? (
+            <TrackList tracks={artistTopTracksData.tracks} />
+          ) : (
+            <Loader />
+          )}
+        </div>
 
-        <Response>
-          <code>{JSON.stringify(relatedArtists, undefined, 2)}</code>
-        </Response>
+        <pre>{JSON.stringify(relatedArtists, undefined, 2)}</pre>
       </BottomContainer>
     </PageContent>
   );
@@ -248,9 +248,6 @@ export const DiscoverPage = () => {
 const BottomContainer = styled.section`
   display: grid;
   grid-template-columns: 1fr 1fr;
-  min-height: 600px;
-`;
-
-const Response = styled.pre`
-  white-space: pre-line;
+  max-height: 400px;
+  overflow-y: scroll;
 `;
