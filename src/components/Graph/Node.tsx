@@ -1,5 +1,5 @@
 import React from "react";
-import styled from "styled-components";
+import styled, { css, keyframes } from "styled-components";
 
 interface Props {
   size?: number;
@@ -11,24 +11,46 @@ interface Props {
   onClick?: (ev: React.MouseEvent<SVGElement>) => void;
 }
 
+const moveLeftAnimation = keyframes`
+  0% {
+    transform: translateX(0%) scale(1);
+  }
+
+  40% {
+    transform: translateX(-100%);
+  }
+
+  60% {
+    transform: translateX(-100%) scale(2);
+  }
+
+  80% {
+    transform: translateX(-100%) scale(1);
+  }
+
+  100% {
+    transform: translateX(0%) scale(1);
+  }
+`;
+
 const Mover = styled.div<{ moveLeft?: boolean }>`
   z-index: 200;
   width: 100%;
   display: flex;
   justify-content: center;
 
-  transform: ${(props) => (props.moveLeft ? "translateX(-100%)" : "")};
-
   transition: transform 1s ease;
+  ${({ moveLeft }) =>
+    moveLeft
+      ? css`
+          animation: ${moveLeftAnimation} 4s ease-in-out;
+        `
+      : ""}
 `;
 
 const StyledSvg = styled.svg<Props>`
   transform: ${(props) =>
-    props.active
-      ? "scale(2)"
-      : props.collapsed
-      ? "scale(0)"
-      : ""}; // + (props.moveLeft ? "translateX(-100%)" : "")};
+    props.active ? "scale(2)" : props.collapsed ? "scale(0)" : ""};
 
   box-shadow: 0px 0px 20px 0px #fa7c90;
   border-radius: 50%;
