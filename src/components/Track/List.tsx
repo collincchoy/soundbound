@@ -2,7 +2,7 @@ import Image from "components/Image";
 import { useMusicPlayer } from "components/MusicPlayer/Context";
 import React from "react";
 import { Track } from "spotify/types";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { last } from "utils";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPauseCircle, faPlayCircle } from "@fortawesome/free-solid-svg-icons";
@@ -38,9 +38,7 @@ export const TrackList = ({ tracks }: Props) => {
             />
           </GridArea>
           <GridArea area="name">
-            <BoldWhiteSpan className="is-bold is-light">
-              {track.name}
-            </BoldWhiteSpan>
+            <BoldWhiteSpan>{track.name}</BoldWhiteSpan>
           </GridArea>
 
           <GridArea area="album">{track.album.name}</GridArea>
@@ -77,6 +75,7 @@ const StyledPlayPauseButton = styled.button`
 const BoldWhiteSpan = styled.span`
   color: #f5f5f5;
   font-weight: 500;
+  font-size: 1.25em;
 `;
 
 const List = styled.ol`
@@ -87,6 +86,7 @@ const List = styled.ol`
 const ListItem = styled.li`
   display: grid;
   grid-template-columns: auto 1fr auto auto;
+  grid-template-rows: 1fr 1fr;
   grid-column-gap: 0.5em;
   grid-template-areas:
     "cover name controls duration"
@@ -108,4 +108,14 @@ const ListItem = styled.li`
 
 const GridArea = styled.div<{ area: string }>`
   grid-area: ${({ area }) => area};
+  ${({ area }) =>
+    area === "name"
+      ? css`
+          align-self: end;
+        `
+      : area === "album"
+      ? css`
+          align-self: start;
+        `
+      : ""}
 `;
