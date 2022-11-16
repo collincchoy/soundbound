@@ -71,7 +71,11 @@ export const DiscoverPage = () => {
         </GridArea>
 
         <GridArea area="center">
-          <Node imageUrl={artist && getLastImage(artist)} />
+          <Node
+            imageUrl={artist && getLastImage(artist)}
+            scaleTo={1.45}
+            bubbleAnimation={selectedNode !== null}
+          />
         </GridArea>
 
         <GridArea area="left" onAnimationEnd={resetAnimationState}>

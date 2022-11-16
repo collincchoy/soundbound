@@ -5,20 +5,24 @@ type Direction = "left" | "downLeft" | "upLeft" | "right";
 
 interface Props {
   size?: number;
+  scaleTo?: number;
   color?: string;
   imageUrl?: string;
   collapsed?: boolean;
   move?: Direction;
   onClick?: (ev: React.MouseEvent<SVGElement>) => void;
+  bubbleAnimation?: boolean;
 }
 
 const Node = ({
   size = 125,
+  scaleTo = undefined,
   color = "#C4C4C4",
   imageUrl,
   collapsed = false,
   move = undefined,
   onClick,
+  bubbleAnimation = false,
 }: Props) => {
   // @ts-ignore  fixme on upgrade of TS>4.6
   const patternId = window.crypto.randomUUID();
@@ -30,6 +34,8 @@ const Node = ({
         height={size}
         collapsed={collapsed}
         onClick={onClick}
+        scaleTo={scaleTo}
+        bubbleAnimation={bubbleAnimation}
       >
         {imageUrl && (
           <defs>
@@ -67,12 +73,12 @@ const moveLeftAnimation = keyframes`
   }
 
   80% {
-    transform: translateX(-100%) scale(2);
+    transform: translateX(-100%) scale(1.65);
   }
 
   100% {
     visibility: hidden;
-    transform: translateX(-100%) scale(1);
+    transform: translateX(-100%) scale(1.45);
   }
 `;
 
@@ -86,12 +92,12 @@ const moveDownLeftAnimation = keyframes`
   }
 
   80% {
-    transform: translate(-100%, 100%) scale(2);
+    transform: translate(-100%, 100%) scale(1.65);
   }
 
   100% {
     visibility: hidden;
-    transform: translate(-100%, 100%) scale(1);
+    transform: translate(-100%, 100%) scale(1.45);
   }
 `;
 
@@ -105,12 +111,12 @@ const moveUpLeftAnimation = keyframes`
   }
 
   80% {
-    transform: translate(-100%, -100%) scale(2);
+    transform: translate(-100%, -100%) scale(1.65);
   }
 
   100% {
     visibility: hidden;
-    transform: translate(-100%, -100%) scale(1);
+    transform: translate(-100%, -100%) scale(1.45);
   }
 `;
 
@@ -124,12 +130,12 @@ const moveRightAnimation = keyframes`
   }
 
   80% {
-    transform: translateX(100%) scale(2);
+    transform: translateX(100%) scale(1.65);
   }
 
   100% {
     visibility: hidden;
-    transform: translateX(100%) scale(1);
+    transform: translateX(100%) scale(1.45);
   }
 `;
 
@@ -165,7 +171,32 @@ const StyledSvg = styled.svg<Props>`
     cursor: pointer;
   }
 
-  transition: box-shadow 0.3s ease-in, transform 1s ease;
+  ${({ scaleTo }) =>
+    scaleTo !== undefined
+      ? css`
+          transform: scale(${scaleTo});
+        `
+      : ""}
+
+  ${({ bubbleAnimation }) =>
+    bubbleAnimation
+      ? css`
+          animation: ${bubbleAnimationKf} 3.5s ease-in-out;
+          transition: box-shadow 0.3s ease-in, transform 1s ease, scale 1s ease;
+        `
+      : css`
+          transition: box-shadow 0.3s ease-in, transform 1s ease;
+        `}
+`;
+
+const bubbleAnimationKf = keyframes`
+  30% {
+    transform: scale(1);
+  }
+
+  to {
+    transform: scale(1);
+  }
 `;
 
 export default Node;
