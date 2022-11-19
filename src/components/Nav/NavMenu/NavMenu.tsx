@@ -8,31 +8,13 @@ export default function NavMenu() {
         name="Top"
         linkTo="/top"
         subMenuItems={[
-          { name: "Artists", linkTo: "/top/artists" },
           { name: "Tracks", linkTo: "/top/tracks" },
+          { name: "Artists", linkTo: "/top/artists" },
         ]}
       />
       <NavItem name="Lab" linkTo="/lab" />
 
       <NavItem name="Discover" linkTo="/discover" />
-      {/* <div className="navbar-item has-dropdown is-hoverable">
-        <NavLink className="navbar-link" to="/">
-          Discover
-        </NavLink>
-
-        <div className="navbar-dropdown">
-          <NavLink className="navbar-item" to="/">
-            Artists
-          </NavLink>
-          <NavLink className="navbar-item" to="/">
-            Genres
-          </NavLink>
-          <hr className="navbar-divider" />
-          <NavLink className="navbar-item" to="/">
-            Report an issue
-          </NavLink>
-        </div>
-      </div> */}
     </>
   );
 }

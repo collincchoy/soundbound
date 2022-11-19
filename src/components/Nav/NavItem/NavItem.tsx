@@ -46,7 +46,7 @@ const ItemWrapper = styled.div`
 
 const NavItem: React.FC<NavItemProps> = ({ name, linkTo, subMenuItems }) => {
   const [isHoveredOver, setIsHoveredOver] = useState(false);
-  const currentRouteMatchesLinkTo = useMatch(linkTo);
+  const currentRouteMatchesLinkTo = useMatch(`${linkTo}/*`);
   return (
     <div
       className={`navbar-item ${subMenuItems && "has-dropdown is-hoverable"}`}
@@ -57,7 +57,7 @@ const NavItem: React.FC<NavItemProps> = ({ name, linkTo, subMenuItems }) => {
         <NavLink
           className={({ isActive }) =>
             `${styles.underline_onhover} navbar-link is-arrowless ${
-              isActive ? "is-active" : ""
+              isActive ? `${styles.active} is-active` : ""
             }`
           }
           to={linkTo}
@@ -68,21 +68,25 @@ const NavItem: React.FC<NavItemProps> = ({ name, linkTo, subMenuItems }) => {
         {subMenuItems && (
           <DropdownMenu isActive={isHoveredOver || !!currentRouteMatchesLinkTo}>
             {subMenuItems
-              ?.map<React.ReactNode>((item) => {
-                return (
-                  <SubMenuNavLink
-                    // activeClassName="is-active"
-                    className={({ isActive }) => (isActive ? "is-active" : "")}
-                    to={item.linkTo}
-                    key={item.name}
-                  >
-                    {item.name}
-                  </SubMenuNavLink>
-                );
-              })
-              .reduce((prev, next) => {
-                return [prev, <span key="span"> | </span>, next];
-              })}
+              ?.map<React.ReactNode>((item) => (
+                <SubMenuNavLink
+                  style={{
+                    fontWeight:
+                      item.linkTo === currentRouteMatchesLinkTo?.pathname
+                        ? "bold"
+                        : undefined,
+                  }}
+                  to={item.linkTo}
+                  key={item.name}
+                >
+                  {item.name}
+                </SubMenuNavLink>
+              ))
+              .reduce((prev, next) => [
+                prev,
+                <span key="span"> | </span>,
+                next,
+              ])}
           </DropdownMenu>
         )}
       </ItemWrapper>
