@@ -11,20 +11,6 @@ import PlayPauseButton from "components/MusicPlayer/PlayPauseButton";
 import TextWithHelp from "components/TextWithHelp";
 import { trackAttributes } from "spotify/constants";
 
-const TrackPopularityContainer = styled.div.attrs((props) => ({
-  className: "card-header-icon",
-}))`
-  padding-left: 0;
-`;
-
-const FooterButton = styled.button`
-  width: 100%;
-  height: 100%;
-  border: none;
-  padding: 0.75rem;
-  margin: 5px;
-`;
-
 const popularityHelpText = trackAttributes.filter(
   (attr) => attr.name === "popularity"
 )[0].description;
@@ -108,25 +94,26 @@ export default function TrackCard({ track }: TrackCardProps) {
         </div>
 
         <div className="overflow-container">
-          <p
+          <TrackCardAlbumText
             ref={albumTextElRef}
-            className={`scroll-on-overflow ${
+            className={`is-size-7 scroll-on-overflow ${
               albumTextIsOverflowing ? "overflowing" : ""
             }`}
           >
             <FontAwesomeIcon
-              className="has-text-black"
+              className="has-text-black is-size-6"
               icon={faRecordVinyl}
               style={{ marginRight: "0.25rem" }}
             />
+
             {album.name}
-          </p>
+          </TrackCardAlbumText>
         </div>
       </StyledCardContent>
 
       <footer className="card-footer">
         <FooterButton
-          className="button"
+          className="button is-inverted is-dark"
           title="Add to queue"
           onClick={() => addToPlayQueue(track)}
           disabled={!track.preview_url}
@@ -138,6 +125,26 @@ export default function TrackCard({ track }: TrackCardProps) {
   );
 }
 
+const TrackPopularityContainer = styled.div.attrs((props) => ({
+  className: "card-header-icon",
+}))`
+  padding-left: 0;
+`;
+
 const StyledCardContent = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 0.375rem;
   padding: 1rem;
+`;
+
+const TrackCardAlbumText = styled.p`
+  display: flex;
+  align-items: center;
+  // this breaks the overflow css's text-overflow: ellipsis for some reason...
+`;
+
+const FooterButton = styled.button`
+  width: 100%;
+  height: 100%;
 `;
