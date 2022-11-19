@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlusCircle } from "@fortawesome/free-solid-svg-icons";
+import { faPlusCircle, faRecordVinyl } from "@fortawesome/free-solid-svg-icons";
 
 import { Track } from "../../spotify/types";
 import { useMusicPlayer } from "../MusicPlayer/Context";
@@ -96,12 +96,11 @@ export default function TrackCard({ track }: TrackCardProps) {
         />
       </div>
 
-      <div className="card-content has-text-centered">
+      <StyledCardContent className="has-text-grey-dark">
         <div className="overflow-container">
-          Artist(s):
           <p
             ref={artistTextElRef}
-            className={`scroll-on-overflow ${artistsTextIsOverflowing &&
+            className={`has-text-weight-bold has-text-dark scroll-on-overflow ${artistsTextIsOverflowing &&
               "overflowing"}`}
           >
             {artists.map((artist) => artist.name).join(", ")}
@@ -109,17 +108,21 @@ export default function TrackCard({ track }: TrackCardProps) {
         </div>
 
         <div className="overflow-container">
-          Album:
           <p
             ref={albumTextElRef}
             className={`scroll-on-overflow ${
               albumTextIsOverflowing ? "overflowing" : ""
             }`}
           >
+            <FontAwesomeIcon
+              className="has-text-black"
+              icon={faRecordVinyl}
+              style={{ marginRight: "0.25rem" }}
+            />
             {album.name}
           </p>
         </div>
-      </div>
+      </StyledCardContent>
 
       <footer className="card-footer">
         <FooterButton
@@ -134,3 +137,7 @@ export default function TrackCard({ track }: TrackCardProps) {
     </div>
   );
 }
+
+const StyledCardContent = styled.div`
+  padding: 1rem;
+`;
