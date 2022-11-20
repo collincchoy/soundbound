@@ -1,6 +1,6 @@
 import React from "react";
 import classes from "./index.module.css";
-import { round } from "../../../utilities";
+import { round } from "utils";
 
 type HandleProps = {
   handle: {
@@ -13,7 +13,7 @@ type HandleProps = {
 
 export default function Handle({
   handle: { id, value, percent },
-  getHandleProps
+  getHandleProps,
 }: HandleProps) {
   value = round(value, 2);
   return (

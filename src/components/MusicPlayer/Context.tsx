@@ -13,18 +13,18 @@ type MusicPlayerContextType = {
 };
 const MusicPlayerContext = React.createContext<MusicPlayerContextType>({
   currentTrack: null,
-  setCurrentTrack: _ => {},
+  setCurrentTrack: (_) => {},
   player: new Audio(),
-  setPlayer: _ => {},
+  setPlayer: (_) => {},
   playQueue: [],
-  setPlayQueue: _ => {},
+  setPlayQueue: (_) => {},
   isPlaying: false,
-  setIsPlaying: _ => {}
+  setIsPlaying: (_) => {},
 });
 
 const handleNullPreviewUrl = (badTrack: Track) => {
   alert(`The next track ${badTrack.name} by ${badTrack.artists
-    .map(artist => artist.name)
+    .map((artist) => artist.name)
     .join(", ")} does not have a preview_url. 😢
 
 The full track info is below:
@@ -39,11 +39,14 @@ function useMusicPlayer() {
     player,
     isPlaying,
     playQueue,
-    setPlayQueue
+    setPlayQueue,
   } = useContext(MusicPlayerContext);
 
   return {
     currentTrack,
+    currentTrackIs(track: Track) {
+      return track.id === currentTrack?.id;
+    },
     changeTrack: (next: Track) => {
       if (next.preview_url == null) {
         handleNullPreviewUrl(next);
@@ -55,13 +58,13 @@ function useMusicPlayer() {
     play: () => player.play(),
     pause: () => player.pause(),
     addToPlayQueue: (track: Track) => {
-      setPlayQueue(prev => [...prev, track]);
+      setPlayQueue((prev) => [...prev, track]);
     },
     addBatchToPlayQueue: (tracks: Track[]) => {
-      setPlayQueue(prev => [...prev, ...tracks]);
+      setPlayQueue((prev) => [...prev, ...tracks]);
     },
     isPlaying,
-    playQueue
+    playQueue,
   };
 }
 
@@ -109,7 +112,7 @@ function MusicPlayerProvider(props: React.PropsWithChildren<any>) {
     playQueue,
     setPlayQueue,
     isPlaying,
-    setIsPlaying
+    setIsPlaying,
   };
   return (
     <MusicPlayerContext.Provider value={MusicPlayerContextValues}>

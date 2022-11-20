@@ -47,3 +47,8 @@ export function debounce(
     if (callNow) func.apply(context, args);
   };
 }
+
+export function last<T>(array: T[]): T | null {
+  if (array.length === 0) return null;
+  return array[array.length - 1];
+}

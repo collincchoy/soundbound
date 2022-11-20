@@ -57,9 +57,9 @@ class SpotifyClient {
       headers: {
         Authorization: `Bearer ${this.access_token}`,
         Accept: "application/json",
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
       },
-      signal: abortSignal
+      signal: abortSignal,
     };
     const response = await fetch(url, options);
     if (!response.ok) {
@@ -79,7 +79,7 @@ class SpotifyClient {
       redirect_uri: this.redirectUri,
       // state: undefined,
       scope: "user-read-private user-read-email user-top-read",
-      show_dialog: true.toString()
+      show_dialog: true.toString(),
     };
     authUrl.search = String(new URLSearchParams(params));
     return authUrl;

@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlusCircle } from "@fortawesome/free-solid-svg-icons";
+import { faPlusCircle, faRecordVinyl } from "@fortawesome/free-solid-svg-icons";
 
 import { Track } from "../../spotify/types";
 import { useMusicPlayer } from "../MusicPlayer/Context";
@@ -10,20 +10,6 @@ import { useOverflowTextHandler } from "hooks/OverflowTextHandler";
 import PlayPauseButton from "components/MusicPlayer/PlayPauseButton";
 import TextWithHelp from "components/TextWithHelp";
 import { trackAttributes } from "spotify/constants";
-
-const TrackPopularityContainer = styled.div.attrs((props) => ({
-  className: "card-header-icon",
-}))`
-  padding-left: 0;
-`;
-
-const FooterButton = styled.button`
-  width: 100%;
-  height: 100%;
-  border: none;
-  padding: 0.75rem;
-  margin: 5px;
-`;
 
 const popularityHelpText = trackAttributes.filter(
   (attr) => attr.name === "popularity"
@@ -96,12 +82,11 @@ export default function TrackCard({ track }: TrackCardProps) {
         />
       </div>
 
-      <div className="card-content has-text-centered">
+      <StyledCardContent className="has-text-grey-dark">
         <div className="overflow-container">
-          Artist(s):
           <p
             ref={artistTextElRef}
-            className={`scroll-on-overflow ${artistsTextIsOverflowing &&
+            className={`has-text-weight-bold has-text-dark scroll-on-overflow ${artistsTextIsOverflowing &&
               "overflowing"}`}
           >
             {artists.map((artist) => artist.name).join(", ")}
@@ -109,21 +94,26 @@ export default function TrackCard({ track }: TrackCardProps) {
         </div>
 
         <div className="overflow-container">
-          Album:
-          <p
+          <TrackCardAlbumText
             ref={albumTextElRef}
-            className={`scroll-on-overflow ${
+            className={`is-size-7 scroll-on-overflow ${
               albumTextIsOverflowing ? "overflowing" : ""
             }`}
           >
+            <FontAwesomeIcon
+              className="has-text-black is-size-6"
+              icon={faRecordVinyl}
+              style={{ marginRight: "0.25rem" }}
+            />
+
             {album.name}
-          </p>
+          </TrackCardAlbumText>
         </div>
-      </div>
+      </StyledCardContent>
 
       <footer className="card-footer">
         <FooterButton
-          className="button"
+          className="button is-inverted is-dark"
           title="Add to queue"
           onClick={() => addToPlayQueue(track)}
           disabled={!track.preview_url}
@@ -134,3 +124,27 @@ export default function TrackCard({ track }: TrackCardProps) {
     </div>
   );
 }
+
+const TrackPopularityContainer = styled.div.attrs((props) => ({
+  className: "card-header-icon",
+}))`
+  padding-left: 0;
+`;
+
+const StyledCardContent = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 0.375rem;
+  padding: 1rem;
+`;
+
+const TrackCardAlbumText = styled.p`
+  display: flex;
+  align-items: center;
+  // this breaks the overflow css's text-overflow: ellipsis for some reason...
+`;
+
+const FooterButton = styled.button`
+  width: 100%;
+  height: 100%;
+`;

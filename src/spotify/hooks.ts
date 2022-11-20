@@ -4,25 +4,29 @@ import { spotify } from "./api";
 
 export function useSpotifyApi<T>(endpoint: string, params?: {}) {
   const [data, setData] = useState<T>();
+  const [status, setStatus] = useState<
+    "idle" | "loading" | "error" | "success"
+  >("idle");
   const [error, setError] = useState<{ status: number; message: string }>();
 
   useEffect(() => {
     const abortController = new AbortController();
     const { signal } = abortController;
+    setStatus("loading");
     spotify
       .get<T>(endpoint, signal, params)
       .then((data) => {
-        console.log(`bah data is: ${JSON.stringify(data)}`);
         setData(data);
+        setStatus("success");
       })
       .catch((error: SpotifyError) => {
-        console.error(`ERR: ${JSON.stringify(error)}`);
         setError(error.error);
+        setStatus("error");
       });
 
     return () => abortController.abort();
   }, [endpoint, params]);
-  return { data, error };
+  return { data, status, error };
 }
 
 export function usePaginatedSpotifyApi<T>(endpoint: string) {

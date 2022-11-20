@@ -1,28 +1,6 @@
 import React, { useState } from "react";
 
-import { isOverflowing, debounce } from "utilities";
-
-// May convert this to use styles in JS
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const styles: { [key: string]: React.CSSProperties } = {
-  container: {
-    overflow: "hidden"
-  },
-  scrollOnOverflowText: {
-    width: "100%",
-    transition: "transform 1s",
-    whiteSpace: "nowrap",
-    overflow: "hidden",
-    textOverflow: "ellipsis"
-  },
-  scrollOnOverflowText_hover: {
-    overflow: "unset",
-    textOverflow: "unset",
-    width: "unset",
-    transition: "transform 3s linear",
-    transform: "translateX(-100%)"
-  }
-};
+import { isOverflowing, debounce } from "utils";
 
 export function useOverflowTextHandler<T extends HTMLElement>() {
   const [hasOverflowingText, setHasOverflowingText] = useState(false);
@@ -40,6 +18,6 @@ export function useOverflowTextHandler<T extends HTMLElement>() {
   }, [elRef, text]);
   return {
     hasOverflowingText,
-    elRef
+    elRef,
   };
 }

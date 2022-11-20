@@ -1,32 +1,32 @@
 import React, { useRef, useState, useEffect } from "react";
-import { debounce } from "utilities";
+import { debounce } from "utils";
 
 const styles: { [key: string]: React.CSSProperties } = {};
 
 styles.wrapper = {
-  scrollBehavior: "smooth"
+  scrollBehavior: "smooth",
 };
 
 const buttonConfiguration = {
   offset: "30px",
-  showHideTransitionDuration: "0.7s"
+  showHideTransitionDuration: "0.7s",
 };
 styles.backToTopButton = {
   position: "fixed",
   bottom: buttonConfiguration.offset,
   left: "50%",
-  transform: "translate(-50%)"
+  transform: "translate(-50%)",
 };
 
 styles.hidden = {
   visibility: "hidden",
   opacity: 0,
-  transition: `visibility 0s ${buttonConfiguration.showHideTransitionDuration}, opacity ${buttonConfiguration.showHideTransitionDuration} linear`
+  transition: `visibility 0s ${buttonConfiguration.showHideTransitionDuration}, opacity ${buttonConfiguration.showHideTransitionDuration} linear`,
 };
 styles.showing = {
   visibility: "visible",
   opacity: 1,
-  transition: `opacity ${buttonConfiguration.showHideTransitionDuration} linear`
+  transition: `opacity ${buttonConfiguration.showHideTransitionDuration} linear`,
 };
 
 const ScrollToTopButton = (props: React.HTMLAttributes<HTMLButtonElement>) => {
@@ -68,7 +68,7 @@ const ScrollableView: React.FC<{ showButtonAt?: string }> = ({
         onClick={scrollToTop}
         style={{
           ...styles.backToTopButton,
-          ...(showButton ? styles.showing : styles.hidden)
+          ...(showButton ? styles.showing : styles.hidden),
         }}
       />
     </div>
