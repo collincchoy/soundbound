@@ -90,6 +90,8 @@ const StyledPlayPauseButton = styled.button`
 const List = styled.ol`
   list-style-type: none;
   background-color: #343434;
+  border-radius: 8px;
+  padding: 1px;
 `;
 
 const ListItem = styled.li`
