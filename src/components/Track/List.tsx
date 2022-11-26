@@ -5,7 +5,11 @@ import { Track } from "spotify/types";
 import styled, { css } from "styled-components";
 import { colonizeMilliseconds, last } from "utils";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPauseCircle, faPlayCircle } from "@fortawesome/free-solid-svg-icons";
+import {
+  faPauseCircle,
+  faPlayCircle,
+  faRecordVinyl,
+} from "@fortawesome/free-solid-svg-icons";
 
 interface Props {
   tracks: Track[];
@@ -27,7 +31,7 @@ export const TrackList = ({ tracks }: Props) => {
     }
   }
   return (
-    <List>
+    <List className="has-text-light">
       {tracks.map((track) => (
         <ListItem key={track.id}>
           <GridArea area="cover">
@@ -37,11 +41,18 @@ export const TrackList = ({ tracks }: Props) => {
               alt="Album Cover"
             />
           </GridArea>
-          <GridArea area="name">
-            <BoldWhiteSpan>{track.name}</BoldWhiteSpan>
+          <GridArea area="name" className="is-size-5 has-text-weight-bold">
+            {track.name}
           </GridArea>
 
-          <GridArea area="album">{track.album.name}</GridArea>
+          <GridArea area="album">
+            <FontAwesomeIcon
+              className="has-text-black-bis"
+              icon={faRecordVinyl}
+              style={{ marginRight: "0.25rem" }}
+            />
+            {track.album.name}
+          </GridArea>
 
           <GridArea area="controls">
             <StyledPlayPauseButton
@@ -74,12 +85,6 @@ const StyledPlayPauseButton = styled.button`
   background-color: initial;
   border: none;
   cursor: pointer;
-`;
-
-const BoldWhiteSpan = styled.span`
-  color: #f5f5f5;
-  font-weight: 500;
-  font-size: 1.25em;
 `;
 
 const List = styled.ol`
