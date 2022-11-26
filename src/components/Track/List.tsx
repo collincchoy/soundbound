@@ -3,7 +3,7 @@ import { useMusicPlayer } from "components/MusicPlayer/Context";
 import React from "react";
 import { Track } from "spotify/types";
 import styled, { css } from "styled-components";
-import { last } from "utils";
+import { colonizeMilliseconds, last } from "utils";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPauseCircle, faPlayCircle } from "@fortawesome/free-solid-svg-icons";
 
@@ -61,7 +61,9 @@ export const TrackList = ({ tracks }: Props) => {
             </StyledPlayPauseButton>
           </GridArea>
 
-          <GridArea area="duration">{track.duration_ms}</GridArea>
+          <GridArea area="duration">
+            {colonizeMilliseconds(track.duration_ms)}
+          </GridArea>
         </ListItem>
       ))}
     </List>

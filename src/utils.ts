@@ -52,3 +52,15 @@ export function last<T>(array: T[]): T | null {
   if (array.length === 0) return null;
   return array[array.length - 1];
 }
+
+/** Convert milliseconds number to a nice string representation.
+ *
+ * @param timeMs number of milliseconds
+ * @returns string representation like "{numMins}:{numSeconds}"
+ */
+export function colonizeMilliseconds(timeMs: number): string {
+  const asSeconds = timeMs / 1000;
+  const minutes = Math.floor(asSeconds / 60);
+  const seconds = Math.round(asSeconds % 60);
+  return `${minutes}:${seconds.toString().padStart(2, "0")}`;
+}
