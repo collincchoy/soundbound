@@ -54,6 +54,8 @@ export const TrackList = ({ tracks }: Props) => {
                     ? faPauseCircle
                     : faPlayCircle
                 }
+                // color="#A9A9A9"
+                inverse
                 size="3x"
               />
             </StyledPlayPauseButton>
