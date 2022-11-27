@@ -155,6 +155,16 @@ export const DiscoverPage = () => {
             title={relatedArtists && relatedArtists[NodeSelection.Bottom].name}
           />
         </GridArea>
+
+        <GridArea area="bottom">
+          <GenreTags>
+            {artist?.genres.map((genre) => (
+              <span className="tag is-rounded is-dark" key={genre}>
+                {genre}
+              </span>
+            ))}
+          </GenreTags>
+        </GridArea>
       </Grid>
 
       <BottomContainer>
@@ -178,7 +188,7 @@ const Grid = styled.article`
   grid-template-areas:
     "left title rightTop"
     "left center rightMiddle"
-    "left empty rightBottom";
+    "left bottom rightBottom";
 
   align-items: center;
   justify-items: center;
@@ -198,6 +208,13 @@ const GridArea = styled.div<{ area: string }>`
   justify-content: center;
   height: 100%;
   width: 100%;
+`;
+
+const GenreTags = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5em;
+  justify-content: center;
 `;
 
 const BottomContainer = styled.section`
