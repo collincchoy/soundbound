@@ -75,6 +75,7 @@ export const DiscoverPage = () => {
             imageUrl={artist && getLastImage(artist)}
             scaleTo={1.45}
             bubbleAnimation={selectedNode !== null}
+            title={artist?.name}
           />
         </GridArea>
 
@@ -89,6 +90,7 @@ export const DiscoverPage = () => {
             imageUrl={previousArtist && getLastImage(previousArtist)}
             move={selectedNode === NodeSelection.Previous ? "right" : undefined}
             onClick={() => selectNode(NodeSelection.Previous)}
+            title={previousArtist && previousArtist.name}
           />
         </GridArea>
 
@@ -106,6 +108,7 @@ export const DiscoverPage = () => {
             }
             move={selectedNode === NodeSelection.Top ? "downLeft" : undefined}
             onClick={() => selectNode(NodeSelection.Top)}
+            title={relatedArtists && relatedArtists[NodeSelection.Top].name}
           />
         </GridArea>
 
@@ -126,6 +129,7 @@ export const DiscoverPage = () => {
             }
             move={selectedNode === NodeSelection.Middle ? "left" : undefined}
             onClick={() => selectNode(NodeSelection.Middle)}
+            title={relatedArtists && relatedArtists[NodeSelection.Middle].name}
           />
         </GridArea>
 
@@ -146,6 +150,7 @@ export const DiscoverPage = () => {
             }
             move={selectedNode === NodeSelection.Bottom ? "upLeft" : undefined}
             onClick={() => selectNode(NodeSelection.Bottom)}
+            title={relatedArtists && relatedArtists[NodeSelection.Bottom].name}
           />
         </GridArea>
       </Grid>
