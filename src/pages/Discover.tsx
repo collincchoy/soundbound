@@ -4,6 +4,7 @@ import Loader from "components/Loader";
 import PageContent from "components/PageContent";
 import { TrackList } from "components/Track/List";
 import React, { useMemo, useState } from "react";
+import { useParams } from "react-router-dom";
 import { useSpotifyApi } from "spotify/hooks";
 import { Artist, Track } from "spotify/types";
 import styled from "styled-components";
@@ -39,7 +40,8 @@ export const DiscoverPage = () => {
   };
 
   const [previousArtist, setPreviousArtist] = useState<Artist>();
-  const [artistId, setArtistId] = useState("5cAtakaadWHJLxmGKrKcX7");
+  const { artistId: pageId = "5cAtakaadWHJLxmGKrKcX7" } = useParams();
+  const [artistId, setArtistId] = useState(pageId); // "5cAtakaadWHJLxmGKrKcX7");
   const { data: artist } = useSpotifyApi<Artist>(`/artists/${artistId}`);
 
   const { data: relatedArtistsData } = useSpotifyApi<{ artists: Artist[] }>(
