@@ -201,6 +201,26 @@ const GridArea = styled.div<{ area: string }>`
 const BottomContainer = styled.section`
   display: grid;
   grid-template-columns: 1fr 1fr;
-  max-height: 400px;
-  overflow-y: scroll;
+  /* grid-auto-rows: 1fr; */
+
+  & > * {
+    max-height: 400px;
+    overflow-y: scroll;
+
+    /* Foreground, Background */
+    scrollbar-color: #999 #333;
+
+    &::-webkit-scrollbar {
+      width: 10px; /* Mostly for vertical scrollbars */
+      height: 10px; /* Mostly for horizontal scrollbars */
+    }
+    &::-webkit-scrollbar-thumb {
+      /* Foreground */
+      background: #999;
+    }
+    &::-webkit-scrollbar-track {
+      /* Background */
+      background: #333;
+    }
+  }
 `;
