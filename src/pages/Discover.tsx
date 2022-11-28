@@ -1,3 +1,4 @@
+import DiscoverArtistDiscography from "components/DiscoverArtistDiscography";
 import { Edge } from "components/Graph/Edge";
 import Node from "components/Graph/Node";
 import Loader from "components/Loader";
@@ -176,7 +177,8 @@ export const DiscoverPage = () => {
           )}
         </div>
 
-        <pre>{JSON.stringify(relatedArtists, undefined, 2)}</pre>
+        {/* <pre>{JSON.stringify(relatedArtists, undefined, 2)}</pre> */}
+        {artist && <DiscoverArtistDiscography artist={artist} />}
       </BottomContainer>
     </PageContent>
   );
@@ -220,6 +222,7 @@ const GenreTags = styled.div`
 const BottomContainer = styled.section`
   display: grid;
   grid-template-columns: 1fr 1fr;
+  column-gap: 1em;
   /* grid-auto-rows: 1fr; */
 
   & > * {
