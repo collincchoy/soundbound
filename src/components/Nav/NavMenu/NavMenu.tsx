@@ -2,8 +2,6 @@ import React from "react";
 import NavItem from "../NavItem/NavItem";
 
 export default function NavMenu() {
-  const shouldShowDiscover =
-    process.env.REACT_APP_ENABLE_DISCOVER_PAGE === "true";
   return (
     <>
       <NavItem
@@ -16,7 +14,7 @@ export default function NavMenu() {
       />
       <NavItem name="Lab" linkTo="/lab" />
 
-      {shouldShowDiscover && <NavItem name="Discover" linkTo="/discover" />}
+      <NavItem name="Discover" linkTo="/discover" />
     </>
   );
 }
