@@ -61,6 +61,8 @@ export const privateRoutes = (
           <DiscoverPage />
         </PrivateRoute>
       }
-    />
+    >
+      <Route path=":artistId" />
+    </Route>
   </>
 );

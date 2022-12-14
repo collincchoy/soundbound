@@ -1,9 +1,11 @@
+import DiscoverArtistDiscography from "components/DiscoverArtistDiscography";
 import { Edge } from "components/Graph/Edge";
 import Node from "components/Graph/Node";
 import Loader from "components/Loader";
 import PageContent from "components/PageContent";
 import { TrackList } from "components/Track/List";
 import React, { useMemo, useState } from "react";
+import { useParams } from "react-router-dom";
 import { useSpotifyApi } from "spotify/hooks";
 import { Artist, Track } from "spotify/types";
 import styled from "styled-components";
@@ -39,7 +41,8 @@ export const DiscoverPage = () => {
   };
 
   const [previousArtist, setPreviousArtist] = useState<Artist>();
-  const [artistId, setArtistId] = useState("5cAtakaadWHJLxmGKrKcX7");
+  const { artistId: pageId = "5cAtakaadWHJLxmGKrKcX7" } = useParams();
+  const [artistId, setArtistId] = useState(pageId); // "5cAtakaadWHJLxmGKrKcX7");
   const { data: artist } = useSpotifyApi<Artist>(`/artists/${artistId}`);
 
   const { data: relatedArtistsData } = useSpotifyApi<{ artists: Artist[] }>(
@@ -75,6 +78,7 @@ export const DiscoverPage = () => {
             imageUrl={artist && getLastImage(artist)}
             scaleTo={1.45}
             bubbleAnimation={selectedNode !== null}
+            title={artist?.name}
           />
         </GridArea>
 
@@ -89,6 +93,7 @@ export const DiscoverPage = () => {
             imageUrl={previousArtist && getLastImage(previousArtist)}
             move={selectedNode === NodeSelection.Previous ? "right" : undefined}
             onClick={() => selectNode(NodeSelection.Previous)}
+            title={previousArtist && previousArtist.name}
           />
         </GridArea>
 
@@ -106,6 +111,7 @@ export const DiscoverPage = () => {
             }
             move={selectedNode === NodeSelection.Top ? "downLeft" : undefined}
             onClick={() => selectNode(NodeSelection.Top)}
+            title={relatedArtists && relatedArtists[NodeSelection.Top].name}
           />
         </GridArea>
 
@@ -126,6 +132,7 @@ export const DiscoverPage = () => {
             }
             move={selectedNode === NodeSelection.Middle ? "left" : undefined}
             onClick={() => selectNode(NodeSelection.Middle)}
+            title={relatedArtists && relatedArtists[NodeSelection.Middle].name}
           />
         </GridArea>
 
@@ -146,7 +153,18 @@ export const DiscoverPage = () => {
             }
             move={selectedNode === NodeSelection.Bottom ? "upLeft" : undefined}
             onClick={() => selectNode(NodeSelection.Bottom)}
+            title={relatedArtists && relatedArtists[NodeSelection.Bottom].name}
           />
+        </GridArea>
+
+        <GridArea area="bottom">
+          <GenreTags>
+            {artist?.genres.map((genre) => (
+              <span className="tag is-rounded is-dark" key={genre}>
+                {genre}
+              </span>
+            ))}
+          </GenreTags>
         </GridArea>
       </Grid>
 
@@ -159,7 +177,8 @@ export const DiscoverPage = () => {
           )}
         </div>
 
-        <pre>{JSON.stringify(relatedArtists, undefined, 2)}</pre>
+        {/* <pre>{JSON.stringify(relatedArtists, undefined, 2)}</pre> */}
+        {artist && <DiscoverArtistDiscography artist={artist} />}
       </BottomContainer>
     </PageContent>
   );
@@ -171,7 +190,7 @@ const Grid = styled.article`
   grid-template-areas:
     "left title rightTop"
     "left center rightMiddle"
-    "left empty rightBottom";
+    "left bottom rightBottom";
 
   align-items: center;
   justify-items: center;
@@ -193,9 +212,37 @@ const GridArea = styled.div<{ area: string }>`
   width: 100%;
 `;
 
+const GenreTags = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5em;
+  justify-content: center;
+`;
+
 const BottomContainer = styled.section`
   display: grid;
   grid-template-columns: 1fr 1fr;
-  max-height: 400px;
-  overflow-y: scroll;
+  column-gap: 1em;
+  /* grid-auto-rows: 1fr; */
+
+  & > * {
+    max-height: 400px;
+    overflow-y: scroll;
+
+    /* Foreground, Background */
+    scrollbar-color: #999 #333;
+
+    &::-webkit-scrollbar {
+      width: 10px; /* Mostly for vertical scrollbars */
+      height: 10px; /* Mostly for horizontal scrollbars */
+    }
+    &::-webkit-scrollbar-thumb {
+      /* Foreground */
+      background: #999;
+    }
+    &::-webkit-scrollbar-track {
+      /* Background */
+      background: #333;
+    }
+  }
 `;

@@ -12,6 +12,7 @@ interface Props {
   move?: Direction;
   onClick?: (ev: React.MouseEvent<SVGElement>) => void;
   bubbleAnimation?: boolean;
+  title?: string;
 }
 
 const Node = ({
@@ -23,12 +24,13 @@ const Node = ({
   move = undefined,
   onClick,
   bubbleAnimation = false,
+  title = undefined,
 }: Props) => {
   // @ts-ignore  fixme on upgrade of TS>4.6
   const patternId = window.crypto.randomUUID();
   const fill = imageUrl ? `url(#${patternId})` : color;
   return (
-    <Mover move={move}>
+    <Mover move={move} title={title}>
       <StyledSvg
         width={size}
         height={size}

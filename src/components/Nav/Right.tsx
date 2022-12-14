@@ -4,11 +4,14 @@ import { useLoginContext } from "../../hooks/Login";
 import { HashLink as Link } from "react-router-hash-link";
 
 const StyledCurrentUser = styled.div.attrs((props) => ({
-  className: "button is-dark",
+  className: "is-dark",
   ...props,
 }))`
-  && {
-    background-color: transparent;
+  cursor: pointer;
+  padding: 1em;
+
+  &:hover {
+    opacity: 0.8;
   }
 `;
 
@@ -33,23 +36,21 @@ function ProfileWithDropdown(props: {
       className={`navbar-item has-dropdown ${isClicked ? "is-active" : ""}`}
       style={{ alignItems: "center" }}
     >
-      <div className="is-arrowless">
-        <StyledCurrentUser onClick={() => setIsClicked(!isClicked)}>
-          <div className="media" style={{ alignItems: "center" }}>
-            <figure className="media-left image">
-              <img
-                className="is-rounded"
-                style={{ width: "auto", height: "auto" }}
-                src={pictureUrl}
-                alt="Current user profile"
-              />
-            </figure>
-            <div className="media-content">
-              <h2>{name}</h2>
-            </div>
+      <StyledCurrentUser onClick={() => setIsClicked(!isClicked)}>
+        <div className="media" style={{ alignItems: "center" }}>
+          <figure className="media-left image">
+            <img
+              className="is-rounded"
+              style={{ width: "auto", height: "auto" }}
+              src={pictureUrl}
+              alt="Current user profile"
+            />
+          </figure>
+          <div className="media-content">
+            <h2>{name}</h2>
           </div>
-        </StyledCurrentUser>
-      </div>
+        </div>
+      </StyledCurrentUser>
       <StyledDropdown>
         <Link to="/#about" className="navbar-item">
           About

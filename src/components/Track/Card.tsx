@@ -10,6 +10,7 @@ import { useOverflowTextHandler } from "hooks/OverflowTextHandler";
 import PlayPauseButton from "components/MusicPlayer/PlayPauseButton";
 import TextWithHelp from "components/TextWithHelp";
 import { trackAttributes } from "spotify/constants";
+import { Link } from "react-router-dom";
 
 const popularityHelpText = trackAttributes.filter(
   (attr) => attr.name === "popularity"
@@ -89,7 +90,18 @@ export default function TrackCard({ track }: TrackCardProps) {
             className={`has-text-weight-bold has-text-dark scroll-on-overflow ${artistsTextIsOverflowing &&
               "overflowing"}`}
           >
-            {artists.map((artist) => artist.name).join(", ")}
+            {artists.map((artist, i) => (
+              <Link
+                to={`/discover/${artist.id}`}
+                key={artist.id}
+                // pink or dark text?
+                className="has-text-dark"
+              >
+                {`${artist.name}${
+                  artists.length > 1 && i < artists.length - 1 ? "," : ""
+                }`}
+              </Link>
+            ))}
           </p>
         </div>
 

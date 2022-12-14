@@ -48,8 +48,9 @@ export interface ArtistImage {
   width: number;
 }
 
-enum AlbumType {
-  ALBUM = "ALBUM",
+export enum AlbumType {
+  Album = "album",
+  Single = "single",
 }
 
 export type SearchArtistResults = {
@@ -75,7 +76,7 @@ export type Artist = {
   external_urls: { spotify: string };
 };
 
-type Album = {
+export type Album = {
   album_type: AlbumType;
   artists: Artist[];
   available_markets: string[];

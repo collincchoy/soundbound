@@ -35,11 +35,14 @@ export function usePaginatedSpotifyApi<T>(endpoint: string) {
   const [error, setError] = useState<{ status: number; message: string }>();
 
   const loadItems = useCallback(
-    (endpoint: string, abortSignal?: AbortSignal) => {
+    (endpoint: string, abortSignal?: AbortSignal, append: boolean = true) => {
       spotify
         .get<PaginatedResponse<T>>(endpoint, abortSignal)
         .then((resp) => {
-          resp.items && setItems((prev) => [...prev, ...resp.items]);
+          resp.items &&
+            setItems((prev) =>
+              append ? [...prev, ...resp.items] : resp.items
+            );
           setNextPage(resp.next && resp.next.split("v1")[1]);
         })
         .catch((error: SpotifyError) => setError(error.error));
@@ -50,14 +53,14 @@ export function usePaginatedSpotifyApi<T>(endpoint: string) {
   useEffect(() => {
     const abortController = new AbortController();
     const { signal } = abortController;
-    loadItems(endpoint, signal);
+    loadItems(endpoint, signal, false);
     return () => {
       abortController.abort();
     };
   }, [endpoint, loadItems]);
 
   const loadMoreItems = (page: number) => {
-    nextPage && loadItems(nextPage);
+    nextPage && loadItems(nextPage, undefined, true);
   };
 
   const reset = () => {
