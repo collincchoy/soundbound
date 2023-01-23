@@ -8,6 +8,7 @@ import LabPage from "../pages/Lab";
 import OauthCallbackPage from "pages/OauthCallback";
 import { PrivateRoute } from "./PrivateRoute";
 import { DiscoverPage } from "pages/Discover";
+import { DiscoverIndexPage } from "pages/DiscoverIndex";
 
 export const publicRoutes = (
   <>
@@ -58,11 +59,18 @@ export const privateRoutes = (
       path="/discover"
       element={
         <PrivateRoute>
+          <DiscoverIndexPage />
+        </PrivateRoute>
+      }
+    />
+
+    <Route
+      path="/discover/:artistId"
+      element={
+        <PrivateRoute>
           <DiscoverPage />
         </PrivateRoute>
       }
-    >
-      <Route path=":artistId" />
-    </Route>
+    />
   </>
 );

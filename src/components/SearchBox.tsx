@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { useField } from "formik";
 
 const StyledSearchBoxContainer = styled.div.attrs<{ isSearching: boolean }>(
-  props => ({ className: `control ${props.isSearching && "is-loading"}` })
+  (props) => ({ className: `control ${props.isSearching && "is-loading"}` })
 )<{ isSearching: boolean }>`
   position: relative;
 `;
@@ -21,7 +21,7 @@ const Suggestion = styled.li<{ isSelected: boolean }>`
   transition: 0.2s;
 
   /* hover & mouse over */
-  ${props =>
+  ${(props) =>
     props.isSelected &&
     `
   background-color: hsl(0, 0%, 21%);
@@ -34,11 +34,13 @@ type SearchBoxProps<T> = {
   name: string;
   getSuggestions: (inputValue: string) => Promise<T[]>;
   suggestionKey: (item: T) => { key: string; value: string };
+  onSelection?: (selected: { key: string; value: string }) => void;
 } & React.PropsWithoutRef<JSX.IntrinsicElements["input"]>;
 
 export default function SearchBox<T>({
   getSuggestions,
   suggestionKey,
+  onSelection,
   ...props
 }: SearchBoxProps<T>) {
   const [isSearching, setIsSearching] = useState(false);
@@ -61,15 +63,23 @@ export default function SearchBox<T>({
       clearSuggestions();
     }
     setIsSearching(false);
+
+    if (props.onChange) {
+      props.onChange(event);
+    }
   };
   const handleBlur = async (event: React.FocusEvent) => {
     field.onBlur(event);
     setIsSearching(false);
     clearSuggestions();
   };
-  const selectItem = (value: string) => {
-    helpers.setValue(value);
+  const selectItem = (item: { key: string; value: string }) => {
+    helpers.setValue(item.value);
     clearSuggestions();
+
+    if (onSelection) {
+      onSelection(item);
+    }
   };
   const handleKeyDown = (e: React.KeyboardEvent) => {
     switch (e.key) {
@@ -91,8 +101,8 @@ export default function SearchBox<T>({
           selectedSuggestionIndex < suggestions.length
         ) {
           e.preventDefault(); // Do not submit form
-          const { value } = suggestionKey(suggestions[selectedSuggestionIndex]);
-          selectItem(value);
+          const item = suggestionKey(suggestions[selectedSuggestionIndex]);
+          selectItem(item);
         }
         break;
       }
@@ -119,10 +129,10 @@ export default function SearchBox<T>({
               <Suggestion
                 isSelected={index === selectedSuggestionIndex}
                 key={key}
-                onClick={() => selectItem(value)}
+                onClick={() => selectItem({ key, value })}
                 onMouseDown={
                   /*Prevent blur event to avoid race condition with click event.*/
-                  e => e.preventDefault()
+                  (e) => e.preventDefault()
                 }
                 onMouseOver={() => setSelectedSuggestionIndex(index)}
               >
