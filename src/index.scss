@@ -30,3 +30,69 @@
   transition: transform 3s linear;
   transform: translateX(-100%);
 }
+
+/* Utility Classes */
+.d-flex {
+  display: flex;
+}
+
+.fd-column {
+  flex-direction: column;
+}
+
+.ai-center {
+  align-items: center;
+}
+
+.jc-center {
+  justify-content: center;
+}
+
+.g2 {
+  gap: 2px;
+}
+
+.g4 {
+  gap: 4px;
+}
+
+.g6 {
+  gap: 6px;
+}
+
+.g8 {
+  gap: 8px;
+}
+
+.g12 {
+  gap: 12px;
+}
+
+.g16 {
+  gap: 16px;
+}
+
+.g24 {
+  gap: 24px;
+}
+
+:root {
+  --1stop: 0.5rem;
+}
+
+.m1 {
+  margin: var(--1stop);
+}
+
+.p1 {
+  padding: var(--1stop);
+}
+
+.h100 {
+  height: 100%;
+}
+
+.w100 {
+  width: 100%;
+}
+
