@@ -1,16 +1,16 @@
 {
   "files": {
-    "main.css": "/soundbound/static/css/main.6a5c2e46.css",
-    "main.js": "/soundbound/static/js/main.1073b32c.js",
+    "main.css": "/soundbound/static/css/main.f12e0861.css",
+    "main.js": "/soundbound/static/js/main.7cdde152.js",
     "static/media/soundbound.png": "/soundbound/static/media/soundbound.f792a1090d477cb3f84d.png",
     "static/media/MixingPot.svg": "/soundbound/static/media/MixingPot.005be523931823c2b012a769859f3e07.svg",
     "static/media/Bubbles.svg": "/soundbound/static/media/Bubbles.77581f11b2423fd5869dfb7c50c78dfa.svg",
     "index.html": "/soundbound/index.html",
-    "main.6a5c2e46.css.map": "/soundbound/static/css/main.6a5c2e46.css.map",
-    "main.1073b32c.js.map": "/soundbound/static/js/main.1073b32c.js.map"
+    "main.f12e0861.css.map": "/soundbound/static/css/main.f12e0861.css.map",
+    "main.7cdde152.js.map": "/soundbound/static/js/main.7cdde152.js.map"
   },
   "entrypoints": [
-    "static/css/main.6a5c2e46.css",
-    "static/js/main.1073b32c.js"
+    "static/css/main.f12e0861.css",
+    "static/js/main.7cdde152.js"
   ]
 }
