@@ -44,7 +44,7 @@ export const DiscoverIndexPage = () => {
                 key: item.id,
                 value: item.name,
               })}
-              placeholder="Daft Punk"
+              placeholder="Name a band/artist"
               onSelection={(selected) => navigate(`/discover/${selected.key}`)}
             />
           </StyledForm>
