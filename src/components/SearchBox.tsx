@@ -14,6 +14,8 @@ const SuggestionList = styled.ol`
   background-color: hsl(0, 0%, 90%);
   list-style-type: none;
   border-radius: 5px;
+  max-height: 240px;
+  overflow-y: scroll;
 `;
 
 const Suggestion = styled.li<{ isSelected: boolean }>`
