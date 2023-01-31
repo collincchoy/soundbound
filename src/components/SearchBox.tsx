@@ -30,6 +30,11 @@ const Suggestion = styled.li<{ isSelected: boolean }>`
   `}
 `;
 
+const SelectInput = styled.input`
+  padding: 0.75rem;
+  border-radius: 1.25rem;
+`;
+
 type SearchBoxProps<T> = {
   name: string;
   getSuggestions: (inputValue: string) => Promise<T[]>;
@@ -113,7 +118,7 @@ export default function SearchBox<T>({
 
   return (
     <StyledSearchBoxContainer isSearching={isSearching}>
-      <input
+      <SelectInput
         {...field}
         {...props}
         onChange={handleChange}
