@@ -24,32 +24,36 @@ export const DiscoverIndexPage = () => {
   const navigate = useNavigate();
   return (
     <PageContent>
-      <h1 className="is-size-1 has-text-white has-text-centered">
-        Search Artists
-      </h1>
+      <div className="d-flex fd-column jc-center g16 h100">
+        <h1 className="is-size-1 has-text-white has-text-centered">
+          Search Artists
+        </h1>
 
-      <Formik
-        initialValues={{
-          artist: "",
-        }}
-        // validate={validate}
-        onSubmit={(values, { setSubmitting }) => {}}
-      >
-        {(formProps) => (
-          <StyledForm>
-            <SearchBox
-              name="artist"
-              getSuggestions={searchForArtist}
-              suggestionKey={(item: any) => ({
-                key: item.id,
-                value: item.name,
-              })}
-              placeholder="Name a band/artist"
-              onSelection={(selected) => navigate(`/discover/${selected.key}`)}
-            />
-          </StyledForm>
-        )}
-      </Formik>
+        <Formik
+          initialValues={{
+            artist: "",
+          }}
+          // validate={validate}
+          onSubmit={(values, { setSubmitting }) => {}}
+        >
+          {(formProps) => (
+            <StyledForm>
+              <SearchBox
+                name="artist"
+                getSuggestions={searchForArtist}
+                suggestionKey={(item: any) => ({
+                  key: item.id,
+                  value: item.name,
+                })}
+                placeholder="Name a band/artist"
+                onSelection={(selected) =>
+                  navigate(`/discover/${selected.key}`)
+                }
+              />
+            </StyledForm>
+          )}
+        </Formik>
+      </div>
     </PageContent>
   );
 };
