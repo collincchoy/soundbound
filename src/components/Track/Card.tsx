@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Fragment } from "react";
 import styled from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlusCircle, faRecordVinyl } from "@fortawesome/free-solid-svg-icons";
@@ -91,16 +91,16 @@ export default function TrackCard({ track }: TrackCardProps) {
               "overflowing"}`}
           >
             {artists.map((artist, i) => (
-              <Link
-                to={`/discover/${artist.id}`}
-                key={artist.id}
-                // pink or dark text?
-                className="has-text-dark"
-              >
-                {`${artist.name}${
-                  artists.length > 1 && i < artists.length - 1 ? "," : ""
-                }`}
-              </Link>
+              <Fragment key={artist.id}>
+                <Link
+                  to={`/discover/${artist.id}`}
+                  // invert the link colors. title+artist name in pink is too much
+                  className="has-text-dark h:has-text-pink"
+                >
+                  {artist.name}
+                </Link>
+                {i < artists.length - 1 ? ", " : ""}
+              </Fragment>
             ))}
           </p>
         </div>

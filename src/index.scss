@@ -1,3 +1,5 @@
+@use 'variables' as v;
+
 :root {
   scroll-behavior: smooth;
 }
@@ -96,3 +98,13 @@
   width: 100%;
 }
 
+.h\:has-text-pink {
+  // For a link with has-text-dark, there is a
+  // specificity collision w/ a.has-text-dark:hover
+  // thus creating a separate class h:has-text-pink which
+  // specifies has-text-dark.
+  &.has-text-dark:hover,
+  &:hover {
+    color: v.$pink !important;
+  }
+}
