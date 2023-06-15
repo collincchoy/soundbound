@@ -12,9 +12,9 @@ export default function NavMenu() {
           { name: "Artists", linkTo: "/top/artists" },
         ]}
       />
-      <NavItem name="Lab" linkTo="/lab" />
-
       <NavItem name="Discover" linkTo="/discover" />
+
+      <NavItem name="Lab" linkTo="/lab" />
     </>
   );
 }
