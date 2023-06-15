@@ -134,6 +134,7 @@ const TrackPopularityContainer = styled.div.attrs((props) => ({
   className: "card-header-icon",
 }))`
   padding-left: 0;
+  cursor: unset; // .card-header-icon has 'cursor: pointer'. popularity # is not clickable atm
 `;
 
 const StyledCardContent = styled.div`
