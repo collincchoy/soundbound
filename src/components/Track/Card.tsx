@@ -1,7 +1,7 @@
 import React, { Fragment } from "react";
 import styled from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlusCircle, faRecordVinyl } from "@fortawesome/free-solid-svg-icons";
+import { faRecordVinyl } from "@fortawesome/free-solid-svg-icons";
 
 import { Track } from "../../spotify/types";
 import { useMusicPlayer } from "../MusicPlayer/Context";
@@ -11,6 +11,7 @@ import PlayPauseButton from "components/MusicPlayer/PlayPauseButton";
 import TextWithHelp from "components/TextWithHelp";
 import { trackAttributes } from "spotify/constants";
 import { Link } from "react-router-dom";
+import AddToQueueButton from "./AddToQueueButton";
 
 const popularityHelpText = trackAttributes.filter(
   (attr) => attr.name === "popularity"
@@ -28,7 +29,6 @@ export default function TrackCard({ track }: TrackCardProps) {
     play,
     pause,
     isPlaying,
-    addToPlayQueue,
   } = useMusicPlayer();
 
   const {
@@ -124,14 +124,7 @@ export default function TrackCard({ track }: TrackCardProps) {
       </StyledCardContent>
 
       <footer className="card-footer">
-        <FooterButton
-          className="button is-inverted is-dark"
-          title="Add to queue"
-          onClick={() => addToPlayQueue(track)}
-          disabled={!track.preview_url}
-        >
-          <FontAwesomeIcon icon={faPlusCircle} size="lg" />
-        </FooterButton>
+        <AddToQueueButton track={track} />
       </footer>
     </div>
   );
@@ -154,9 +147,4 @@ const TrackCardAlbumText = styled.p`
   display: flex;
   align-items: center;
   // this breaks the overflow css's text-overflow: ellipsis for some reason...
-`;
-
-const FooterButton = styled.button`
-  width: 100%;
-  height: 100%;
 `;
