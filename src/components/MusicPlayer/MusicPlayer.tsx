@@ -1,10 +1,11 @@
 import React from "react";
 
-import classes from "./index.module.css";
+import styles from "./index.module.css";
 import { useMusicPlayer } from "./Context";
 import PlayQueue from "./PlayQueue";
 import TrackInfo from "./TrackInfo";
 import PlayPauseButton from "./PlayPauseButton";
+import styled from "styled-components";
 
 export default function MusicPlayer() {
   const { currentTrack, isPlaying, pause, play, playQueue } = useMusicPlayer();
@@ -14,18 +15,25 @@ export default function MusicPlayer() {
     contents = <span>No track to play.</span>;
   } else {
     contents = (
-      <div className={`container ${classes.flexContainer}`}>
-        <div className={classes.left}>
+      <StyledWrapper>
+        <div className={styles.left}>
           <TrackInfo track={currentTrack} />
         </div>
-        <div className={classes.middle}>
+        <div className={styles.middle}>
           <PlayPauseButton {...{ play, pause, isPlaying }} />
         </div>
-        <div className={classes.right}>
+        <div className={styles.right}>
           <PlayQueue queue={playQueue} currentIndex={2} />
         </div>
-      </div>
+      </StyledWrapper>
     );
   }
-  return <div className={classes.MusicPlayer}>{contents}</div>;
+  return <div className={styles.MusicPlayer}>{contents}</div>;
 }
+
+const StyledWrapper = styled.div.attrs({ className: "container" })`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 100%;
+`;

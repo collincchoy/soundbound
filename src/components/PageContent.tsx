@@ -1,5 +1,5 @@
 import React from "react";
-import MusicPlayer from "./MusicPlayer";
+import MusicPlayer from "./MusicPlayer/MusicPlayer";
 import NavBar from "./Nav/NavBar/NavBar";
 import styled from "styled-components";
 

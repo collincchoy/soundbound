@@ -9,18 +9,21 @@
   height: 80px;
   border: 3px solid darkgray;
   border-bottom: none;
-  border-top-left-radius: 60px;
-  border-top-right-radius: 60px;
+  border-top-left-radius: 35px;
+  border-top-right-radius: 35px;
   background-color: #282c34;
   color: whitesmoke;
   z-index: 300;
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 1024px) {
   .MusicPlayer {
     border-radius: 0px;
     border-left: none;
     border-right: none;
+    /* line up with track/artist gallery gutters */
+    padding-inline-start: 1.5rem;
+    padding-inline-end: 1.5rem;
   }
 }
 
