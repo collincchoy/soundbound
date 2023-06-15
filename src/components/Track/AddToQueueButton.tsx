@@ -26,7 +26,9 @@ const ButtonText = styled.span.attrs({
   max-width: 0px;
   opacity: 0;
   margin-inline-start: 0px;
-  transition: opacity 0.5s, max-width 0.5s, margin-inline-start 0.2s;
+  transition: opacity 0.5s 0.1s, max-width 0.5s 0.1s,
+    // margin is faster so the text doesn't "bump out" at the end of the transition
+      margin-inline-start 0.2s 0.1s;
 `;
 
 const StyledButton = styled.button`
