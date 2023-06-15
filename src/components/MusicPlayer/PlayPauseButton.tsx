@@ -36,6 +36,7 @@ export default function PlayPauseButton({
   return (
     <ButtonWithOverlay
       title={buttonName}
+      aria-label={buttonName}
       type="button"
       onClick={handleClick}
       {...props}

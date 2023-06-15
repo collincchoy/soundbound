@@ -7,15 +7,19 @@ import styled from "styled-components";
 
 export default function AddToQueueButton({ track }: { track: Track }) {
   const { addToPlayQueue } = useMusicPlayer();
+  const disabled = !track.preview_url;
   return (
     <StyledButton
       className="button is-inverted is-dark"
-      title="Add to queue"
+      title="Add to Queue"
+      aria-label="Add to Queue"
       onClick={() => addToPlayQueue(track)}
-      disabled={!track.preview_url}
+      disabled={disabled}
     >
       <FontAwesomeIcon icon={faPlusCircle} size="lg" />
-      <ButtonText>Add to Queue</ButtonText>
+
+      {/* Do not do slide-in on hover if button is disabled */}
+      {!disabled && <ButtonText>Add to Queue</ButtonText>}
     </StyledButton>
   );
 }
