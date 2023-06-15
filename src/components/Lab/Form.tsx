@@ -8,32 +8,6 @@ import { spotify } from "spotify/api";
 import AdvancedTuner from "./AdvancedTuner";
 import { trackAttributes, TrackAttribute } from "../../spotify/constants";
 
-const StyledLabFormWrapper = styled.div.attrs((props) => ({
-  className: "container has-background-light",
-}))`
-  border-radius: 6px;
-  padding: 10px;
-  margin: 0.75rem 0;
-`;
-
-const LabFormDescription = styled.div.attrs((props) => ({
-  className: "content",
-}))`
-  margin: 1rem;
-`;
-
-const TunersDiv = styled.div.attrs((props) => ({ className: "field" }))`
-  border: solid 1px black;
-  padding: 10px;
-  display: flex;
-  flex-wrap: wrap;
-`;
-
-const StyledTuner = styled(AdvancedTuner)`
-  flex: 1;
-  min-width: 150px;
-`;
-
 export type LabFormValues = {
   artists: string;
   tracks: string;
@@ -48,12 +22,12 @@ type LabFormProps = {
   onSubmit: (values: LabFormValues) => void;
 };
 
-const LabForm = (props: LabFormProps) => {
+export default function LabForm(props: LabFormProps) {
   const DEFAULT_NUM_TRACKS = 20;
   return (
     <StyledLabFormWrapper>
       <LabFormDescription>
-        <h3>Tune your own playlist generator! </h3>
+        <LabFormHeader>Playlist Mixer</LabFormHeader>
         <p>
           Mix & match artists, tracks, or genres and generate a playlist of
           recommended tracks. Additionally, use the sliders to adjust the
@@ -141,7 +115,7 @@ const LabForm = (props: LabFormProps) => {
       </Formik>
     </StyledLabFormWrapper>
   );
-};
+}
 
 async function searchForArtist(artistName: string) {
   const params = {
@@ -198,4 +172,32 @@ async function getAvailableGenres() {
   return _cached_genres;
 }
 
-export default LabForm;
+const StyledLabFormWrapper = styled.div.attrs({
+  className: "has-background-light",
+})`
+  border-radius: 6px;
+  padding: 0.75rem 1.5rem;
+  margin: 0.75rem 0;
+`;
+
+const LabFormHeader = styled.h1`
+  margin-block-start: 1rem;
+`;
+
+const LabFormDescription = styled.div.attrs({
+  className: "content",
+})``;
+
+const TunersDiv = styled.div.attrs({ className: "field" })`
+  border: solid 1px black;
+  padding: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+`;
+
+const StyledTuner = styled(AdvancedTuner)`
+  flex: 1;
+  min-width: 150px;
+  max-width: 250px;
+`;
