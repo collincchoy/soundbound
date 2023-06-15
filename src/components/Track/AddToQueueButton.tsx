@@ -5,6 +5,21 @@ import React from "react";
 import { Track } from "spotify/types";
 import styled from "styled-components";
 
+export default function AddToQueueButton({ track }: { track: Track }) {
+  const { addToPlayQueue } = useMusicPlayer();
+  return (
+    <StyledButton
+      className="button is-inverted is-dark"
+      title="Add to queue"
+      onClick={() => addToPlayQueue(track)}
+      disabled={!track.preview_url}
+    >
+      <FontAwesomeIcon icon={faPlusCircle} size="lg" />
+      <ButtonText>Add to Queue</ButtonText>
+    </StyledButton>
+  );
+}
+
 const ButtonText = styled.span.attrs({
   className: "is-size-7",
 })`
@@ -26,18 +41,3 @@ const StyledButton = styled.button`
     }
   }
 `;
-
-export default function AddToQueueButton({ track }: { track: Track }) {
-  const { addToPlayQueue } = useMusicPlayer();
-  return (
-    <StyledButton
-      className="button is-inverted is-dark"
-      title="Add to queue"
-      onClick={() => addToPlayQueue(track)}
-      disabled={!track.preview_url}
-    >
-      <FontAwesomeIcon icon={faPlusCircle} size="lg" />
-      <ButtonText>Add to Queue</ButtonText>
-    </StyledButton>
-  );
-}
