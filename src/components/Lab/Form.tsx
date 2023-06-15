@@ -27,11 +27,12 @@ export default function LabForm(props: LabFormProps) {
   return (
     <StyledLabFormWrapper>
       <LabFormDescription>
-        <LabFormHeader>Playlist Mixer</LabFormHeader>
+        <LabFormHeader>Discover your perfect playlist!</LabFormHeader>
         <p>
-          Mix & match artists, tracks, or genres and generate a playlist of
-          recommended tracks. Additionally, use the sliders to adjust the
-          algorithm based on various track attributes.
+          Customize your music experience by selecting artists, tracks, and
+          genres, and fine-tune the sound with adjustable audio features. Submit
+          your choices for a curated list of songs tailored to your preferences.
+          Start exploring now!
         </p>
       </LabFormDescription>
       <Formik
