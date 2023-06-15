@@ -1,37 +1,46 @@
-import React, { ButtonHTMLAttributes } from "react";
-import PlayButton from "./PlayButton";
-import PauseButton from "./PauseButton";
+import React from "react";
+import PlayIcon from "./PlayIcon";
+import PauseIcon from "./PauseIcon";
+import ButtonWithOverlay from "./ButtonWithOverlay";
 
 type PlayPauseButtonProps = {
   isPlaying: boolean;
   play: () => void;
   pause: () => void;
-} & ButtonHTMLAttributes<HTMLButtonElement>;
+} & React.ButtonHTMLAttributes<HTMLButtonElement>;
 
-const PlayPauseButton: React.FC<PlayPauseButtonProps> = ({
+export default function PlayPauseButton({
   isPlaying,
   play,
   pause,
   onClick,
   ...props
-}) => {
-  return isPlaying ? (
-    <PauseButton
-      onClick={(e) => {
-        onClick && onClick(e);
-        pause();
-      }}
-      {...props}
-    />
-  ) : (
-    <PlayButton
-      onClick={(e) => {
-        onClick && onClick(e);
-        play();
-      }}
-      {...props}
-    />
-  );
-};
+}: PlayPauseButtonProps) {
+  let buttonName: string;
+  let buttonIcon: JSX.Element;
+  let onButtonClick: typeof play | typeof pause;
+  if (isPlaying) {
+    buttonName = "Pause";
+    onButtonClick = pause;
+    buttonIcon = <PauseIcon />;
+  } else {
+    buttonName = "Play";
+    onButtonClick = play;
+    buttonIcon = <PlayIcon />;
+  }
 
-export default PlayPauseButton;
+  function handleClick(e: React.MouseEvent<HTMLButtonElement>) {
+    onClick && onClick(e);
+    onButtonClick();
+  }
+  return (
+    <ButtonWithOverlay
+      title={buttonName}
+      type="button"
+      onClick={handleClick}
+      {...props}
+    >
+      {buttonIcon}
+    </ButtonWithOverlay>
+  );
+}
