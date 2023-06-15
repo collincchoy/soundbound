@@ -11,7 +11,7 @@ const SubMenuNavLink = styled(NavLink)`
 
 const DropdownMenu = styled.div<{ isActive: boolean }>`
   position: absolute;
-  top: calc(50% + 15px);
+  top: calc(50% + 16px);
   left: 0.75rem; /*padding from navbar-item*/
   display: none;
   font-size: 0.7em;

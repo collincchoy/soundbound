@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-const Container = styled.div.attrs(props => ({ className: "container" }))`
+const Container = styled.div.attrs({ className: "container" })`
   max-width: 800px;
 `;
 
