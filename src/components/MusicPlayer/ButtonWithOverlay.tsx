@@ -19,13 +19,15 @@ const ButtonWithOverlay = styled.button.attrs((p) => ({
   transition: background-color var(--transition-duration);
 
   svg {
-    color: hsl(0deg 0% 70% / 50%);
+    color: hsl(0deg 0% 70%);
+    opacity: 0.5;
     transition: color var(---transition-duration);
   }
 
   &:hover {
     svg {
-      color: hsla(0, 0%, 100%, 1);
+      color: hsl(0, 0%, 100%);
+      opacity: 1;
     }
     --bg-color: hsla(0, 0%, 10%, 50%);
     background-color: var(--bg-color);

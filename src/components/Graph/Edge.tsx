@@ -43,6 +43,9 @@ const StyledSvg = styled.svg<Props>`
   height: 125px;
 `;
 
+/**
+ * https://css-tricks.com/svg-line-animation-works/
+ */
 const Line = styled.line<Pick<Props, "length" | "collapsed">>`
   transition: stroke-dashoffset 1s ease;
 

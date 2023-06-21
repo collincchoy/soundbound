@@ -1,0 +1,12 @@
+<svg width="45" height="45" viewBox="0 0 45 45" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="22.5" cy="22.5" r="22" stroke="currentColor" />
+    <polygon class="play" points="15.000 31.399, 15.000 13.635, 16.456 12.745, 34.219 21.833, 34.203 23.622, 16.439 32.297, 15.000 31.399" fill="currentColor">
+        <animate id="animate-to-left-pause" begin="indefinite" fill="freeze" attributeName="points" dur="500ms" to="14.000 31.000, 14.000 13.000, 15.000 12.000, 16.000 13.000, 16.000 31.000, 15.000 32.000, 14.000 31.000" />
+
+        <animate id="animate-to-left-play" begin="indefinite" fill="freeze" attributeName="points" dur="500ms" to="15.000 31.399, 15.000 13.635, 16.456 12.745, 34.219 21.833, 34.203 23.622, 16.439 32.297, 15.000 31.399" />
+    </polygon>
+    <polygon class="play-right" points="22.500 27.381, 22.500 18.117, 23.947 17.223, 33.211 21.850, 33.212 23.639, 23.948 28.276, 22.500 27.381" fill="currentColor">
+        <animate id="animate-to-right-pause" begin="indefinite" fill="freeze" attributeName="points" dur="500ms" to="31.000 13.000, 31.000 31.000, 30.000 32.000, 29.000 31.000, 29.000 13.000, 30.000 12.000, 31.000 13.000" />
+        <animate id="animate-to-right-play" begin="indefinite" fill="freeze" attributeName="points" dur="500ms" to="22.500 27.381, 22.500 18.117, 23.947 17.223, 33.211 21.850, 33.212 23.639, 23.948 28.276, 22.500 27.381" />
+    </polygon>
+</svg>
