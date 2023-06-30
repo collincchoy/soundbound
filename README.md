@@ -21,7 +21,7 @@ Built with the Spotify API, TypeScript, and React.
     3. short_term (approximately last 4 weeks)
   - Play quick 30 second previews of tracks - Great for finding music!
 
-<img src="public/screenshots/top-artists-page.png" >
+<img src="public/screenshots/top-tracks-page.png" >
 
 ### Discover Graph
   - Interactive SVG-based graph to journey through related artists

@@ -1,11 +1,12 @@
 import React, { useEffect, useRef } from "react";
-import ButtonWithOverlay from "./ButtonWithOverlay";
 import { ReactComponent as PlayPauseIcon } from "./PlayPauseWithCircle.svg";
+import styled from "styled-components";
 
 type PlayPauseButtonProps = {
   isPlaying: boolean;
   play: () => Promise<void>;
   pause: () => void;
+  withOverlay?: boolean;
 } & React.ButtonHTMLAttributes<HTMLButtonElement>;
 
 export default function PlayPauseButton({
@@ -58,7 +59,7 @@ export default function PlayPauseButton({
     }
   }
   return (
-    <ButtonWithOverlay
+    <StyledButtonWithOverlay
       title={buttonName}
       aria-label={buttonName}
       type="button"
@@ -67,6 +68,45 @@ export default function PlayPauseButton({
       {...props}
     >
       <PlayPauseIcon />
-    </ButtonWithOverlay>
+    </StyledButtonWithOverlay>
   );
 }
+
+const StyledButtonWithOverlay = styled.button.attrs((p) => ({
+  className: "button " + p.className ?? "",
+}))`
+  ${(p: { withOverlay?: boolean }) =>
+    p.withOverlay &&
+    `    
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  `};
+
+  --transition-duration: 0.3s;
+  background-color: unset;
+  transition: background-color var(--transition-duration);
+
+  height: 100%;
+  width: 100%;
+  cursor: pointer;
+  border: none;
+  border-radius: 0; // override radius from .button
+
+  svg {
+    color: hsl(0deg 0% 70%);
+    opacity: 0.5;
+    transition: color var(---transition-duration);
+  }
+
+  &:hover {
+    svg {
+      color: hsl(0, 0%, 100%);
+      opacity: 1;
+    }
+    --bg-color: hsla(0, 0%, 10%, 50%);
+    background-color: var(--bg-color);
+    /* box-shadow: 0 1px 1px 1px var(--bg-color); */
+  }
+`;

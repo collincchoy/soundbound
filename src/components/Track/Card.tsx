@@ -80,6 +80,7 @@ export default function TrackCard({ track }: TrackCardProps) {
           onClick={() => currentTrack?.id !== id && changeTrack(track)}
           {...{ isPlaying: currentTrack?.id === id && isPlaying, play, pause }}
           disabled={!track.preview_url}
+          withOverlay={true}
         />
       </div>
 
