@@ -83,18 +83,24 @@ export const DiscoverPage = () => {
         </GridArea>
 
         <GridArea area="left" onAnimationEnd={resetAnimationState}>
-          <Edge
-            length="33.33%"
-            strokeWidth="6"
-            direction="right"
-            collapsed={selectedNode === NodeSelection.Previous}
-          />
-          <Node
-            imageUrl={previousArtist && getLastImage(previousArtist)}
-            move={selectedNode === NodeSelection.Previous ? "right" : undefined}
-            onClick={() => selectNode(NodeSelection.Previous)}
-            title={previousArtist && previousArtist.name}
-          />
+          {previousArtist && (
+            <>
+              <Edge
+                length="33.33%"
+                strokeWidth="6"
+                direction="right"
+                collapsed={selectedNode === NodeSelection.Previous}
+              />
+              <Node
+                imageUrl={getLastImage(previousArtist)}
+                move={
+                  selectedNode === NodeSelection.Previous ? "right" : undefined
+                }
+                onClick={() => selectNode(NodeSelection.Previous)}
+                title={previousArtist.name}
+              />
+            </>
+          )}
         </GridArea>
 
         <GridArea area="rightTop" onAnimationEnd={resetAnimationState}>
