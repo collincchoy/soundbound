@@ -5,11 +5,8 @@ import { Track } from "spotify/types";
 import styled, { css } from "styled-components";
 import { colonizeMilliseconds, last } from "utils";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faPauseCircle,
-  faPlayCircle,
-  faRecordVinyl,
-} from "@fortawesome/free-solid-svg-icons";
+import { faRecordVinyl } from "@fortawesome/free-solid-svg-icons";
+import PlayPauseButton from "components/MusicPlayer/PlayPauseButton";
 
 interface Props {
   tracks: Track[];
@@ -18,18 +15,12 @@ interface Props {
 export const TrackList = ({ tracks }: Props) => {
   const musicPlayer = useMusicPlayer();
 
-  function playTrack(track: Track) {
-    musicPlayer.changeTrack(track);
-    musicPlayer.play();
-  }
-
-  function toggleTrackPlay(track: Track) {
-    if (musicPlayer.currentTrackIs(track) && musicPlayer.isPlaying) {
-      musicPlayer.pause();
-    } else {
-      playTrack(track);
+  function toggleTrack(track: Track) {
+    if (!musicPlayer.currentTrackIs(track)) {
+      musicPlayer.changeTrack(track);
     }
   }
+
   return (
     <List className="has-text-light">
       {tracks.map((track) => (
@@ -55,21 +46,16 @@ export const TrackList = ({ tracks }: Props) => {
           </GridArea>
 
           <GridArea area="controls">
-            <StyledPlayPauseButton
-              onClick={() => toggleTrackPlay(track)}
+            <PlayPauseButton
+              onClick={() => toggleTrack(track)}
+              isPlaying={
+                musicPlayer.currentTrackIs(track) && musicPlayer.isPlaying
+              }
+              onPlay={musicPlayer.play}
+              onPause={musicPlayer.pause}
               disabled={!track.preview_url}
-            >
-              <FontAwesomeIcon
-                icon={
-                  musicPlayer.currentTrackIs(track) && musicPlayer.isPlaying
-                    ? faPauseCircle
-                    : faPlayCircle
-                }
-                // color="#A9A9A9"
-                inverse
-                size="3x"
-              />
-            </StyledPlayPauseButton>
+              withOverlay={false}
+            />
           </GridArea>
 
           <GridArea area="duration">
@@ -80,12 +66,6 @@ export const TrackList = ({ tracks }: Props) => {
     </List>
   );
 };
-
-const StyledPlayPauseButton = styled.button`
-  background-color: initial;
-  border: none;
-  cursor: pointer;
-`;
 
 const List = styled.ol`
   list-style-type: none;

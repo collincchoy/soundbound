@@ -4,15 +4,15 @@ import styled from "styled-components";
 
 type PlayPauseButtonProps = {
   isPlaying: boolean;
-  play: () => Promise<void>;
-  pause: () => void;
+  onPlay: () => Promise<void>;
+  onPause: () => void;
   withOverlay?: boolean;
 } & React.ButtonHTMLAttributes<HTMLButtonElement>;
 
 export default function PlayPauseButton({
   isPlaying,
-  play,
-  pause,
+  onPlay,
+  onPause,
   onClick,
   ...props
 }: PlayPauseButtonProps) {
@@ -53,9 +53,9 @@ export default function PlayPauseButton({
     onClick && onClick(e);
 
     if (isPlaying) {
-      pause();
+      onPause();
     } else {
-      await play();
+      await onPlay();
     }
   }
   return (

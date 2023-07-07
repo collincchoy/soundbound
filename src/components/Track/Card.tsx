@@ -78,7 +78,9 @@ export default function TrackCard({ track }: TrackCardProps) {
 
         <PlayPauseButton
           onClick={() => currentTrack?.id !== id && changeTrack(track)}
-          {...{ isPlaying: currentTrack?.id === id && isPlaying, play, pause }}
+          isPlaying={currentTrack?.id === id && isPlaying}
+          onPlay={play}
+          onPause={pause}
           disabled={!track.preview_url}
           withOverlay={true}
         />

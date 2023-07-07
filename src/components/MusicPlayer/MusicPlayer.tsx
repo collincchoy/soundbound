@@ -20,7 +20,11 @@ export default function MusicPlayer() {
           <TrackInfo track={currentTrack} />
         </div>
         <div className={styles.middle}>
-          <PlayPauseButton {...{ play, pause, isPlaying }} />
+          <PlayPauseButton
+            onPlay={play}
+            onPause={pause}
+            isPlaying={isPlaying}
+          />
         </div>
         <div className={styles.right}>
           <PlayQueue queue={playQueue} currentIndex={2} />
