@@ -175,7 +175,8 @@ export const DiscoverPage = () => {
       </Grid>
 
       <BottomContainer>
-        <div>
+        <div className="has-text-light">
+          <h3>Top Tracks</h3>
           {artistTopTracksData?.tracks ? (
             <TrackList tracks={artistTopTracksData.tracks} />
           ) : (

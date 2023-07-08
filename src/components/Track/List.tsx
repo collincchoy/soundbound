@@ -22,7 +22,7 @@ export const TrackList = ({ tracks }: Props) => {
   }
 
   return (
-    <List className="has-text-light">
+    <List>
       {tracks.map((track) => (
         <ListItem key={track.id}>
           <GridArea area="cover">
@@ -32,7 +32,7 @@ export const TrackList = ({ tracks }: Props) => {
               alt="Album Cover"
             />
           </GridArea>
-          <GridArea area="name" className="is-size-5 has-text-weight-bold">
+          <GridArea area="name" className="has-text-weight-bold">
             {track.name}
           </GridArea>
 
