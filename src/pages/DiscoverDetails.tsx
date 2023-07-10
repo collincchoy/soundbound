@@ -7,10 +7,11 @@ import TabbedContent from "components/TabbedContent";
 import { TrackList } from "components/Track/List";
 import React, { useState } from "react";
 import { useSpotifyApi } from "spotify/hooks";
-import { Album, Artist, Track } from "spotify/types";
+import { Album, Artist, PaginatedResponse, Track } from "spotify/types";
 import styled from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimesCircle } from "@fortawesome/free-solid-svg-icons";
+import { spotify } from "spotify/api";
 
 const ARTIST_TOP_TRACKS_QUERY_PARAMS = { market: "US" };
 
@@ -20,12 +21,31 @@ export default function DiscoverDetails(props: { artist: Artist }) {
     ARTIST_TOP_TRACKS_QUERY_PARAMS
   );
 
-  const [openedAlbums, setOpenedAlbums] = useState<Album[]>([]);
+  const [openedAlbums, setOpenedAlbums] = useState<
+    { album: Album; tracks?: Track[] }[]
+  >([]);
   const [activeTab, setActiveTab] = useState(0);
 
   function handleAlbumClick(album: Album) {
     // if album is already opened, do nothing
-    if (openedAlbums.find((a) => a.id === album.id)) return;
+    if (openedAlbums.find((a) => a.album.id === album.id)) return;
+
+    // fetch the track list for the album
+    spotify
+      .get<PaginatedResponse<Track>>(`/albums/${album.id}/tracks`)
+      .then((resp) => {
+        setOpenedAlbums((openedAlbums) =>
+          openedAlbums.map((openedAlbum) => {
+            if (openedAlbum.album.id === album.id) {
+              // resp.items[x] doesn't include the album metadata so let's append it here to satisfy downstream expectations
+              resp.items.forEach((track) => (track.album = album));
+              const tracks = resp.items;
+              return { album, tracks };
+            }
+            return openedAlbum;
+          })
+        );
+      });
 
     setOpenedAlbums((openedAlbums) => {
       // Max of 5 open at a time.
@@ -35,7 +55,7 @@ export default function DiscoverDetails(props: { artist: Artist }) {
       }
       // offset by 1 because top tracks tab is always open
       setActiveTab(openedAlbums.length + 1);
-      return [...openedAlbums, album];
+      return [...openedAlbums, { album }];
     });
   }
 
@@ -66,7 +86,7 @@ export default function DiscoverDetails(props: { artist: Artist }) {
             </TabContent>
           </Tab>
 
-          {openedAlbums.map((album, i) => (
+          {openedAlbums.map(({ album, tracks }, i) => (
             /* isActive is offset by 1 because top tracks tab is always open */
             <Tab key={album.id} id={album.id} isActive={i + 1 === activeTab}>
               <TabHeader>
@@ -82,8 +102,7 @@ export default function DiscoverDetails(props: { artist: Artist }) {
               </TabHeader>
 
               <TabContent>
-                {/* <TrackList tracks={album.tracks} /> */}
-                <span>{album.name} content</span>
+                {tracks ? <TrackList tracks={tracks} /> : <Loader />}
               </TabContent>
             </Tab>
           ))}
