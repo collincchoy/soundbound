@@ -19,6 +19,7 @@ export default function DiscoverDetails(props: { artist: Artist }) {
   );
 
   const [openedAlbums, setOpenedAlbums] = useState<Album[]>([]);
+  const [activeTab, setActiveTab] = useState(0);
 
   function handleAlbumClick(album: Album) {
     // if album is already opened, do nothing
@@ -30,28 +31,17 @@ export default function DiscoverDetails(props: { artist: Artist }) {
       if (openedAlbums.length > 4) {
         openedAlbums = openedAlbums.slice(openedAlbums.length - 4);
       }
+      // offset by 1 because top tracks tab is always open
+      setActiveTab(openedAlbums.length + 1);
       return [...openedAlbums, album];
     });
   }
 
-  const albumTabs = openedAlbums.map((album) => {
-    return (
-      <Tab key={album.id} id={album.id}>
-        <TabHeader>{album.name}</TabHeader>
-
-        <TabContent>
-          {/* <TrackList tracks={album.tracks} /> */}
-          <span>{album.name} content</span>
-        </TabContent>
-      </Tab>
-    );
-  });
   return (
     <StyledGridLayout>
       <div className="has-text-light">
-        {/* <h3>Top Tracks</h3> */}
-        <TabbedContent>
-          <Tab id="top-tracks">
+        <TabbedContent onTabClick={(_, i) => setActiveTab(i)}>
+          <Tab id="top-tracks" isActive={activeTab === 0}>
             <TabHeader>Top Tracks</TabHeader>
 
             <TabContent>
@@ -63,7 +53,17 @@ export default function DiscoverDetails(props: { artist: Artist }) {
             </TabContent>
           </Tab>
 
-          {albumTabs}
+          {openedAlbums.map((album, i) => (
+            /* isActive is offset by 1 because top tracks tab is always open */
+            <Tab key={album.id} id={album.id} isActive={i + 1 === activeTab}>
+              <TabHeader>{album.name}</TabHeader>
+
+              <TabContent>
+                {/* <TrackList tracks={album.tracks} /> */}
+                <span>{album.name} content</span>
+              </TabContent>
+            </Tab>
+          ))}
         </TabbedContent>
       </div>
 

@@ -5,10 +5,11 @@ import { useTabbedContentContext } from "./TabbedContentContext";
 
 type Props = {
   id: string;
+  isActive?: boolean;
   children: ReactNode;
 };
 
-export default function Tab({ id, children }: Props) {
+export default function Tab({ id, isActive, children }: Props) {
   let header: ReactNode, content: ReactNode;
   React.Children.forEach(children, (child) => {
     if (!React.isValidElement(child)) return;
@@ -20,11 +21,11 @@ export default function Tab({ id, children }: Props) {
       // content.push(child);
     }
   });
-  const tabbedContentContext = useTabbedContentContext();
+  const { upsertTab, removeTab } = useTabbedContentContext();
   useEffect(() => {
-    const tab = { id, header, content };
-    tabbedContentContext.upsertTab(tab);
-    return () => tabbedContentContext.removeTab(tab);
-  }, [header, content]);
+    const tab = { id, header, content, isActive };
+    upsertTab(tab);
+    return () => removeTab(tab);
+  }, [id, header, content, isActive, upsertTab, removeTab]);
   return null;
 }
