@@ -28,7 +28,13 @@ export default function DiscoverDetails(props: { artist: Artist }) {
 
   function handleAlbumClick(album: Album) {
     // if album is already opened, do nothing
-    if (openedAlbums.find((a) => a.album.id === album.id)) return;
+    const alreadyOpenedAlbumIdx = openedAlbums.findIndex(
+      (a) => a.album.id === album.id
+    );
+    if (alreadyOpenedAlbumIdx !== -1) {
+      setActiveTab(alreadyOpenedAlbumIdx + 1);
+      return;
+    }
 
     // fetch the track list for the album
     spotify
