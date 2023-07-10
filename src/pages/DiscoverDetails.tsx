@@ -9,6 +9,8 @@ import React, { useState } from "react";
 import { useSpotifyApi } from "spotify/hooks";
 import { Album, Artist, Track } from "spotify/types";
 import styled from "styled-components";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTimesCircle } from "@fortawesome/free-solid-svg-icons";
 
 const ARTIST_TOP_TRACKS_QUERY_PARAMS = { market: "US" };
 
@@ -37,6 +39,17 @@ export default function DiscoverDetails(props: { artist: Artist }) {
     });
   }
 
+  function handleCloseAlbumTab(tabIndex: number) {
+    setOpenedAlbums((openedAlbums) => {
+      const res = openedAlbums.filter((_, i) => i !== tabIndex);
+      // if the active tab is now out of bounds, reset it to the last opened tab
+      if (activeTab > res.length) {
+        setActiveTab(res.length);
+      }
+      return res;
+    });
+  }
+
   return (
     <StyledGridLayout>
       <div className="has-text-light">
@@ -56,7 +69,17 @@ export default function DiscoverDetails(props: { artist: Artist }) {
           {openedAlbums.map((album, i) => (
             /* isActive is offset by 1 because top tracks tab is always open */
             <Tab key={album.id} id={album.id} isActive={i + 1 === activeTab}>
-              <TabHeader>{album.name}</TabHeader>
+              <TabHeader>
+                {album.name}
+                <StyledTabCloseButton
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleCloseAlbumTab(i);
+                  }}
+                >
+                  <FontAwesomeIcon icon={faTimesCircle} />
+                </StyledTabCloseButton>
+              </TabHeader>
 
               <TabContent>
                 {/* <TrackList tracks={album.tracks} /> */}
@@ -100,6 +123,26 @@ const StyledGridLayout = styled.section`
     &::-webkit-scrollbar-track {
       /* Background */
       background: #333;
+    }
+  }
+`;
+
+const StyledTabCloseButton = styled.button`
+  cursor: pointer;
+  margin-inline-start: 4px;
+  border: none;
+  background-color: unset;
+  border-radius: 50%;
+  padding: 0;
+
+  svg {
+    border-radius: 50%;
+    transition: box-shadow 0.1s ease-out;
+  }
+
+  &:hover {
+    svg {
+      box-shadow: 0px 0px 4px 0px red;
     }
   }
 `;
