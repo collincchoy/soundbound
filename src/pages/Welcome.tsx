@@ -17,6 +17,7 @@ import HoverLink from "components/Welcome/HoverLink";
 const ArtistCardColumn = styled.div`
   display: flex;
   flex-direction: column;
+  gap: 12px;
   justify-content: space-between;
   height: 100%;
 `;
@@ -103,14 +104,15 @@ export default function WelcomePage() {
         <ForkMeRibbon />
       </Section>
       <Section id="reflection" className="is-primary">
-        <h1 className="title is-spaced">Reflection</h1>
+        <h1 className="title is-spaced">Top Tracks & Artists</h1>
         <h3 className="subtitle">
-          Review your personal <strong>Top Artists</strong> and{" "}
-          <strong>Top Tracks</strong> by listening history across 3 different
-          time periods.
+          Stuck in playlist-mode? Have a tune stuck in your head from a playlist
+          you listen to on repeat but can't recall the name or artist?
           <SectionText>
-            Preview 30-second snippets of tracks to quickly rediscover those
-            tracks you know by ear but struggle to remember by name.
+            Revisit your <strong>Top Artists</strong> &{" "}
+            <strong>Top Tracks</strong> from the past month, 6 months, and more,
+            and indulge in 30-second track previews to quickly reflect on your
+            recent favorites.
           </SectionText>
         </h3>
         <div className="columns">
@@ -145,9 +147,9 @@ export default function WelcomePage() {
           Find new music by exploring relationships between artists, tracks, and
           genres.
           <SectionText>
-            Lab allows you to mix-&-match artists, tracks, and genres and then
-            tune by track attributes like loudness, acousticness, valence, and
-            more to find you new music!
+            Lab allows you to generate playlists by mixing artists, tracks, and
+            genres which you can then tune by track attributes like loudness,
+            acousticness, valence, and more to find you new music!
           </SectionText>
           {/* <p>
             Soundbound Discovery provides an infinite suggestion graph of
@@ -173,8 +175,8 @@ export default function WelcomePage() {
             the Spotify API.
           </p>
           <p>
-            The project is still being worked on and if you'd like to reach out,
-            find me{" "}
+            The project is actively under development - if you'd like to reach
+            out, find me{" "}
             <a href="https://collincchoy.github.io">
               <span style={{ textDecoration: "line-through" }}>here</span>&nbsp;
             </a>
