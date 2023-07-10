@@ -1,4 +1,4 @@
-import React, { MouseEventHandler, useMemo } from "react";
+import React, { useMemo } from "react";
 import { usePaginatedSpotifyApi } from "spotify/hooks";
 import { Album, AlbumType, Artist } from "spotify/types";
 import styled from "styled-components";
@@ -26,21 +26,24 @@ export default function DiscoverArtistDiscography({
     return [_albums, singles, others];
   }, [albums]);
 
-  const renderAlbumImages = (albums: Album[]) => {
-    return albums.map((album) => (
-      <HoverableAlbum
-        src={album?.images[album?.images?.length - 1]?.url}
-        alt="Album Cover"
-        title={album.name}
-        key={album.id}
-        popoverMessage={album.name}
+  const renderAlbumImages = (albums: Album[]) =>
+    albums.map((album) => (
+      <StyledHoverableAlbumCover
+        data-popover-message={album.name}
         onClick={onAlbumClick && (() => onAlbumClick(album))}
-      />
+        key={album.id}
+      >
+        <img
+          src={album?.images[album?.images?.length - 1]?.url}
+          title={album.name}
+          alt={`Album cover for ${album.name}`}
+          className="image is-64x64"
+        />
+      </StyledHoverableAlbumCover>
     ));
-  };
 
   return (
-    <div className="has-text-light">
+    <>
       <div>
         <h3>Albums</h3>
         {renderAlbumImages(albumsTypeAlbum)}
@@ -50,33 +53,11 @@ export default function DiscoverArtistDiscography({
         <h3>Singles</h3>
         {renderAlbumImages(albumsTypeSingle)}
       </div>
-    </div>
+    </>
   );
 }
 
-const HoverableAlbum: React.FC<{
-  src: string;
-  alt: string;
-  title: string;
-  popoverMessage: string;
-  onClick?: MouseEventHandler;
-}> = (props) => {
-  return (
-    <StyledAlbumCover
-      data-popover-message={props.popoverMessage}
-      onClick={props.onClick}
-    >
-      <img
-        src={props.src}
-        title={props.title}
-        alt={props.alt}
-        className="image is-64x64"
-      />
-    </StyledAlbumCover>
-  );
-};
-
-const StyledAlbumCover = styled.div`
+const StyledHoverableAlbumCover = styled.div`
   display: inline-block;
   cursor: pointer;
   position: relative;

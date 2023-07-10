@@ -51,8 +51,8 @@ export default function DiscoverDetails(props: { artist: Artist }) {
   }
 
   return (
-    <StyledGridLayout>
-      <div className="has-text-light">
+    <StyledGridLayout className="has-text-light">
+      <section>
         <TabbedContent onTabClick={(_, i) => setActiveTab(i)}>
           <Tab id="top-tracks" isActive={activeTab === 0}>
             <TabHeader>Top Tracks</TabHeader>
@@ -88,13 +88,15 @@ export default function DiscoverDetails(props: { artist: Artist }) {
             </Tab>
           ))}
         </TabbedContent>
-      </div>
+      </section>
 
       {/* <pre>{JSON.stringify(relatedArtists, undefined, 2)}</pre> */}
-      <DiscoverArtistDiscography
-        artist={props.artist}
-        onAlbumClick={handleAlbumClick}
-      />
+      <section>
+        <DiscoverArtistDiscography
+          artist={props.artist}
+          onAlbumClick={handleAlbumClick}
+        />
+      </section>
     </StyledGridLayout>
   );
 }
