@@ -5,7 +5,6 @@ import React, {
   useCallback,
   useContext,
   useMemo,
-  useReducer,
   useState,
 } from "react";
 
@@ -20,10 +19,6 @@ const TabbedContentContext = createContext<
   TabbedContentContextState | undefined
 >(undefined);
 
-type Action = { type: "removeTab" } | { type: "removeTab" };
-type Dispatch = (action: Action) => void;
-type State = TabbedContentContextState;
-
 export type Tab = {
   id: string;
   header: ReactNode;
@@ -31,23 +26,11 @@ export type Tab = {
   isActive?: boolean;
 };
 
-// function TabbedContentReducer(state: State, action: Action) {
-//   switch (action.type) {
-//     case "removeTab": {
-//       return { count: state.count + 1 };
-//     }
-//     default: {
-//       throw new Error(`Unhandled action type: ${action.type}`);
-//     }
-//   }
-// }
-
 type TabbedContentContextProviderProps = PropsWithChildren<{}>;
 
 export function TabbedContentContextProvider(
   props: TabbedContentContextProviderProps
 ) {
-  // const [state, dispatch] = useReducer(TabbedContentReducer, {tabs: []});
   const [tabs, setTabs] = useState<Tab[]>([]);
   const upsertTab = useCallback((tab: Tab) => {
     setTabs((tabs) => {
