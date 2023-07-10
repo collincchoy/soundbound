@@ -1,16 +1,12 @@
-import DiscoverArtistDiscography from "components/DiscoverArtistDiscography";
 import { Edge } from "components/Graph/Edge";
 import Node from "components/Graph/Node";
-import Loader from "components/Loader";
 import PageContent from "components/PageContent";
-import { TrackList } from "components/Track/List";
 import React, { useMemo, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useSpotifyApi } from "spotify/hooks";
-import { Artist, Track } from "spotify/types";
+import { Artist } from "spotify/types";
 import styled from "styled-components";
-
-const ARTIST_TOP_TRACKS_QUERY_PARAMS = { market: "US" };
+import DiscoverDetails from "./DiscoverDetails";
 
 enum NodeSelection {
   Previous = -1,
@@ -60,11 +56,6 @@ export const DiscoverPage = () => {
 
   const getLastImage = (artist: Artist) =>
     artist.images[Math.floor(artist.images.length / 2)].url;
-
-  const { data: artistTopTracksData } = useSpotifyApi<{ tracks: Track[] }>(
-    `/artists/${artistId}/top-tracks`,
-    ARTIST_TOP_TRACKS_QUERY_PARAMS
-  );
 
   return (
     <PageContent>
@@ -174,19 +165,7 @@ export const DiscoverPage = () => {
         </GridArea>
       </Grid>
 
-      <BottomContainer>
-        <div className="has-text-light">
-          <h3>Top Tracks</h3>
-          {artistTopTracksData?.tracks ? (
-            <TrackList tracks={artistTopTracksData.tracks} />
-          ) : (
-            <Loader />
-          )}
-        </div>
-
-        {/* <pre>{JSON.stringify(relatedArtists, undefined, 2)}</pre> */}
-        {artist && <DiscoverArtistDiscography artist={artist} />}
-      </BottomContainer>
+      {artist && <DiscoverDetails artist={artist} />}
     </PageContent>
   );
 };
@@ -224,32 +203,4 @@ const GenreTags = styled.div`
   flex-wrap: wrap;
   gap: 0.5em;
   justify-content: center;
-`;
-
-const BottomContainer = styled.section`
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  column-gap: 1em;
-  /* grid-auto-rows: 1fr; */
-
-  & > * {
-    max-height: 400px;
-    overflow-y: scroll;
-
-    /* Foreground, Background */
-    scrollbar-color: #999 #333;
-
-    &::-webkit-scrollbar {
-      width: 10px; /* Mostly for vertical scrollbars */
-      height: 10px; /* Mostly for horizontal scrollbars */
-    }
-    &::-webkit-scrollbar-thumb {
-      /* Foreground */
-      background: #999;
-    }
-    &::-webkit-scrollbar-track {
-      /* Background */
-      background: #333;
-    }
-  }
 `;
