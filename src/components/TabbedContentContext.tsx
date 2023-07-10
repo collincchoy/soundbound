@@ -11,7 +11,7 @@ const TabbedContentContext = createContext<
   TabbedContentContextState | undefined
 >(undefined);
 
-type Action = { type: "addTab" } | { type: "removeTab" };
+type Action = { type: "removeTab" } | { type: "removeTab" };
 type Dispatch = (action: Action) => void;
 type State = TabbedContentContextState;
 
@@ -19,15 +19,15 @@ type Tab = { id: string; header: ReactNode; content: ReactNode };
 
 export type TabbedContentContextState = {
   tabs: Tab[];
-  addTab: (tab: Tab) => void;
   upsertTab: (tab: Tab) => void;
+  removeTab: (tab: Tab) => void;
   activeIdx?: number;
   // setActiveIdx: (idx: number) => void;
 };
 
 // function TabbedContentReducer(state: State, action: Action) {
 //   switch (action.type) {
-//     case "addTab": {
+//     case "removeTab": {
 //       return { count: state.count + 1 };
 //     }
 //     default: {
@@ -43,9 +43,6 @@ export function TabbedContentContextProvider({
 }: TabbedContentContextProviderProps) {
   // const [state, dispatch] = useReducer(TabbedContentReducer, {tabs: []});
   const [tabs, setTabs] = useState<Tab[]>([]);
-  function addTab(tab: Tab) {
-    setTabs((tabs) => [...tabs, tab]);
-  }
   function upsertTab(tab: Tab) {
     setTabs((tabs) => {
       let shouldInsert = true;
@@ -65,10 +62,13 @@ export function TabbedContentContextProvider({
       return updatedTabs;
     });
   }
+  function removeTab(tab: Tab) {
+    setTabs((tabs) => tabs.filter((t) => t.id !== tab.id));
+  }
   const [activeIdx, setActiveIdx] = useState(0);
   return (
     <TabbedContentContext.Provider
-      value={{ tabs, addTab, upsertTab, activeIdx }}
+      value={{ tabs, upsertTab, removeTab, activeIdx }}
     >
       {children}
     </TabbedContentContext.Provider>

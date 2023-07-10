@@ -20,6 +20,20 @@ export default function DiscoverDetails(props: { artist: Artist }) {
 
   const [openedAlbums, setOpenedAlbums] = useState<Album[]>([]);
 
+  function handleAlbumClick(album: Album) {
+    // if album is already opened, do nothing
+    if (openedAlbums.find((a) => a.id === album.id)) return;
+
+    setOpenedAlbums((openedAlbums) => {
+      // Max of 5 open at a time.
+      // auto close oldest tabs
+      if (openedAlbums.length > 4) {
+        openedAlbums = openedAlbums.slice(openedAlbums.length - 4);
+      }
+      return [...openedAlbums, album];
+    });
+  }
+
   const albumTabs = openedAlbums.map((album) => {
     return (
       <Tab key={album.id} id={album.id}>
@@ -54,7 +68,10 @@ export default function DiscoverDetails(props: { artist: Artist }) {
       </div>
 
       {/* <pre>{JSON.stringify(relatedArtists, undefined, 2)}</pre> */}
-      <DiscoverArtistDiscography artist={props.artist} />
+      <DiscoverArtistDiscography
+        artist={props.artist}
+        onAlbumClick={handleAlbumClick}
+      />
     </StyledGridLayout>
   );
 }

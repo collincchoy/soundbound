@@ -22,7 +22,9 @@ export default function Tab({ id, children }: Props) {
   });
   const tabbedContentContext = useTabbedContentContext();
   useEffect(() => {
-    tabbedContentContext.upsertTab({ id, header, content });
+    const tab = { id, header, content };
+    tabbedContentContext.upsertTab(tab);
+    return () => tabbedContentContext.removeTab(tab);
   }, [header, content]);
   return null;
 }

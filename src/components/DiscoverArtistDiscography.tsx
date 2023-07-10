@@ -1,13 +1,17 @@
-import React, { useMemo } from "react";
+import React, { MouseEventHandler, useMemo } from "react";
 import { usePaginatedSpotifyApi } from "spotify/hooks";
 import { Album, AlbumType, Artist } from "spotify/types";
 import styled from "styled-components";
 
+type Props = {
+  artist: Artist;
+  onAlbumClick?: (album: Album) => void;
+};
+
 export default function DiscoverArtistDiscography({
   artist,
-}: {
-  artist: Artist;
-}) {
+  onAlbumClick,
+}: Props) {
   const { items: albums } = usePaginatedSpotifyApi<Album>(
     `/artists/${artist.id}/albums`
   );
@@ -30,6 +34,7 @@ export default function DiscoverArtistDiscography({
         title={album.name}
         key={album.id}
         popoverMessage={album.name}
+        onClick={onAlbumClick && (() => onAlbumClick(album))}
       />
     ));
   };
@@ -54,9 +59,13 @@ const HoverableAlbum: React.FC<{
   alt: string;
   title: string;
   popoverMessage: string;
+  onClick?: MouseEventHandler;
 }> = (props) => {
   return (
-    <StyledAlbumCover data-popover-message={props.popoverMessage}>
+    <StyledAlbumCover
+      data-popover-message={props.popoverMessage}
+      onClick={props.onClick}
+    >
       <img
         src={props.src}
         title={props.title}
