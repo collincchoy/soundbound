@@ -150,7 +150,7 @@ const StyledGridLayout = styled.section`
 
 const StyledTabCloseButton = styled.button`
   cursor: pointer;
-  margin-inline-start: 4px;
+  margin-inline-start: 6px;
   border: none;
   background-color: unset;
   border-radius: 50%;
